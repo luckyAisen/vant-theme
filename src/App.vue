@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
     <el-button>默认按钮</el-button>
+    <van-button disabled type="primary">禁用状态</van-button>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>

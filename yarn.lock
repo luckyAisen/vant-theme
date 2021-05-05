@@ -1115,7 +1115,7 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@popperjs/core@^2.4.4":
+"@popperjs/core@^2.4.4", "@popperjs/core@^2.9.2":
   version "2.9.2"
   resolved "https://registry.nlark.com/@popperjs/core/download/@popperjs/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
   integrity sha1-rep7aVPLs0ZRdmsFSEaOdDxqI1M=
@@ -1383,6 +1383,28 @@
   dependencies:
     "@typescript-eslint/types" "4.22.1"
     eslint-visitor-keys "^2.0.0"
+
+"@vant/icons@^1.5.3":
+  version "1.5.3"
+  resolved "https://registry.npm.taobao.org/@vant/icons/download/@vant/icons-1.5.3.tgz#b7779f67bf608d417a82452fbede406dfa46b439"
+  integrity sha1-t3efZ79gjUF6gkUvvt5AbfpGtDk=
+
+"@vant/lazyload@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.nlark.com/@vant/lazyload/download/@vant/lazyload-1.2.0.tgz?cache=0&sync_timestamp=1620007499934&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vant%2Flazyload%2Fdownload%2F%40vant%2Flazyload-1.2.0.tgz#62e9779bd7844ad8f71c2ca2bf852e6147c7a86d"
+  integrity sha1-Yul3m9eEStj3HCyiv4UuYUfHqG0=
+
+"@vant/popperjs@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/@vant/popperjs/download/@vant/popperjs-1.1.0.tgz?cache=0&sync_timestamp=1617712371368&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vant%2Fpopperjs%2Fdownload%2F%40vant%2Fpopperjs-1.1.0.tgz#b4edee5bbfa6fb18705986e313d4fd5f17942a0f"
+  integrity sha1-tO3uW7+m+xhwWYbjE9T9XxeUKg8=
+  dependencies:
+    "@popperjs/core" "^2.9.2"
+
+"@vant/use@^1.1.1":
+  version "1.1.2"
+  resolved "https://registry.nlark.com/@vant/use/download/@vant/use-1.1.2.tgz#d35265e05df88a47b04196a308efb5e89e44ca10"
+  integrity sha1-01Jl4F34ikewQZajCO+16J5EyhA=
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.2.1":
   version "1.2.1"
@@ -9766,6 +9788,16 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+vant@^3.0.16:
+  version "3.0.16"
+  resolved "https://registry.nlark.com/vant/download/vant-3.0.16.tgz?cache=0&sync_timestamp=1620008645047&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvant%2Fdownload%2Fvant-3.0.16.tgz#abc4404b9cc61f4607ac61c0ba6d890975e2723e"
+  integrity sha1-q8RAS5zGH0YHrGHAum2JCXXicj4=
+  dependencies:
+    "@vant/icons" "^1.5.3"
+    "@vant/lazyload" "^1.2.0"
+    "@vant/popperjs" "^1.1.0"
+    "@vant/use" "^1.1.1"
 
 vary@~1.1.2:
   version "1.1.2"
