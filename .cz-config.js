@@ -32,24 +32,24 @@ module.exports = {
     { value: 'revert', name: 'revert:   回滚 commit' }
   ],
 
-  // scope 设置 影响范围 选项
-  scopes: [
-    ['views', '视图相关'],
-    ['components', '组件相关'],
-    ['styles', '样式相关'],
-    ['element-ui', '对 element-ui 主题的调整'],
-    ['utils', 'utils 相关'],
-    ['api', 'serveice 接口服务相关'],
-    ['deps', '项目依赖'],
-    ['other', '其他修改'],
-    // 如果选择 custom ,后面会让你再输入一个自定义的 scope , 也可以不设置此项， 把后面的 allowCustomScopes 设置为 true
-    ['custom', '以上都不是？我要自定义']
-  ].map(([value, description]) => {
-    return {
-      value,
-      name: `${value.padEnd(30)} (${description})`
-    }
-  }),
+  // // scope 设置 影响范围 选项
+  // scopes: [
+  //   ['views', '视图相关'],
+  //   ['components', '组件相关'],
+  //   ['styles', '样式相关'],
+  //   ['element-ui', '对 element-ui 主题的调整'],
+  //   ['utils', 'utils 相关'],
+  //   ['api', 'serveice 接口服务相关'],
+  //   ['deps', '项目依赖'],
+  //   ['other', '其他修改'],
+  //   // 如果选择 custom ,后面会让你再输入一个自定义的 scope , 也可以不设置此项， 把后面的 allowCustomScopes 设置为 true
+  //   ['custom', '以上都不是？我要自定义']
+  // ].map(([value, description]) => {
+  //   return {
+  //     value,
+  //     name: `${value.padEnd(30)} (${description})`
+  //   }
+  // }),
 
   // 可以设置 scope 的类型跟 type 的类型匹配项
   /*
