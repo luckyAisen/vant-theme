@@ -16,8 +16,9 @@ export function getAttrsGroup(stylesItem: StyleItem): AttrsGroup {
       varName,
       varValue
     }
-    if (varValue.startsWith('#')) {
+    if (varValue.trim().startsWith('#')) {
       obj.component = 'n-color-picker'
+      obj.varValue = varValue.toLocaleUpperCase()
     } else {
       obj.component = 'n-input'
       obj.suffix = 'px'

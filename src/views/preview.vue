@@ -22,8 +22,9 @@ export default defineComponent({
     AttrsConsole
   },
   setup() {
-    const routerName = useRouteInfo().name
     const store = useStore()
+    store.dispatch('getCurrentThemeConfig')
+    const routerName = useRouteInfo().name
     store.dispatch('transform', routerName)
 
     onBeforeRouteUpdate((to: RouteLocationNormalized) => {
@@ -44,6 +45,7 @@ export default defineComponent({
   .app-component-container {
     flex: 1;
     padding: 24px;
+    overflow-y: auto;
   }
 
   .app-attrs-container {

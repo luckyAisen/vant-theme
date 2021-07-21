@@ -1,0 +1,1 @@
+export const APP_THEME_CONFIG = 'APP_THEME_CONFIG'
