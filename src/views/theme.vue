@@ -3,7 +3,7 @@
     <div class="page-theme-container">
       <p class="theme-title">所有主题</p>
       <ul class="theme-list">
-        <li class="card-item" v-for="(item, index) in themeList" :key="item.id">
+        <li class="card-item" v-for="item in themeList" :key="item.id">
           <div class="card-line">
             <div
               class="line-2"
@@ -52,12 +52,7 @@
                 <span class="info-more" :key="item.id">...</span>
               </n-dropdown>
             </div>
-            <div class="card-info-description" v-if="index === 0">
-              vant 默认主题
-            </div>
-            <div class="card-info-description" v-else>
-              最近修改 {{ item.update }}
-            </div>
+            <div class="card-info-description">最近修改 {{ item.update }}</div>
           </div>
         </li>
         <li class="card-add" @click="useModalOpen('add')">
@@ -110,10 +105,10 @@ export default defineComponent({
       '--van-orange-light': '#fffbe8',
       '--van-green': '#07c160'
     }
-    const defaultItem = {
-      name: 'Vant',
-      newTheme: defaultColor
-    }
+    // const defaultItem = {
+    //   name: 'Vant',
+    //   newTheme: defaultColor
+    // }
     const themeList = computed(() => {
       const list = [...store.state.themeUserConfig]
       list.map((item: Theme) => {
@@ -124,7 +119,7 @@ export default defineComponent({
         item.update = dayjs(item.update).format('YYYY-MM-DD HH:mm')
         return item
       })
-      list.unshift(defaultItem)
+      // list.unshift(defaultItem)
       return list
     })
     const showModal = ref(false)
@@ -144,6 +139,10 @@ export default defineComponent({
       {
         label: '删除主题',
         key: 'delete'
+      },
+      {
+        label: '下载主题文件',
+        key: 'dowalond'
       }
     ]
     let optionType = ''
