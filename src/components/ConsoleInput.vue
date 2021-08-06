@@ -2,7 +2,7 @@
   <n-ellipsis class="console-component-title">
     {{ varName }}
   </n-ellipsis>
-  <n-input type="input" v-model:value="model" @update:value="complete" />
+  <n-input type="input" v-model:value="model" @change="complete" />
 </template>
 
 <script lang="ts">
