@@ -35,9 +35,6 @@
     "src/**/*.vue",
   ],
   "exclude": [
-    "src/views/component/vant/**/*.ts",
-    "src/views/component/vant/**/*.tsx",
-    "src/views/component/vant/**/*.vue",
     "node_modules"
   ]
 }
