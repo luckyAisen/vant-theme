@@ -1,16 +1,23 @@
 {
   "name": "vant-theme",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "theme preview built on Vant UI",
+  "license": "MIT",
   "author": {
     "name": "aisen60",
-    "email": "caixusheng60@gmail.com",
-    "url": "http://caixusheng.com"
+    "email": "caixusheng60@gmail.com"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Aisen60/vant-theme.git"
   },
+  "keywords": [
+    "vue",
+    "vue3",
+    "vant",
+    "theme",
+    "vant-theme"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -67,5 +74,8 @@
     "src/**/*.{js,jsx,vue,ts,tsx}": [
       "vue-cli-service lint"
     ]
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
