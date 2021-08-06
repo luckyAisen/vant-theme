@@ -1,15 +1,15 @@
 <template>
   <div class="vant-block">
     <h1>颜色</h1>
-    <van-row gutter="24">
+    <van-row gutter="24" class="block-color">
       <van-col
-        v-for="col in color"
-        :key="col.value"
-        class="color-wrapper"
+        v-for="item in color"
+        :key="item.value"
+        class="block-color-item"
         span="4"
       >
-        <div :style="{ backgroundColor: col.value, ...col.style }">
-          <p>{{ col.describe }}</p>
+        <div :style="{ backgroundColor: item.value, ...item.style }">
+          <p>{{ item.describe }}</p>
         </div>
       </van-col>
     </van-row>
@@ -18,10 +18,63 @@
   <div class="vant-block">
     <h1>内边距</h1>
     <div class="block-padding" v-for="item in padding" :key="item">
-      <p :style="{ paddingLeft: 'var(' + item + ')' }">
-        {{ item }}
+      <p :style="{ paddingLeft: item.value }">
+        {{ item.describe }}
       </p>
     </div>
+  </div>
+
+  <div class="vant-block">
+    <h1>字体</h1>
+    <div class="block-font" v-for="(item, index) in font" :key="item">
+      <p
+        :style="{
+          [index === font.length - 1 ? 'fontWeight' : 'fontSize']: item.value
+        }"
+      >
+        {{ item.describe }}
+      </p>
+    </div>
+  </div>
+
+  <div class="vant-block">
+    <h1>行高</h1>
+    <div class="block-line-height" v-for="item in lineHeight" :key="item">
+      <p
+        :style="{
+          lineHeight: item.value
+        }"
+      >
+        {{ item.describe }}
+      </p>
+    </div>
+  </div>
+
+  <div class="vant-block">
+    <h1>边框</h1>
+    <div class="block-border-width">
+      <div class="border-width-item"></div>
+    </div>
+  </div>
+
+  <div class="vant-block">
+    <h1>圆角</h1>
+    <van-row gutter="24" class="block-border-radius">
+      <van-col
+        v-for="item in borderRadiusList"
+        :key="item.value"
+        class="block-border-radius-item"
+        span="6"
+      >
+        <div
+          :style="{
+            borderRadius: item.value
+          }"
+        >
+          <p>{{ item.describe }}</p>
+        </div>
+      </van-col>
+    </van-row>
   </div>
 </template>
 
@@ -29,7 +82,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'asdasdbase',
+  name: 'BaseStyleVar',
   setup() {
     return {
       color: [
@@ -106,7 +159,7 @@ export default defineComponent({
           value: 'var(--van-gradient-orange)',
           describe: '渐变橙色',
           style: {
-            background: 'var(--van-gradient-red)'
+            background: 'var(--van-gradient-orange)'
           }
         },
 
@@ -140,12 +193,88 @@ export default defineComponent({
         }
       ],
       padding: [
-        '--van-padding-base',
-        '--van-padding-xs',
-        '--van-padding-sm',
-        '--van-padding-md',
-        '--van-padding-lg',
-        '--van-padding-xl'
+        {
+          value: 'var(--van-padding-base)',
+          describe: '基础'
+        },
+        {
+          value: 'var(--van-padding-xs)',
+          describe: '超小'
+        },
+        {
+          value: 'var(--van-padding-sm)',
+          describe: '小'
+        },
+        {
+          value: 'var(--van-padding-md)',
+          describe: '中等'
+        },
+        {
+          value: 'var(--van-padding-lg)',
+          describe: '大'
+        }
+      ],
+      font: [
+        {
+          value: 'var(--van-font-size-xs)',
+          describe: '超小'
+        },
+        {
+          value: 'var(--van-font-size-sm)',
+          describe: '小'
+        },
+        {
+          value: 'var(--van-font-size-md)',
+          describe: '中等'
+        },
+        {
+          value: 'var(--van-font-size-lg)',
+          describe: '大'
+        },
+        {
+          value: 'var(--van-font-size-xs)',
+          describe: '超小'
+        },
+        {
+          value: 'var(--van-font-weight-bold)',
+          describe: '粗细程度'
+        }
+      ],
+      lineHeight: [
+        {
+          value: 'var(--van-line-height-xs)',
+          describe: '超小'
+        },
+        {
+          value: 'var(--van-line-height-sm)',
+          describe: '小'
+        },
+        {
+          value: 'var(--van-line-height-md)',
+          describe: '中等'
+        },
+        {
+          value: 'var(--van-line-height-lg)',
+          describe: '大'
+        }
+      ],
+      borderRadiusList: [
+        {
+          value: 'var(--van-border-radius-sm)',
+          describe: '小'
+        },
+        {
+          value: 'var(--van-border-radius-md)',
+          describe: '中等'
+        },
+        {
+          value: 'var(--van-border-radius-lg)',
+          describe: '大'
+        },
+        {
+          value: 'var(--van-border-radius-max)',
+          describe: '最大'
+        }
       ]
     }
   }
@@ -153,23 +282,59 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.color-wrapper {
-  height: 114px;
-  color: #000000;
-  margin-bottom: 20px;
+.vant-block {
+  .block-color {
+    .block-color-item {
+      margin-bottom: 20px;
 
-  div {
-    border-radius: 8px;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
+      div {
+        color: #000000;
+        border-radius: 8px;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 114px;
+        padding: 20px;
+      }
+    }
   }
 
   .block-padding {
     p {
       padding: 0;
+    }
+  }
+
+  .block-line-height {
+  }
+
+  .block-border-width {
+    .border-width-item {
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      border-width: var(--van-border-width-base);
+      border-color: var(--van-red);
+      border-style: solid;
+    }
+  }
+
+  .block-border-radius {
+    .block-border-radius-item {
+      margin-bottom: 20px;
+
+      div {
+        color: #000000;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 114px;
+        padding: 20px;
+        background-color: var(--van-red);
+      }
     }
   }
 }
