@@ -75,6 +75,14 @@ export default createStore({
       const index = configList.findIndex((item: Theme) => item.id === payload)
       if (index !== -1) {
         configList.splice(index, 1)
+        setVarStyleByConfig(state.oldThemePreviewConfig)
+        state.themePreviewConfig = {}
+        state.oldThemePreviewConfig = {}
+        state.themePreviewId = null
+        storage.setItem(APP_THEME_USER_CONFIG, state.themeUserConfig)
+        storage.setItem(APP_THEME_PREVIEW_CONFIG, state.themePreviewConfig)
+        storage.setItem(APP_OLD_PREVIEW_CONFIG, state.oldThemePreviewConfig)
+        storage.setItem(APP_THEME_PREVIEW_ID, state.themePreviewId)
       }
     },
     // SET_THEME_USER_CONFIG(state, payload) {
@@ -180,7 +188,8 @@ export default createStore({
      * @param context
      * @param payload
      */
-    deleteTheme({ commit }, payload) {
+    deleteTheme({ state, commit }, payload) {
+      setVarStyleByConfig(state.oldThemePreviewConfig)
       commit('DELETE_SINGLE_USER_THEME', payload)
     },
     /**
