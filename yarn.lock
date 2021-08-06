@@ -1474,6 +1474,11 @@
     "@typescript-eslint/types" "4.28.3"
     eslint-visitor-keys "^2.0.0"
 
+"@vant/area-data@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.nlark.com/@vant/area-data/download/@vant/area-data-1.1.1.tgz#b9acf8a804c0d60f721b6900680299422b006b1a"
+  integrity sha1-uaz4qATA1g9yG2kAaAKZQisAaxo=
+
 "@vant/icons@^1.6.0":
   version "1.6.0"
   resolved "https://registry.nlark.com/@vant/icons/download/@vant/icons-1.6.0.tgz?cache=0&sync_timestamp=1621321922501&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vant%2Ficons%2Fdownload%2F%40vant%2Ficons-1.6.0.tgz#3db7eb7f963f51a2a08676720d5af9c4c3512feb"
@@ -1496,6 +1501,11 @@
   resolved "https://registry.nlark.com/@vant/use/download/@vant/use-1.2.0.tgz?cache=0&sync_timestamp=1626093726995&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vant%2Fuse%2Fdownload%2F%40vant%2Fuse-1.2.0.tgz#c762c85aa5beda8e847ed553793acad7bfde2d07"
   integrity sha1-x2LIWqW+2o6EftVTeTrK17/eLQc=
 
+"@vicons/ionicons5@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.nlark.com/@vicons/ionicons5/download/@vicons/ionicons5-0.10.0.tgz#94641a71850d9e251f1059b67da4c19326bce962"
+  integrity sha1-lGQacYUNniUfEFm2faTBkya86WI=
+
 "@vue/babel-helper-vue-jsx-merge-props@^1.2.1":
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/@vue/babel-helper-vue-jsx-merge-props/download/@vue/babel-helper-vue-jsx-merge-props-1.2.1.tgz?cache=0&sync_timestamp=1602851122331&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Fbabel-helper-vue-jsx-merge-props%2Fdownload%2F%40vue%2Fbabel-helper-vue-jsx-merge-props-1.2.1.tgz#31624a7a505fb14da1d58023725a4c5f270e6a81"
@@ -1506,7 +1516,7 @@
   resolved "https://registry.nlark.com/@vue/babel-helper-vue-transform-on/download/@vue/babel-helper-vue-transform-on-1.0.2.tgz#9b9c691cd06fc855221a2475c3cc831d774bc7dc"
   integrity sha1-m5xpHNBvyFUiGiR1w8yDHXdLx9w=
 
-"@vue/babel-plugin-jsx@^1.0.3":
+"@vue/babel-plugin-jsx@^1.0.3", "@vue/babel-plugin-jsx@^1.0.6":
   version "1.0.6"
   resolved "https://registry.nlark.com/@vue/babel-plugin-jsx/download/@vue/babel-plugin-jsx-1.0.6.tgz?cache=0&sync_timestamp=1619929844730&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vue%2Fbabel-plugin-jsx%2Fdownload%2F%40vue%2Fbabel-plugin-jsx-1.0.6.tgz#184bf3541ab6efdbe5079ab8b20c19e2af100bfb"
   integrity sha1-GEvzVBq279vlB5q4sgwZ4q8QC/s=
@@ -3740,6 +3750,11 @@ date-fns@^2.19.0:
   version "2.22.1"
   resolved "https://registry.nlark.com/date-fns/download/date-fns-2.22.1.tgz#1e5af959831ebb1d82992bf67b765052d8f0efc4"
   integrity sha1-Hlr5WYMeux2CmSv2e3ZQUtjw78Q=
+
+dayjs@^1.10.6:
+  version "1.10.6"
+  resolved "https://registry.nlark.com/dayjs/download/dayjs-1.10.6.tgz?cache=0&sync_timestamp=1625557417200&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdayjs%2Fdownload%2Fdayjs-1.10.6.tgz#288b2aa82f2d8418a6c9d4df5898c0737ad02a63"
+  integrity sha1-KIsqqC8thBimydTfWJjAc3rQKmM=
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
@@ -7039,10 +7054,10 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-naive-ui@^2.15.4:
-  version "2.15.5"
-  resolved "https://registry.nlark.com/naive-ui/download/naive-ui-2.15.5.tgz#50ffc1834fd64765621a31f0b09e64d72770cd6c"
-  integrity sha1-UP/Bg0/WR2ViGjHwsJ5k1ydwzWw=
+naive-ui@^2.15.11:
+  version "2.15.11"
+  resolved "https://registry.nlark.com/naive-ui/download/naive-ui-2.15.11.tgz#1a7fa5ca6d42ed2c4d50cde827b994f42edc5743"
+  integrity sha1-Gn+lym1C7SxNUM3oJ7mU9C7cV0M=
   dependencies:
     "@css-render/plugin-bem" "^0.15.4"
     "@css-render/vue3-ssr" "^0.15.4"

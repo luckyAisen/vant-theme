@@ -1,15 +1,18 @@
-export type MenuItem = {
+import { Ref } from 'vue'
+import { RouteRecordName } from 'vue-router'
+
+export type Menu = {
   id: string
   name: string
-  children?: MenuItem[]
+  children?: Menu[]
 }
 
-export type StyleItem = {
+export type Style = {
   id: string
   styles: string[]
 }
 
-export type AttrsItem = {
+export type Attr = {
   varName: string
   varValue: string
   component?: string
@@ -17,14 +20,40 @@ export type AttrsItem = {
   unit?: string
 }
 
-export type MenuGroup = MenuItem[]
+export type MenuGroup = Menu[]
 
-export type StyleGroup = StyleItem[]
+export type StyleGroup = Style[]
 
-export type AttrsGroup = AttrsItem[]
+export type AttrsGroup = Attr[]
 
-export type ChangeAttr = {
-  index: number
-  key: string
-  value: string
+export interface Property {
+  [propName: string]: any
+  [propName: number]: any
 }
+
+export interface Props extends Property {
+  index: Ref<number>
+  varName: Ref<string>
+  varValue: Ref<string>
+  // [propName: string]: any
+  // [propName: number]: any
+}
+
+export interface ConsoleComponent {
+  model: Ref<string>
+  handler: (value: string, id: RouteRecordName | null | undefined) => void
+}
+
+export interface Theme {
+  id?: number
+  name?: string
+  update?: number | string
+  newTheme?: {
+    [propName: string]: number | string | boolean
+  }
+  oldTheme?: {
+    [propName: string]: number | string | boolean
+  }
+}
+
+export type LocalStorage = Property

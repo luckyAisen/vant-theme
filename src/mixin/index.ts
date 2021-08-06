@@ -1,5 +1,11 @@
-import { PropType } from 'vue'
-import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router'
+import { PropType, ref } from 'vue'
+import { useStore } from 'vuex'
+import {
+  useRoute,
+  RouteRecordName,
+  RouteLocationNormalizedLoaded
+} from 'vue-router'
+import { ConsoleComponent } from '@/interface'
 
 export const useProps = (): any => {
   return {
@@ -17,7 +23,29 @@ export const useProps = (): any => {
   }
 }
 
-export const useRouteInfo = (): RouteLocationNormalizedLoaded => {
+export const currentRoute = (): RouteLocationNormalizedLoaded => {
   const route = useRoute()
   return route
+}
+
+export const useConsoleComponent = (componentProps: any): ConsoleComponent => {
+  const store = useStore()
+  const model = ref(componentProps.varValue)
+  const handler = async (
+    value: string,
+    id: RouteRecordName | null | undefined
+  ) => {
+    const { index, varName } = componentProps
+    const payload = {
+      index,
+      varName,
+      varValue: value
+    }
+    await store.dispatch('setComponentConsoleStyle', payload)
+    await store.dispatch('getComponentConsoleStyle', id)
+  }
+  return {
+    model,
+    handler
+  }
 }

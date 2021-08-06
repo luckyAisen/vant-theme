@@ -1,24 +1,39 @@
-import { StyleItem, AttrsItem, AttrsGroup } from '@/interface'
+import dayjs from 'dayjs'
 
-export function getVarStyle(
-  name: string,
-  el = document.documentElement
-): string {
+import { Style, Attr, AttrsGroup } from '@/interface'
+
+export const doc = document.documentElement
+
+export function getVarStyle(name: string, el = doc): string {
   return getComputedStyle(el).getPropertyValue(name)
 }
 
-export function getAttrsGroup(stylesItem: StyleItem): AttrsGroup {
+export function setVarStyle(key: string, value: string, el = doc): void {
+  el.style.setProperty(key, value)
+}
+
+export function setVarStyleByConfig(
+  config: { [propName: string]: string },
+  el = doc
+): void {
+  for (const varName in config) {
+    const varValue = config[varName] as string
+    setVarStyle(varName, varValue, el)
+  }
+}
+
+export function getComponentStyle(stylesItem: Style): AttrsGroup {
   const attrsList: AttrsGroup = []
   stylesItem.styles.map(style => {
     const varName = style
     const varValue = getVarStyle(style)
-    const obj: AttrsItem = {
+    const obj: Attr = {
       varName,
       varValue
     }
-    if (varValue.trim().startsWith('#')) {
+    if (varValue.trim().startsWith('#') || varValue.trim().startsWith('rgba')) {
       obj.component = 'n-color-picker'
-      obj.varValue = varValue.toLocaleUpperCase()
+      // obj.varValue = varValue.toLocaleUpperCase()
     } else {
       obj.component = 'n-input'
       obj.suffix = 'px'
@@ -26,4 +41,15 @@ export function getAttrsGroup(stylesItem: StyleItem): AttrsGroup {
     attrsList.push(obj)
   })
   return attrsList
+}
+
+export function getTime(): number {
+  return dayjs().valueOf()
+}
+
+export function humpToScribe(target: string): string {
+  return target.replace(/([A-Z])/g, function (match, p, offset) {
+    const lower = match.toLowerCase()
+    return offset !== 0 ? '-' + lower : lower
+  })
 }

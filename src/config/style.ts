@@ -914,7 +914,7 @@ export const styleList: StyleGroup = [
       '--van-tabbar-item-active-background-color',
       '--van-tabbar-item-line-height',
       '--van-tabbar-item-icon-size',
-      '--van-tabbar-item-margin-bottom'
+      '--van-tabbar-item-icon-margin-bottom'
     ]
   },
   {
@@ -936,6 +936,7 @@ export const styleList: StyleGroup = [
       '--van-address-edit-padding',
       '--van-address-edit-buttons-padding',
       '--van-address-edit-button-margin-bottom',
+      '--van-address-edit-button-font-size',
       '--van-address-edit-detail-finish-color',
       '--van-address-edit-detail-finish-font-size'
     ]
@@ -1062,5 +1063,4 @@ export const styleList: StyleGroup = [
     ]
   }
 ]
-
 // export default styleList

@@ -1,5 +1,7 @@
 node_modules
 dist
 commitlint.config
-generator.js
+generator/
 vue.config.js
+vue.config.js
+src/views/component/vant/*

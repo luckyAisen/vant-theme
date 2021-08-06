@@ -4,12 +4,18 @@ import componentRoutes from './component'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'HomeRoute',
     component: () => import(/* webpackChunkName: "home" */ '../views/home.vue')
   },
   {
+    path: '/theme',
+    name: 'ThemeRoute',
+    component: () =>
+      import(/* webpackChunkName: "theme" */ '../views/theme.vue')
+  },
+  {
     path: '/preview',
-    name: 'Preview',
+    name: 'PreviewRoute',
     redirect: '/preview/base',
     component: () =>
       import(/* webpackChunkName: "preview" */ '../views/preview.vue'),

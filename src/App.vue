@@ -1,49 +1,35 @@
 <template>
-  <NavBar />
-  <div class="app-main-container">
-    <router-view />
-  </div>
+  <n-loading-bar-provider>
+    <n-message-provider>
+      <n-notification-provider>
+        <n-dialog-provider>
+          <NavBar />
+          <div class="app-main-container">
+            <router-view />
+          </div>
+        </n-dialog-provider>
+      </n-notification-provider>
+    </n-message-provider>
+  </n-loading-bar-provider>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import {
+  NLoadingBarProvider,
+  NMessageProvider,
+  NNotificationProvider,
+  NDialogProvider
+} from 'naive-ui'
 import NavBar from '@/components/NavBar.vue'
-
 export default defineComponent({
   name: 'App',
   components: {
+    NLoadingBarProvider,
+    NMessageProvider,
+    NNotificationProvider,
+    NDialogProvider,
     NavBar
   }
 })
 </script>
-
-<style lang="less">
-:root {
-  --app-text-color: #1f2225;
-  --app-primary-color: #8e3c00;
-  --app-main-container: 64px;
-}
-html {
-  height: 100%;
-}
-body {
-  height: 100%;
-  color: var(--app-text-color);
-  font-size: 16px;
-  background-color: #ffffff;
-}
-#app {
-  height: 100%;
-  overflow: hidden;
-}
-a {
-  color: var(--app-text-color);
-  &:hover {
-    color: var(--app-primary-color);
-  }
-}
-.app-main-container {
-  width: 100%;
-  height: calc(100% - var(--app-main-container));
-}
-</style>

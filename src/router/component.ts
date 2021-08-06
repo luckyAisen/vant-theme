@@ -14,7 +14,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Button',
     component: () =>
       import(
-        /* webpackChunkName: "component-button" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-button" */ '../views/component/vant/button/demo/index.vue'
       )
   },
   {
@@ -22,7 +22,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Cell',
     component: () =>
       import(
-        /* webpackChunkName: "component-cell" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-cell" */ '../views/component/vant/cell/demo/index.vue'
       )
   },
   {
@@ -30,7 +30,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Image',
     component: () =>
       import(
-        /* webpackChunkName: "component-image" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-image" */ '../views/component/vant/image/demo/index.vue'
       )
   },
   {
@@ -38,7 +38,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Popup',
     component: () =>
       import(
-        /* webpackChunkName: "component-popup" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-popup" */ '../views/component/vant/popup/demo/index.vue'
       )
   },
   {
@@ -46,7 +46,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Toast',
     component: () =>
       import(
-        /* webpackChunkName: "component-toast" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-toast" */ '../views/component/vant/toast/demo/index.vue'
       )
   },
   {
@@ -54,7 +54,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Calendar',
     component: () =>
       import(
-        /* webpackChunkName: "component-calendar" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-calendar" */ '../views/component/vant/calendar/demo/index.vue'
       )
   },
   {
@@ -62,7 +62,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Cascader',
     component: () =>
       import(
-        /* webpackChunkName: "component-cascader" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-cascader" */ '../views/component/vant/cascader/demo/index.vue'
       )
   },
   {
@@ -70,7 +70,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Checkbox',
     component: () =>
       import(
-        /* webpackChunkName: "component-checkbox" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-checkbox" */ '../views/component/vant/checkbox/demo/index.vue'
       )
   },
   {
@@ -78,7 +78,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Field',
     component: () =>
       import(
-        /* webpackChunkName: "component-field" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-field" */ '../views/component/vant/field/demo/index.vue'
       )
   },
   {
@@ -86,7 +86,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'NumberKeyboard',
     component: () =>
       import(
-        /* webpackChunkName: "component-numberkeyboard" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-numberkeyboard" */ '../views/component/vant/number-keyboard/demo/index.vue'
       )
   },
   {
@@ -94,7 +94,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'PasswordInput',
     component: () =>
       import(
-        /* webpackChunkName: "component-passwordinput" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-passwordinput" */ '../views/component/vant/password-input/demo/index.vue'
       )
   },
   {
@@ -102,7 +102,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Picker',
     component: () =>
       import(
-        /* webpackChunkName: "component-picker" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-picker" */ '../views/component/vant/picker/demo/index.vue'
       )
   },
   {
@@ -110,7 +110,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Radio',
     component: () =>
       import(
-        /* webpackChunkName: "component-radio" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-radio" */ '../views/component/vant/radio/demo/index.vue'
       )
   },
   {
@@ -118,7 +118,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Rate',
     component: () =>
       import(
-        /* webpackChunkName: "component-rate" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-rate" */ '../views/component/vant/rate/demo/index.vue'
       )
   },
   {
@@ -126,7 +126,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Search',
     component: () =>
       import(
-        /* webpackChunkName: "component-search" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-search" */ '../views/component/vant/search/demo/index.vue'
       )
   },
   {
@@ -134,7 +134,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Slider',
     component: () =>
       import(
-        /* webpackChunkName: "component-slider" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-slider" */ '../views/component/vant/slider/demo/index.vue'
       )
   },
   {
@@ -142,7 +142,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Stepper',
     component: () =>
       import(
-        /* webpackChunkName: "component-stepper" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-stepper" */ '../views/component/vant/stepper/demo/index.vue'
       )
   },
   {
@@ -150,7 +150,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Switch',
     component: () =>
       import(
-        /* webpackChunkName: "component-switch" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-switch" */ '../views/component/vant/switch/demo/index.vue'
       )
   },
   {
@@ -158,7 +158,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Uploader',
     component: () =>
       import(
-        /* webpackChunkName: "component-uploader" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-uploader" */ '../views/component/vant/uploader/demo/index.vue'
       )
   },
   {
@@ -166,7 +166,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'ActionSheet',
     component: () =>
       import(
-        /* webpackChunkName: "component-actionsheet" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-actionsheet" */ '../views/component/vant/action-sheet/demo/index.vue'
       )
   },
   {
@@ -174,7 +174,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Dialog',
     component: () =>
       import(
-        /* webpackChunkName: "component-dialog" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-dialog" */ '../views/component/vant/dialog/demo/index.vue'
       )
   },
   {
@@ -182,7 +182,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'DropdownMenu',
     component: () =>
       import(
-        /* webpackChunkName: "component-dropdownmenu" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-dropdownmenu" */ '../views/component/vant/dropdown-menu/demo/index.vue'
       )
   },
   {
@@ -190,7 +190,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Loading',
     component: () =>
       import(
-        /* webpackChunkName: "component-loading" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-loading" */ '../views/component/vant/loading/demo/index.vue'
       )
   },
   {
@@ -198,7 +198,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Notify',
     component: () =>
       import(
-        /* webpackChunkName: "component-notify" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-notify" */ '../views/component/vant/notify/demo/index.vue'
       )
   },
   {
@@ -206,7 +206,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Overlay',
     component: () =>
       import(
-        /* webpackChunkName: "component-overlay" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-overlay" */ '../views/component/vant/overlay/demo/index.vue'
       )
   },
   {
@@ -214,7 +214,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'PullRefresh',
     component: () =>
       import(
-        /* webpackChunkName: "component-pullrefresh" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-pullrefresh" */ '../views/component/vant/pull-refresh/demo/index.vue'
       )
   },
   {
@@ -222,7 +222,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'ShareSheet',
     component: () =>
       import(
-        /* webpackChunkName: "component-sharesheet" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-sharesheet" */ '../views/component/vant/share-sheet/demo/index.vue'
       )
   },
   {
@@ -230,7 +230,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'SwipeCell',
     component: () =>
       import(
-        /* webpackChunkName: "component-swipecell" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-swipecell" */ '../views/component/vant/swipe-cell/demo/index.vue'
       )
   },
   {
@@ -238,7 +238,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Badge',
     component: () =>
       import(
-        /* webpackChunkName: "component-badge" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-badge" */ '../views/component/vant/badge/demo/index.vue'
       )
   },
   {
@@ -246,7 +246,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Circle',
     component: () =>
       import(
-        /* webpackChunkName: "component-circle" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-circle" */ '../views/component/vant/circle/demo/index.vue'
       )
   },
   {
@@ -254,7 +254,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Collapse',
     component: () =>
       import(
-        /* webpackChunkName: "component-collapse" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-collapse" */ '../views/component/vant/collapse/demo/index.vue'
       )
   },
   {
@@ -262,7 +262,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'CountDown',
     component: () =>
       import(
-        /* webpackChunkName: "component-countdown" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-countdown" */ '../views/component/vant/count-down/demo/index.vue'
       )
   },
   {
@@ -270,7 +270,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Divider',
     component: () =>
       import(
-        /* webpackChunkName: "component-divider" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-divider" */ '../views/component/vant/divider/demo/index.vue'
       )
   },
   {
@@ -278,7 +278,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Empty',
     component: () =>
       import(
-        /* webpackChunkName: "component-empty" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-empty" */ '../views/component/vant/empty/demo/index.vue'
       )
   },
   {
@@ -286,7 +286,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'ImagePreview',
     component: () =>
       import(
-        /* webpackChunkName: "component-imagepreview" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-imagepreview" */ '../views/component/vant/image-preview/demo/index.vue'
       )
   },
   {
@@ -294,7 +294,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'List',
     component: () =>
       import(
-        /* webpackChunkName: "component-list" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-list" */ '../views/component/vant/list/demo/index.vue'
       )
   },
   {
@@ -302,7 +302,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'NoticeBar',
     component: () =>
       import(
-        /* webpackChunkName: "component-noticebar" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-noticebar" */ '../views/component/vant/notice-bar/demo/index.vue'
       )
   },
   {
@@ -310,7 +310,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Popover',
     component: () =>
       import(
-        /* webpackChunkName: "component-popover" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-popover" */ '../views/component/vant/popover/demo/index.vue'
       )
   },
   {
@@ -318,7 +318,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Progress',
     component: () =>
       import(
-        /* webpackChunkName: "component-progress" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-progress" */ '../views/component/vant/progress/demo/index.vue'
       )
   },
   {
@@ -326,7 +326,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Skeleton',
     component: () =>
       import(
-        /* webpackChunkName: "component-skeleton" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-skeleton" */ '../views/component/vant/skeleton/demo/index.vue'
       )
   },
   {
@@ -334,7 +334,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Steps',
     component: () =>
       import(
-        /* webpackChunkName: "component-steps" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-steps" */ '../views/component/vant/steps/demo/index.vue'
       )
   },
   {
@@ -342,7 +342,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Sticky',
     component: () =>
       import(
-        /* webpackChunkName: "component-sticky" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-sticky" */ '../views/component/vant/sticky/demo/index.vue'
       )
   },
   {
@@ -350,7 +350,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Swipe',
     component: () =>
       import(
-        /* webpackChunkName: "component-swipe" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-swipe" */ '../views/component/vant/swipe/demo/index.vue'
       )
   },
   {
@@ -358,7 +358,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Tag',
     component: () =>
       import(
-        /* webpackChunkName: "component-tag" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-tag" */ '../views/component/vant/tag/demo/index.vue'
       )
   },
   {
@@ -366,7 +366,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'ActionBar',
     component: () =>
       import(
-        /* webpackChunkName: "component-actionbar" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-actionbar" */ '../views/component/vant/action-bar/demo/index.vue'
       )
   },
   {
@@ -374,7 +374,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Grid',
     component: () =>
       import(
-        /* webpackChunkName: "component-grid" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-grid" */ '../views/component/vant/grid/demo/index.vue'
       )
   },
   {
@@ -382,7 +382,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'IndexBar',
     component: () =>
       import(
-        /* webpackChunkName: "component-indexbar" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-indexbar" */ '../views/component/vant/index-bar/demo/index.vue'
       )
   },
   {
@@ -390,7 +390,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'NavBar',
     component: () =>
       import(
-        /* webpackChunkName: "component-navbar" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-navbar" */ '../views/component/vant/nav-bar/demo/index.vue'
       )
   },
   {
@@ -398,7 +398,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Pagination',
     component: () =>
       import(
-        /* webpackChunkName: "component-pagination" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-pagination" */ '../views/component/vant/pagination/demo/index.vue'
       )
   },
   {
@@ -406,7 +406,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Sidebar',
     component: () =>
       import(
-        /* webpackChunkName: "component-sidebar" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-sidebar" */ '../views/component/vant/sidebar/demo/index.vue'
       )
   },
   {
@@ -414,7 +414,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Tab',
     component: () =>
       import(
-        /* webpackChunkName: "component-tab" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-tab" */ '../views/component/vant/tab/demo/index.vue'
       )
   },
   {
@@ -422,7 +422,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Tabbar',
     component: () =>
       import(
-        /* webpackChunkName: "component-tabbar" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-tabbar" */ '../views/component/vant/tabbar/demo/index.vue'
       )
   },
   {
@@ -430,7 +430,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'TreeSelect',
     component: () =>
       import(
-        /* webpackChunkName: "component-treeselect" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-treeselect" */ '../views/component/vant/tree-select/demo/index.vue'
       )
   },
   {
@@ -438,7 +438,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'AddressEdit',
     component: () =>
       import(
-        /* webpackChunkName: "component-addressedit" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-addressedit" */ '../views/component/vant/address-edit/demo/index.vue'
       )
   },
   {
@@ -446,7 +446,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'AddressList',
     component: () =>
       import(
-        /* webpackChunkName: "component-addresslist" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-addresslist" */ '../views/component/vant/address-list/demo/index.vue'
       )
   },
   {
@@ -454,7 +454,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Card',
     component: () =>
       import(
-        /* webpackChunkName: "component-card" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-card" */ '../views/component/vant/card/demo/index.vue'
       )
   },
   {
@@ -462,7 +462,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'ContactCard',
     component: () =>
       import(
-        /* webpackChunkName: "component-contactcard" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-contactcard" */ '../views/component/vant/contact-card/demo/index.vue'
       )
   },
   {
@@ -470,7 +470,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'ContactEdit',
     component: () =>
       import(
-        /* webpackChunkName: "component-contactedit" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-contactedit" */ '../views/component/vant/contact-edit/demo/index.vue'
       )
   },
   {
@@ -478,7 +478,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'ContactList',
     component: () =>
       import(
-        /* webpackChunkName: "component-contactlist" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-contactlist" */ '../views/component/vant/contact-list/demo/index.vue'
       )
   },
   {
@@ -486,7 +486,7 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'Coupon',
     component: () =>
       import(
-        /* webpackChunkName: "component-coupon" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-coupon" */ '../views/component/vant/coupon-list/demo/index.vue'
       )
   },
   {
@@ -494,9 +494,8 @@ const componentRoutes: Array<RouteRecordRaw> = [
     name: 'SubmitBar',
     component: () =>
       import(
-        /* webpackChunkName: "component-submitbar" */ '../views/component/block.vue'
+        /* webpackChunkName: "component-submitbar" */ '../views/component/vant/submit-bar/demo/index.vue'
       )
   }
 ]
-
 export default componentRoutes

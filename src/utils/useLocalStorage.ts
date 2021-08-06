@@ -1,33 +1,38 @@
-function parse(str: string): string {
-  let value
+import { Property, LocalStorage } from '@/interface'
+
+function parse(value: string): string {
+  let newValue
   try {
-    value = JSON.parse(str)
+    newValue = JSON.parse(value)
   } catch {
-    value = null
+    newValue = newValue || null
   }
-  return value
+  return newValue
 }
 
-function stringify(obj: string): string | null {
-  let value
+function stringify(
+  value: string | number | Property
+): string | null | undefined {
+  let newValue
   try {
-    value = JSON.stringify(obj)
+    newValue = JSON.stringify(value)
   } catch {
-    value = null
+    newValue = newValue || null
   }
-  return value
+  return newValue
 }
 
-export default function useLocalStorage(): any {
-  function setItem(key: string, value: any) {
-    value = stringify(value)
-    window.localStorage.setItem(key, value)
+export default function useLocalStorage(): LocalStorage {
+  function setItem(key: string, value: string | number | Property) {
+    const newValue = stringify(value)
+    window.localStorage.setItem(key, newValue as string)
   }
 
-  function getItem(key: string): any {
-    let value = window.localStorage.getItem(key)
+  function getItem(key: string): string | number | Property | null {
+    const value = window.localStorage.getItem(key)
     if (value) {
-      value = parse(value)
+      const newValue = parse(value)
+      return newValue
     }
     return value
   }

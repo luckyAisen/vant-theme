@@ -1,54 +1,59 @@
 <template>
-  <div class="app-preview-container">
-    <Menu class="app-menu-container" />
-    <div class="app-component-container">
-      <router-view />
+  <div class="page-preview">
+    <preview-menu />
+    <div class="page-preview-component-container" ref="previewRef">
+      <div :class="componentDemoName">
+        <router-view />
+      </div>
     </div>
-    <AttrsConsole class="app-attrs-container" />
+    <div class="page-preview-console-container" ref="consoleRef">
+      <preview-console />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router'
 import { useStore } from 'vuex'
-import Menu from '@/components/Menu.vue'
-import AttrsConsole from '@/components/Console.vue'
-import { useRouteInfo } from '@/mixin'
+import previewMenu from '@/components/Menu.vue'
+import previewConsole from '@/components/Console.vue'
+import { currentRoute } from '@/mixin'
+import { humpToScribe } from '@/utils'
+
 export default defineComponent({
-  name: 'Preview',
+  name: 'PagePreview',
   components: {
-    Menu,
-    AttrsConsole
+    previewMenu,
+    previewConsole
   },
   setup() {
+    const consoleRef = ref<Element>()
+    const previewRef = ref<Element>()
+    const componentDemoName = ref(
+      `demo-${humpToScribe(currentRoute().name as string)}`
+    )
     const store = useStore()
-    store.dispatch('getCurrentThemeConfig')
-    const routerName = useRouteInfo().name
-    store.dispatch('transform', routerName)
+    store.dispatch('getThemePreviewConfig')
+    store.dispatch('getComponentConsoleStyle', currentRoute().name)
 
     onBeforeRouteUpdate((to: RouteLocationNormalized) => {
-      store.dispatch('transform', to.name)
+      if (consoleRef.value) {
+        consoleRef.value.scrollTop = 0
+      }
+
+      if (previewRef.value) {
+        previewRef.value.scrollTop = 0
+      }
+      store.dispatch('getComponentConsoleStyle', to.name)
+
+      componentDemoName.value = `demo-${humpToScribe(to.name as string)}`
     })
+    return {
+      componentDemoName,
+      previewRef,
+      consoleRef
+    }
   }
 })
 </script>
-
-<style lang="less" scope>
-.app-preview-container {
-  display: flex;
-  height: 100%;
-
-  .app-menu-container {
-  }
-
-  .app-component-container {
-    flex: 1;
-    padding: 24px;
-    overflow-y: auto;
-  }
-
-  .app-attrs-container {
-  }
-}
-</style>

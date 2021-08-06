@@ -9,7 +9,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "baseUrl": ".",
     "types": [
       "webpack-env"
@@ -17,6 +17,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@demo/*": [
+        "src/views/component/vant/*"
       ]
     },
     "lib": [
@@ -30,10 +33,11 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
   ],
   "exclude": [
+    "src/views/component/vant/**/*.ts",
+    "src/views/component/vant/**/*.tsx",
+    "src/views/component/vant/**/*.vue",
     "node_modules"
   ]
 }

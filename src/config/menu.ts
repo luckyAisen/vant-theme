@@ -1,14 +1,24 @@
 import { MenuGroup } from '../interface'
 
-export const menuList: MenuGroup = [
+export const baseMenuList: MenuGroup = [
   {
-    id: '基础组件',
-    name: '基础组件',
+    id: '基础样式变量',
+    name: '基础样式变量',
     children: [
       {
         id: 'Base',
         name: 'Base 基础样式'
-      },
+      }
+    ]
+  }
+]
+
+export const menuList: MenuGroup = [
+  ...baseMenuList,
+  {
+    id: '基础组件',
+    name: '基础组件',
+    children: [
       {
         id: 'Button',
         name: 'Button 按钮'
