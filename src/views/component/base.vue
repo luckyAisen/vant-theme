@@ -29,7 +29,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'base',
+  name: 'asdasdbase',
   setup() {
     return {
       color: [
