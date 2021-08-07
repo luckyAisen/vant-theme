@@ -250,7 +250,7 @@ export default createStore({
         code += `\n ${value}: ${styles[value]};`
       }
       code += '\n}'
-      download(code, 'test.css')
+      download(code, `${getTime()}.css`)
     }
   },
   modules: {}
