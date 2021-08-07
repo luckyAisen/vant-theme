@@ -107,8 +107,11 @@ export default createStore({
      */
     SET_OLD_THEME_PREVIEW_CONFIG(state, payload) {
       const { varName, oldVarValue } = payload
-      state.oldThemePreviewConfig[varName] = oldVarValue
-      storage.setItem(APP_OLD_PREVIEW_CONFIG, state.oldThemePreviewConfig)
+      const oldTheme = state.oldThemePreviewConfig
+      if (varName in oldTheme === false) {
+        oldTheme[varName] = oldVarValue
+        storage.setItem(APP_OLD_PREVIEW_CONFIG, oldTheme)
+      }
     },
     /**
      * 设置当前主题id
