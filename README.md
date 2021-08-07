@@ -6,6 +6,8 @@
 
 **目前只支持 `3.x`版本。**
 
+在线预览：https://aisen60.github.io/vant-theme
+
 ## 如何使用
 
 当修改完样式后，点击**下载主题文件**按钮，会得到一份`css`文件。将这份`css`文件引入到项目中，就可以覆盖 `vant` 官方默认样式了。具体请查看官方文档：[定制主题](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#ding-zhi-zhu-ti) 。目前暂不支持 [ConfigProvider](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#tong-guo-configprovider-fu-gai) 这种方式，后面在下载主题文件时会加入。
