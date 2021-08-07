@@ -7,33 +7,49 @@
           <div class="card-line">
             <div
               class="line-2"
-              :style="{ backgroundColor: item.newTheme['--van-red'] }"
+              :style="{
+                backgroundColor:
+                  item.newTheme['--van-red'] || defaultColor['--van-red']
+              }"
             ></div>
             <div
               class="line-2"
-              :style="{ backgroundColor: item.newTheme['--van-blue'] }"
+              :style="{
+                backgroundColor:
+                  item.newTheme['--van-blue'] || defaultColor['--van-blue']
+              }"
             ></div>
           </div>
           <div class="card-line">
             <div
               class="line-4"
-              :style="{ backgroundColor: item.newTheme['--van-orange'] }"
-            ></div>
-            <div
-              class="line-4"
               :style="{
-                backgroundColor: item.newTheme['--van-orange-dark']
+                backgroundColor:
+                  item.newTheme['--van-orange'] || defaultColor['--van-orange']
               }"
             ></div>
             <div
               class="line-4"
               :style="{
-                backgroundColor: item.newTheme['--van-orange-light']
+                backgroundColor:
+                  item.newTheme['--van-orange-dark'] ||
+                  defaultColor['--van-orange-dark']
               }"
             ></div>
             <div
               class="line-4"
-              :style="{ backgroundColor: item.newTheme['--van-green'] }"
+              :style="{
+                backgroundColor:
+                  item.newTheme['--van-orange-light'] ||
+                  defaultColor['--van-orange-light']
+              }"
+            ></div>
+            <div
+              class="line-4"
+              :style="{
+                backgroundColor:
+                  item.newTheme['--van-green'] || defaultColor['--van-green']
+              }"
             ></div>
           </div>
           <div class="card-info">
@@ -105,21 +121,15 @@ export default defineComponent({
       '--van-orange-light': '#fffbe8',
       '--van-green': '#07c160'
     }
-    // const defaultItem = {
-    //   name: 'Vant',
-    //   newTheme: defaultColor
-    // }
     const themeList = computed(() => {
       const list = [...store.state.themeUserConfig]
       list.map((item: Theme) => {
         item.newTheme = {
-          ...defaultColor,
           ...item.newTheme
         }
         item.update = dayjs(item.update).format('YYYY-MM-DD HH:mm')
         return item
       })
-      // list.unshift(defaultItem)
       return list
     })
     const showModal = ref(false)
@@ -181,6 +191,8 @@ export default defineComponent({
             }
           })
           break
+        case 'dowalond':
+          store.dispatch('downloadTheme', currentTheme)
       }
     }
     const useModalConfirm = ({ nameValue: name }: { nameValue: string }) => {
@@ -210,6 +222,7 @@ export default defineComponent({
       }
     }
     return {
+      defaultColor,
       themeList,
       options,
       showModal,

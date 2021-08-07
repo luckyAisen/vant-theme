@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import { styleList } from '@/config'
 import { AttrsGroup, Attr, Theme } from '@/interface'
 import {
   setVarStyleByConfig,
@@ -8,13 +7,16 @@ import {
   getTime,
   getVarStyle
 } from '@/utils'
-import useLocalStorage from '@/utils/useLocalStorage'
 import {
   APP_THEME_USER_CONFIG,
   APP_THEME_PREVIEW_CONFIG,
   APP_OLD_PREVIEW_CONFIG,
   APP_THEME_PREVIEW_ID
 } from '@/constant'
+import useLocalStorage from '@/utils/useLocalStorage'
+import { styleList } from '@/config'
+import download from '@/utils/download'
+
 const storage = useLocalStorage()
 
 export default createStore({
@@ -135,16 +137,6 @@ export default createStore({
     }
   },
   actions: {
-    // init({ state, dispatch }) {
-    // if (
-    //   state.themeUserConfig.length === 0 &&
-    //   Object.keys(state.themePreviewConfig).length === 0
-    // ) {
-    //   dispatch('addTheme', {
-    //     name: `主题${state.themeUserConfig.length + 1}`
-    //   })
-    // }
-    // },
     /**
      * 生成一个主题
      * @param context
@@ -200,8 +192,6 @@ export default createStore({
     useTheme({ state, commit }, payload) {
       setVarStyleByConfig(state.oldThemePreviewConfig)
       const { id, newTheme = {}, oldTheme = {} } = payload
-      // commit('SET_THEME_PREVIEW_CONFIG', newTheme)
-      // commit('SET_OLD_THEME_PREVIEW_CONFIG', oldTheme)
       commit('INIT_THEME_PREVIEW', newTheme)
       commit('INIT_OLD_THEME_PREVIEW', oldTheme)
       commit('SET_THEME_PREVIEW_ID', id)
@@ -225,6 +215,9 @@ export default createStore({
       const componentStyle: AttrsGroup = getComponentStyle(stylesItem)
       commit('SET_COMPONENT_CONSOLE_STYLE', componentStyle)
     },
+    /**
+     * 设置属性
+     */
     setComponentConsoleStyle({ state, commit }, payload) {
       const { index, varName, varValue } = payload
       const oldVarValue = getVarStyle(varName)
@@ -244,6 +237,18 @@ export default createStore({
       }
       commit('UPDATE_SINGLE_USER_THEME', config)
       // dispatch('getComponentConsoleStyle')
+    },
+    /**
+     * 下载主题
+     */
+    downloadTheme(context, payload) {
+      const { newTheme: styles } = payload
+      let code = `:root {`
+      for (const value in styles) {
+        code += `\n ${value}: ${styles[value]};`
+      }
+      code += '\n}'
+      download(code, 'test.css')
     }
   },
   modules: {}
