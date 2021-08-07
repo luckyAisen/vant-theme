@@ -77,7 +77,6 @@ export default createStore({
       const index = configList.findIndex((item: Theme) => item.id === payload)
       if (index !== -1) {
         configList.splice(index, 1)
-        setVarStyleByConfig(state.oldThemePreviewConfig)
         state.themePreviewConfig = {}
         state.oldThemePreviewConfig = {}
         state.themePreviewId = null
@@ -180,8 +179,8 @@ export default createStore({
      * @param context
      * @param payload
      */
-    deleteTheme({ state, commit }, payload) {
-      setVarStyleByConfig(state.oldThemePreviewConfig)
+    async deleteTheme({ state, commit }, payload) {
+      await setVarStyleByConfig(state.oldThemePreviewConfig)
       commit('DELETE_SINGLE_USER_THEME', payload)
     },
     /**
@@ -189,8 +188,8 @@ export default createStore({
      * @param context
      * @param payload
      */
-    useTheme({ state, commit }, payload) {
-      setVarStyleByConfig(state.oldThemePreviewConfig)
+    async useTheme({ state, commit }, payload) {
+      await setVarStyleByConfig(state.oldThemePreviewConfig)
       const { id, newTheme = {}, oldTheme = {} } = payload
       commit('INIT_THEME_PREVIEW', newTheme)
       commit('INIT_OLD_THEME_PREVIEW', oldTheme)
@@ -200,10 +199,10 @@ export default createStore({
      * 获取当前主题配置
      * @param context
      */
-    getThemePreviewConfig({ state }) {
+    async getThemePreviewConfig({ state }) {
       const config = state.themePreviewConfig
       // 设置主题样式
-      setVarStyleByConfig(config)
+      await setVarStyleByConfig(config)
     },
     /**
      * 获取当前组件样式
