@@ -97,7 +97,6 @@ import { AddSharp } from '@vicons/ionicons5'
 import dayjs from 'dayjs'
 import ModalComponent from '@/components/Modal.vue'
 import { Theme } from '@/interface'
-// import { setVarStyleByConfig } from '@/utils'
 
 export default defineComponent({
   name: 'PageTheme',

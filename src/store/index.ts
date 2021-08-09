@@ -1,11 +1,12 @@
 import { createStore } from 'vuex'
-import { AttrsGroup, Attr, Theme } from '@/interface'
+import { AttrsGroup, Attr, Theme, Property } from '@/interface'
 import {
   setVarStyleByConfig,
   getComponentStyle,
   setVarStyle,
   getTime,
-  getVarStyle
+  getVarStyle,
+  scribeToHump
 } from '@/utils'
 import {
   APP_THEME_USER_CONFIG,
@@ -244,13 +245,16 @@ export default createStore({
      * 下载主题
      */
     downloadTheme(context, payload) {
-      const { newTheme: styles } = payload
-      let code = `:root {`
+      const { name, newTheme: styles } = payload
+      let styleCode = `:root {`
+      const jsonCode: Property = {}
       for (const value in styles) {
-        code += `\n ${value}: ${styles[value]};`
+        styleCode += `\n ${value}: ${styles[value]};`
+        jsonCode[scribeToHump(value)] = styles[value]
       }
-      code += '\n}'
-      download(code, `${getTime()}.css`)
+      styleCode += '\n}'
+      download(styleCode, `${name} - ${getTime()}.css`)
+      download(JSON.stringify(jsonCode), `${name} - ${getTime()}.json`)
     }
   },
   modules: {}

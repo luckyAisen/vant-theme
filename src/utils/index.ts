@@ -53,3 +53,14 @@ export function humpToScribe(target: string): string {
     return offset !== 0 ? '-' + lower : lower
   })
 }
+
+export function scribeToHump(
+  target: string,
+  searchValue = '--van-',
+  replaceValue = ''
+): string {
+  const newValue = target.replace(searchValue, replaceValue)
+  return newValue.replace(/-(\w)/g, function (all, letter) {
+    return letter.toUpperCase()
+  })
+}
