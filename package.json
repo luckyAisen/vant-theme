@@ -1,6 +1,6 @@
 {
   "name": "vant-theme",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "theme preview built on Vant UI",
   "license": "MIT",
   "author": {
@@ -27,7 +27,6 @@
   "dependencies": {
     "@vant/area-data": "^1.1.1",
     "@vicons/ionicons5": "^0.10.0",
-    "core-js": "^3.6.5",
     "dayjs": "^1.10.6",
     "file-saver": "^2.0.5",
     "naive-ui": "^2.15.11",
@@ -38,8 +37,8 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@types/file-saver": "^2.0.3",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
@@ -53,10 +52,6 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
-    "commitizen": "^4.2.4",
-    "commitlint-config-cz": "^0.13.2",
-    "cz-conventional-changelog": "^3.3.0",
-    "cz-customizable": "^6.3.0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
@@ -67,14 +62,14 @@
     "prettier": "^2.2.1",
     "typescript": "~4.1.5"
   },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    }
-  },
   "lint-staged": {
     "src/**/*.{js,jsx,vue,ts,tsx}": [
       "vue-cli-service lint"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
     ]
   },
   "engines": {
