@@ -1,9 +1,17 @@
 import { Ref } from 'vue'
 import { RouteRecordName } from 'vue-router'
 
+export type Test = {
+  type?: string
+  label?: string
+  key?: string
+  children?: Test[]
+}
+
 export type Menu = {
   id: string
   name: string
+  hash?: string
   children?: Menu[]
 }
 
