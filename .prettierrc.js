@@ -1,4 +1,4 @@
-module.exports =       {
+module.exports = {
   // tab缩进大小,默认为2
   tabWidth: 2,
   // 使用分号, 默认true
@@ -12,7 +12,7 @@ module.exports =       {
    * "es5" - 在ES5中有效的结尾逗号（对象，数组等）
    * "all"-尽可能使用尾随逗号
    */
-  trailingComma: "none",
+  trailingComma: 'none',
   /**
    * 支架间距:在对象文字中的括号之间打印空格。
    * 有效选项：
@@ -26,5 +26,5 @@ module.exports =       {
    * avoid 能省略括号的时候就省略 例如x => x
    * always 总是有括号
    */
-  arrowParens: "avoid"
+  arrowParens: 'avoid'
 }

@@ -1,4 +1,4 @@
-import { Property, LocalStorage } from '@/interface'
+import { Property } from '@/constant/interface'
 
 function parse(value: string): string {
   let newValue
@@ -22,7 +22,7 @@ function stringify(
   return newValue
 }
 
-export default function useLocalStorage(): LocalStorage {
+export default function useLocalStorage(): Property {
   function setItem(key: string, value: string | number | Property) {
     const newValue = stringify(value)
     window.localStorage.setItem(key, newValue as string)

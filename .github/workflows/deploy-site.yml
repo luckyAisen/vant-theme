@@ -1,38 +1,38 @@
-# name: GitHub Pages
+name: GitHub Pages
 
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
+on:
+  push:
+    branches:
+      - v0.1.0
+  pull_request:
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-20.04
-#     concurrency:
-#       group: ${{ github.workflow }}-${{ github.ref }}
-#     steps:
-#       - uses: actions/checkout@v2
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Setup Node
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: '14'
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-#       - name: Cache dependencies
-#         uses: actions/cache@v2
-#         with:
-#           path: ~/.npm
-#           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-#           restore-keys: |
-#             ${{ runner.os }}-node-
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
               
-#       - run: npm install
-#       - run: npm run build
+      - run: npm install
+      - run: npm run build
 
-#       - name: deploy
-#         uses: peaceiris/actions-gh-pages@v3
-#         if: ${{ github.ref == 'refs/heads/main' }}
-#         with:
-#           github_token: ${{ secrets.GH_PAGES }}
-#           publish_dir: ./dist
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GH_PAGES }}
+          publish_dir: ./dist

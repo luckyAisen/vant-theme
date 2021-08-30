@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { Style, Attr, AttrsGroup } from '@/interface'
+import { Style, Attr, AttrsGroup } from '@/constant/interface'
 
 export const doc = document.documentElement
 
@@ -22,7 +22,9 @@ export function setVarStyleByConfig(
   }
 }
 
-export function getComponentStyle(stylesItem: Style): AttrsGroup {
+export function getComponentStyle(
+  stylesItem: Style = { id: '', styles: [] }
+): AttrsGroup {
   const attrsList: AttrsGroup = []
   stylesItem.styles.map(style => {
     const varName = style
@@ -33,7 +35,6 @@ export function getComponentStyle(stylesItem: Style): AttrsGroup {
     }
     if (varValue.trim().startsWith('#') || varValue.trim().startsWith('rgba')) {
       obj.component = 'n-color-picker'
-      // obj.varValue = varValue.toLocaleUpperCase()
     } else {
       obj.component = 'n-input'
       obj.suffix = 'px'
@@ -45,6 +46,10 @@ export function getComponentStyle(stylesItem: Style): AttrsGroup {
 
 export function getTime(): number {
   return dayjs().valueOf()
+}
+
+export function transitionTime(time: number): string {
+  return dayjs(time).format('YYYY-MM-DD HH:mm')
 }
 
 export function humpToScribe(target: string): string {

@@ -5,7 +5,7 @@ import {
   RouteRecordName,
   RouteLocationNormalizedLoaded
 } from 'vue-router'
-import { ConsoleComponent } from '@/interface'
+import { ConsoleComponent } from '@/constant/interface'
 
 export const useProps = (): any => {
   return {
@@ -41,6 +41,7 @@ export const useConsoleComponent = (componentProps: any): ConsoleComponent => {
       varName,
       varValue: value
     }
+    debugger
     await store.dispatch('setComponentConsoleStyle', payload)
     await store.dispatch('getComponentConsoleStyle', id)
   }
