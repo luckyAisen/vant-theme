@@ -5,13 +5,11 @@ import {
   getComponentStyle,
   setVarStyle,
   getTime,
-  getVarStyle,
   scribeToHump
 } from '@/utils'
 import {
   APP_THEME_USER_CONFIG,
   APP_THEME_PREVIEW_CONFIG,
-  APP_OLD_PREVIEW_CONFIG,
   APP_THEME_PREVIEW_ID
 } from '@/constant'
 import useLocalStorage from '@/utils/useLocalStorage'
@@ -39,12 +37,6 @@ export default createStore({
       if (state.menuActive !== value) {
         state.menuActive = value
       }
-    },
-    /**
-     * 设置 iframe 状态
-     */
-    SET_IFRAME_READY(state) {
-      state.isIframeReady = true
     },
     /**
      * 添加用户主题
@@ -113,7 +105,6 @@ export default createStore({
       state.themePreviewConfig[varName] = varValue
       storage.setItem(APP_THEME_PREVIEW_CONFIG, state.themePreviewConfig)
     },
-
     /**
      * 获取当前组件样式变量
      * @param state
@@ -136,10 +127,9 @@ export default createStore({
      * @param param0
      * @param payload
      */
-    menuChange({ commit, dispatch }, payload) {
-      const { hash } = payload
+    menuChange({ commit }, hash) {
       commit('SET_MENU_ACTIVE', hash)
-      dispatch('getComponentConsoleStyle', hash)
+      // dispatch('getComponentConsoleStyle', hash)
     },
     /**
      * 生成一个主题
@@ -166,6 +156,7 @@ export default createStore({
     async addTheme({ commit, dispatch }, payload) {
       const config = await dispatch('generateConfig', payload)
       commit('ADD_THEME', config)
+      return config
     },
     /**
      * 修改主题
@@ -216,14 +207,6 @@ export default createStore({
       commit('SET_COMPONENT_CONSOLE_STYLE', componentStyle)
     },
     /**
-     * 设置 iframe 状态
-     * @param context
-     * @param context.commit
-     */
-    setIframeReady({ commit }) {
-      commit('SET_IFRAME_READY')
-    },
-    /**
      * 设置属性
      */
     setComponentConsoleStyle({ state, commit }, payload) {
@@ -237,17 +220,30 @@ export default createStore({
       const config = {
         id: currentThemeInfo.id,
         name: currentThemeInfo.name,
-        newTheme: state.themePreviewConfig,
+        theme: Object.assign(
+          {},
+          currentThemeInfo.theme,
+          state.themePreviewConfig
+        ),
         update: getTime()
       }
       commit('UPDATE_THEME', config)
-      // dispatch('getComponentConsoleStyle')
+      const iframe = document.querySelector('iframe')
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(
+          {
+            type: 'setStyles',
+            value: { varName, varValue }
+          },
+          '*'
+        )
+      }
     },
     /**
      * 下载主题
      */
     downloadTheme(context, payload) {
-      const { name, newTheme: styles } = payload
+      const { name, theme: styles } = payload
       let styleCode = `:root {`
       const jsonCode: Property = {}
       for (const value in styles) {

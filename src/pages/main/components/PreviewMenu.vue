@@ -23,7 +23,7 @@ export default defineComponent({
       value: computed(() => $store.state.menuActive),
       menuOptions,
       handleUpdateValue(key: string) {
-        $store.dispatch('menuChange', { hash: key })
+        $store.dispatch('menuChange', key)
       }
     }
   }

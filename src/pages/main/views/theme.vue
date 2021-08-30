@@ -182,8 +182,10 @@ export default defineComponent({
       const type = optionType
       switch (type) {
         case 'add':
-          $store.dispatch('addTheme', { name })
-          $router.push('/preview')
+          $store.dispatch('addTheme', { name }).then(theme => {
+            $store.dispatch('useTheme', theme)
+            $router.push('/preview')
+          })
           break
         case 'edit':
           $store.dispatch('updateTheme', {

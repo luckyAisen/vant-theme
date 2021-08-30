@@ -10,10 +10,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { NEllipsis, NColorPicker } from 'naive-ui'
-import { useProps, useConsoleComponent } from '@/mixin'
-import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'ConsoleColorPicker',
@@ -21,20 +20,31 @@ export default defineComponent({
     NEllipsis,
     NColorPicker
   },
-  props: useProps(),
-  setup(props) {
-    const route = useRoute()
-    const { model, handler } = useConsoleComponent(props)
-    const complete = (value: string) => {
-      debugger
-      handler(value, route.name)
+  props: {
+    index: {
+      type: Number
+    },
+    varName: {
+      type: String,
+      default: ''
+    },
+    varValue: {
+      type: String,
+      default: ''
     }
-    watch(
-      () => props.varValue,
-      () => {
-        model.value = props.varValue
+  },
+  setup(props) {
+    const $store = useStore()
+    const model = ref(props.varValue)
+    const complete = async (value: string) => {
+      const { index, varName } = props
+      const payload = {
+        index,
+        varName,
+        varValue: value
       }
-    )
+      await $store.dispatch('setComponentConsoleStyle', payload)
+    }
     return {
       model,
       complete

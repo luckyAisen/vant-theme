@@ -78,13 +78,9 @@ export default defineComponent({
       emit('close')
     }
     async function modalValidate() {
-      try {
-        await formRef.value.validate()
-        emit('confirm', formModel)
-        modalClose()
-      } catch (err) {
-        console.log(err)
-      }
+      await formRef.value.validate()
+      emit('confirm', formModel)
+      modalClose()
     }
     watchEffect(() => {
       modalShow.value = props.show

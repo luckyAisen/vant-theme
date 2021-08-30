@@ -43,7 +43,7 @@ export default defineComponent({
   setup() {
     const $store = useStore()
     $store.dispatch('getThemePreviewConfig')
-    $store.dispatch('getComponentConsoleStyle', 'Base')
+    $store.dispatch('menuChange', 'Base')
   }
 })
 </script>

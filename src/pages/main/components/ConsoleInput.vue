@@ -41,12 +41,6 @@ export default defineComponent({
       }
       await $store.dispatch('setComponentConsoleStyle', payload)
     }
-    // watch(
-    //   () => props.varValue,
-    //   () => {
-    //     model.value = props.varValue
-    //   }
-    // )
     return {
       model,
       complete
