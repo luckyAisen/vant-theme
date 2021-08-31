@@ -28,6 +28,7 @@ import {
 import { useStore } from 'vuex'
 import { NSpin } from 'naive-ui'
 import ColorBase from './ColorBase.vue'
+import { iframeReady, postMessageToChild } from '@/utils/iframeRouter'
 export default defineComponent({
   name: 'PreviewContent',
   components: {
@@ -40,28 +41,26 @@ export default defineComponent({
     const isIframeReady = ref(true)
     const iframeEl = ref(null)
     const stopWatchMenuActive = watch(menuActive, newState => {
-      const iframe = document.querySelector('iframe')
-      if (iframe && iframe.contentWindow && newState !== 'Base') {
-        iframe.contentWindow.postMessage(
-          {
+      iframeReady(() => {
+        isIframeReady.value = false
+        if (newState !== 'Base') {
+          postMessageToChild({
             type: 'replacePath',
             value: newState
-          },
-          '*'
-        )
-      }
-    })
-    onMounted(() => {
-      window.addEventListener('message', event => {
-        if (event.data.type === 'iframeReady') {
-          const style = document.createElement('style')
-          style.textContent = `.demo-nav__back { display: none; }`
-          iframeEl.value.contentDocument.head.appendChild(style)
-          isIframeReady.value = false
+          })
         }
       })
     })
+    onMounted(() => {
+      iframeReady(() => {
+        postMessageToChild({
+          type: 'initStyles',
+          value: JSON.stringify($store.state.themePreviewConfig)
+        })
+      })
+    })
     onUnmounted(() => {
+      document.documentElement.style = {}
       stopWatchMenuActive()
     })
     return {

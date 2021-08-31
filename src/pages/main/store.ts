@@ -7,6 +7,8 @@ import {
   getTime,
   scribeToHump
 } from '@/utils'
+import { postMessageToChild } from '@/utils/iframeRouter'
+
 import {
   APP_THEME_USER_CONFIG,
   APP_THEME_PREVIEW_CONFIG,
@@ -228,16 +230,10 @@ export default createStore({
         update: getTime()
       }
       commit('UPDATE_THEME', config)
-      const iframe = document.querySelector('iframe')
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(
-          {
-            type: 'setStyles',
-            value: { varName, varValue }
-          },
-          '*'
-        )
-      }
+      postMessageToChild({
+        type: 'setStyles',
+        value: JSON.stringify({ varName, varValue })
+      })
     },
     /**
      * 下载主题
