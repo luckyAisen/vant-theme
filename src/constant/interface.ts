@@ -1,6 +1,3 @@
-import { Ref } from 'vue'
-import { RouteRecordName } from 'vue-router'
-
 export type Menu = {
   type?: string
   label?: string
@@ -32,19 +29,6 @@ export interface Property {
   [propName: number]: any
 }
 
-export interface Props extends Property {
-  index: Ref<number>
-  varName: Ref<string>
-  varValue: Ref<string>
-  // [propName: string]: any
-  // [propName: number]: any
-}
-
-export interface ConsoleComponent {
-  model: Ref<string>
-  handler: (value: string, id: RouteRecordName | null | undefined) => void
-}
-
 export interface Theme {
   id?: number
   name?: string
@@ -52,4 +36,13 @@ export interface Theme {
   theme?: {
     [propName: string]: number | string | boolean
   }
+}
+
+export interface PMessage {
+  type: string
+  value: string
+}
+
+export interface Fn {
+  (): void
 }
