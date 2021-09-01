@@ -2,7 +2,7 @@
   <div class="console-wrapper">
     <div class="console-operation">
       <div class="revert-container">
-        <n-icon size="24">
+        <n-icon size="24" @click="revert">
           <return-up-back-outline />
         </n-icon>
       </div>
@@ -45,6 +45,7 @@ import { NIcon, NButton, useDialog, useMessage } from 'naive-ui'
 import { ReturnUpBackOutline } from '@vicons/ionicons5'
 import ConsoleColorPicker from '../components/ConsoleColorPicker.vue'
 import ConsoleInput from '../components/ConsoleInput.vue'
+import { Theme } from '@/constant/interface'
 
 export default defineComponent({
   name: 'PreviewConsole',
@@ -61,6 +62,9 @@ export default defineComponent({
     const message = useMessage()
     const componentStyle = computed(() => $store.state.componentConsoleStyle)
     const menuActive = computed(() => $store.state.menuActive)
+    const revert = () => {
+      message.info('撤销，还没做呢')
+    }
     const reset = () => {
       dialog.error({
         title: '我是一个提醒',
@@ -75,7 +79,11 @@ export default defineComponent({
       })
     }
     const download = () => {
-      $store.dispatch('downloadTheme')
+      const currentThemeInfo = $store.state.themeUserConfig.filter(
+        (item: Theme) => item.id === $store.state.themePreviewId
+      )[0]
+      $store.dispatch('downloadTheme', currentThemeInfo)
+      message.success('下载好了')
     }
     const stopWatchMenuActive = watch(
       menuActive,
@@ -89,6 +97,7 @@ export default defineComponent({
     })
     return {
       componentStyle,
+      revert,
       reset,
       download
     }
