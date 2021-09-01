@@ -22,6 +22,10 @@ export function setVarStyleByConfig(
   }
 }
 
+export function clearStyle(el = doc): void {
+  el.setAttribute('style', '')
+}
+
 export function getComponentStyle(
   stylesItem: Style = { id: '', styles: [] }
 ): AttrsGroup {

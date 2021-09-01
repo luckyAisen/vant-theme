@@ -5,14 +5,17 @@ import {
   getComponentStyle,
   setVarStyle,
   getTime,
-  scribeToHump
+  scribeToHump,
+  clearStyle
 } from '@/utils'
-import { postMessageToChild } from '@/utils/iframeRouter'
+import { iframeReady, postMessageToChild } from '@/utils/iframeRouter'
 
 import {
   APP_THEME_USER_CONFIG,
   APP_THEME_PREVIEW_CONFIG,
-  APP_THEME_PREVIEW_ID
+  APP_THEME_PREVIEW_ID,
+  MESSAGE_SET_STYLES,
+  MESSAGE_CLEAR_STYLES
 } from '@/constant'
 import useLocalStorage from '@/utils/useLocalStorage'
 import { APP_STYLE_LIST as styleList } from '@/constant'
@@ -174,7 +177,7 @@ export default createStore({
      * @param payload
      */
     async deleteTheme({ commit }, payload) {
-      document.documentElement.setAttribute('style', '')
+      clearStyle()
       commit('DELETE_THEME', payload)
     },
     /**
@@ -231,7 +234,7 @@ export default createStore({
       }
       commit('UPDATE_THEME', config)
       postMessageToChild({
-        type: 'setStyles',
+        type: MESSAGE_SET_STYLES,
         value: JSON.stringify({ varName, varValue })
       })
     },
@@ -249,6 +252,26 @@ export default createStore({
       styleCode += '\n}'
       download(styleCode, `${name} - ${getTime()}.css`)
       download(JSON.stringify(jsonCode), `${name} - ${getTime()}.json`)
+    },
+    resetTheme({ state, commit, dispatch }) {
+      const currentThemeInfo = state.themeUserConfig.filter(
+        (item: Theme) => item.id === state.themePreviewId
+      )[0]
+      commit('SET_THEME_PREVIEW')
+      const config = {
+        id: currentThemeInfo.id,
+        name: currentThemeInfo.name,
+        theme: Object.assign({}, state.themePreviewConfig),
+        update: getTime()
+      }
+      clearStyle()
+      commit('UPDATE_THEME', config)
+      iframeReady(() => {
+        postMessageToChild({
+          type: MESSAGE_CLEAR_STYLES
+        })
+      })
+      dispatch('getComponentConsoleStyle', state.menuActive)
     }
   }
 })

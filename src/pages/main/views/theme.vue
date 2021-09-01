@@ -135,7 +135,7 @@ export default defineComponent({
       },
       {
         label: '下载主题文件',
-        key: 'dowalond'
+        key: 'download'
       }
     ]
     let optionType = ''
@@ -174,7 +174,7 @@ export default defineComponent({
             }
           })
           break
-        case 'dowalond':
+        case 'download':
           $store.dispatch('downloadTheme', currentTheme)
       }
     }

@@ -1,7 +1,6 @@
 :root {
   --app-text-color: #1f2225;
   --app-primary-color: #18a058;
-  --app-navbar-height: 64px;
 }
 
 html,
@@ -185,6 +184,28 @@ a {
   .page-preview-console-container {
     box-shadow: 0 8px 12px #ebedf0;
     overflow: hidden auto;
+
+    .console-operation {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      border-bottom: 1px solid #efeff5;
+
+      .revert-container {
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          color: var(--app-primary-color);
+        }
+      }
+
+      .btn-container {
+        .n-button {
+          margin-left: 10px;
+        }
+      }
+    }
 
     .console-wrapper {
       width: 500px;

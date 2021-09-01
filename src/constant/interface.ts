@@ -40,7 +40,7 @@ export interface Theme {
 
 export interface PMessage {
   type: string
-  value: string
+  value?: string | null
 }
 
 export interface Fn {

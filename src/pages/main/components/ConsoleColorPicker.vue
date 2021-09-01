@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watchEffect } from 'vue'
 import { NEllipsis, NColorPicker } from 'naive-ui'
 import { useStore } from 'vuex'
 
@@ -45,6 +45,9 @@ export default defineComponent({
       }
       await $store.dispatch('setComponentConsoleStyle', payload)
     }
+    watchEffect(() => {
+      model.value = props.varValue
+    })
     return {
       model,
       complete

@@ -29,6 +29,7 @@ import { useStore } from 'vuex'
 import { NSpin } from 'naive-ui'
 import ColorBase from './ColorBase.vue'
 import { iframeReady, postMessageToChild } from '@/utils/iframeRouter'
+import { MESSAGE_INIT_STYLES, MESSAGE_VANT_REPLACEPATH } from '@/constant'
 export default defineComponent({
   name: 'PreviewContent',
   components: {
@@ -46,7 +47,7 @@ export default defineComponent({
         isIframeReady.value = false
         if (newState !== 'Base') {
           postMessageToChild({
-            type: 'replacePath',
+            type: MESSAGE_VANT_REPLACEPATH,
             value: newState
           })
         }
@@ -55,7 +56,7 @@ export default defineComponent({
     onMounted(() => {
       iframeReady(() => {
         postMessageToChild({
-          type: 'initStyles',
+          type: MESSAGE_INIT_STYLES,
           value: JSON.stringify($store.state.themePreviewConfig)
         })
       })
