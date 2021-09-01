@@ -6,7 +6,7 @@
     <div v-show="menuActive !== 'Base'" class="page-preview-iframe-container">
       <n-spin size="large" :show="isIframeReady">
         <iframe
-          src="./mobile.html"
+          :src="iframeUrl"
           frameborder="0"
           style="height: 640px"
           ref="iframeEl"
@@ -40,6 +40,7 @@ export default defineComponent({
     const menuActive = computed(() => $store.state.menuActive)
     const isIframeReady = ref(true)
     const iframeEl = ref(null)
+    const iframeUrl = `${process.env.VUE_APP_PUBLICPATH}mobile.html`
     const stopWatchMenuActive = watch(menuActive, newState => {
       iframeReady(() => {
         isIframeReady.value = false
@@ -66,7 +67,8 @@ export default defineComponent({
     return {
       menuActive,
       isIframeReady,
-      iframeEl
+      iframeEl,
+      iframeUrl
     }
   }
 })

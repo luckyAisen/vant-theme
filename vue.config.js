@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: './',
+  publicPath: process.env.VUE_APP_PUBLICPATH, // 部署应用包时的基本 URL
   pages: {
     index: {
       // page 的入口
