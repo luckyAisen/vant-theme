@@ -1,11 +1,13 @@
 <template>
   <div class="console-wrapper">
     <div class="console-operation">
-      <div class="revert-container">
-        <n-icon size="24" @click="revert">
+      <!--
+        <div class="revert-container">
+         <n-icon size="24" @click="revert">
           <return-up-back-outline />
-        </n-icon>
+        </n-icon> 
       </div>
+      -->
       <div class="btn-container">
         <n-button type="error" @click="reset">重置所有</n-button>
         <n-button type="info" @click="download">下载</n-button>
@@ -41,8 +43,8 @@
 <script lang="ts">
 import { defineComponent, computed, watch, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
-import { NIcon, NButton, useDialog, useMessage } from 'naive-ui'
-import { ReturnUpBackOutline } from '@vicons/ionicons5'
+import { NButton, useDialog, useMessage } from 'naive-ui'
+// import { ReturnUpBackOutline } from '@vicons/ionicons5'
 import ConsoleColorPicker from '../components/ConsoleColorPicker.vue'
 import ConsoleInput from '../components/ConsoleInput.vue'
 import { Theme } from '@/constant/interface'
@@ -50,8 +52,8 @@ import { Theme } from '@/constant/interface'
 export default defineComponent({
   name: 'PreviewConsole',
   components: {
-    NIcon,
-    ReturnUpBackOutline,
+    // NIcon,
+    // ReturnUpBackOutline,
     NButton,
     ConsoleColorPicker,
     ConsoleInput
