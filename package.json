@@ -19,8 +19,8 @@
     "vant-theme"
   ],
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "node scripts/serve.js",
+    "build": "node scripts/build.js",
     "lint": "vue-cli-service lint",
     "prepare": "husky install"
   },
@@ -47,9 +47,12 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
+    "download-git-repo": "^3.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
+    "fs-extra": "^10.0.0",
+    "glob": "^7.1.7",
     "husky": "^7.0.2",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",

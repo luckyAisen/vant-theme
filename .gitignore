@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+.tmp/vant-gh-pages
+public/vant-gh-pages
 
 
 # local env files

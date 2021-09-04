@@ -1,2 +1,6 @@
 node_modules
 dist
+scripts/
+.tmp/vant-gh-pages
+public/vant-gh-pages
+vue.config.js
