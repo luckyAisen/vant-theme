@@ -44,16 +44,12 @@
 import { defineComponent, computed, watch, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { NButton, useDialog, useMessage } from 'naive-ui'
-// import { ReturnUpBackOutline } from '@vicons/ionicons5'
 import ConsoleColorPicker from '../components/ConsoleColorPicker.vue'
 import ConsoleInput from '../components/ConsoleInput.vue'
-import { Theme } from '@/constant/interface'
 
 export default defineComponent({
   name: 'PreviewConsole',
   components: {
-    // NIcon,
-    // ReturnUpBackOutline,
     NButton,
     ConsoleColorPicker,
     ConsoleInput
@@ -80,10 +76,8 @@ export default defineComponent({
         }
       })
     }
-    const download = () => {
-      const currentThemeInfo = $store.state.themeUserConfig.filter(
-        (item: Theme) => item.id === $store.state.themePreviewId
-      )[0]
+    const download = async () => {
+      const currentThemeInfo = await $store.dispatch('getCurrentThemeInfo')
       $store.dispatch('downloadTheme', currentThemeInfo)
       message.success('下载好了')
     }

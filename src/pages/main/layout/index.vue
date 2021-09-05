@@ -27,7 +27,6 @@ import {
   NDialogProvider,
   NLayout,
   NLayoutHeader
-  // NLayoutContent
 } from 'naive-ui'
 import AppHeader from './Header.vue'
 
@@ -40,7 +39,6 @@ export default defineComponent({
     NDialogProvider,
     NLayout,
     NLayoutHeader,
-    // NLayoutContent,
     AppHeader
   }
 })
