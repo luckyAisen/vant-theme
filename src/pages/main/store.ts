@@ -134,7 +134,6 @@ export default createStore({
      */
     menuChange({ commit }, hash) {
       commit('SET_MENU_ACTIVE', hash)
-      // dispatch('getComponentConsoleStyle', hash)
     },
     /**
      * 生成一个主题
@@ -144,13 +143,7 @@ export default createStore({
      */
     generateConfig(context, payload) {
       const _id = getTime()
-      const {
-        id = _id,
-        name,
-        update = _id,
-        theme = {}
-        // theme = { ...DEFAULT_COLOR }
-      } = payload
+      const { id = _id, name, update = _id, theme = {} } = payload
       return { id, name, update, theme }
     },
     /**
@@ -214,14 +207,12 @@ export default createStore({
     /**
      * 设置属性
      */
-    setComponentConsoleStyle({ state, commit }, payload) {
+    async setComponentConsoleStyle({ state, commit, dispatch }, payload) {
       const { index, varName, varValue } = payload
       setVarStyle(varName, varValue)
       commit('SET_THEME_PREVIEW_CONFIG', { varName, varValue })
       commit('SET_SINGLE_COMPONENT_CONSOLE_STYLE', { index, varValue })
-      const currentThemeInfo = state.themeUserConfig.filter(
-        (item: Theme) => item.id === state.themePreviewId
-      )[0]
+      const currentThemeInfo = await dispatch('getCurrentThemeInfo')
       const config = {
         id: currentThemeInfo.id,
         name: currentThemeInfo.name,
@@ -253,10 +244,11 @@ export default createStore({
       download(styleCode, `${name} - ${getTime()}.css`)
       download(JSON.stringify(jsonCode), `${name} - ${getTime()}.json`)
     },
-    resetTheme({ state, commit, dispatch }) {
-      const currentThemeInfo = state.themeUserConfig.filter(
-        (item: Theme) => item.id === state.themePreviewId
-      )[0]
+    /**
+     * 重置主题
+     */
+    async resetTheme({ state, commit, dispatch }) {
+      const currentThemeInfo = await dispatch('getCurrentThemeInfo')
       commit('SET_THEME_PREVIEW')
       const config = {
         id: currentThemeInfo.id,
@@ -272,6 +264,16 @@ export default createStore({
         })
       })
       dispatch('getComponentConsoleStyle', state.menuActive)
+    },
+    /**
+     * 获取当前主题配置
+     * @returns Theme
+     */
+    async getCurrentThemeInfo({ state }) {
+      const currentThemeInfo = state.themeUserConfig.filter(
+        (item: Theme) => item.id === state.themePreviewId
+      )[0]
+      return currentThemeInfo
     }
   }
 })
