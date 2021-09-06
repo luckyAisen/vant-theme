@@ -1,12 +1,40 @@
 ## 简介
 
-`vant-theme`是一个 `vant` 组件库**在线主题预览工具**，如果你有`vant`组件库**定制主题、动态切换主题**的需求，可以使用此工具。
+`vant-theme`是一个 `vant` 组件库**在线主题预览工具**，如果你有`vant`组件库**定制主题、动态切换主题**的需求，可以使用此工具。`vant-theme`可以修改`vant`组件库所提供的**样式变量**，它能够及时反馈和呈现修改过后的内容。
 
-`vant-theme`可以修改`vant`组件库所提供的**样式变量**，并且可以及时反馈修改过后样式。
+`vant` 在 `3.x`版本使用了 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 来组织样式。**`vant-theme`就是通过样式覆盖的形式实现的。**
 
-**目前只支持 `3.x`版本。**
+**目前只支持 `3.x`版本，在不久后将支持 `2.x`版本。 **
 
 在线预览：https://aisen60.github.io/vant-theme
+
+仓库地址：https://github.com/Aisen60/vant-theme
+
+## 为什么要做这个工具？
+
+它能解决以下两个问题：
+
+1、在线快速预览，快速的效果反馈，所见即所得。你不在需要在编辑器中重复的进行配置，你只需要在`vant-theme` 中把你需要自定义的组件样式配置好，下载到本地后引入即可。
+
+2、你可以分享给你公司的设计师，让 TA 在设计页面时，就能根据你所在的团队定义好的设计规范来设计组件了。当设计师交付设计稿给前端时，顺便把下载后的文件交付给你。可以省去一些相关的沟通和人力工作。
+
+
+## 预览
+
+首页：
+
+<img width="1440" alt="index" src="https://user-images.githubusercontent.com/19791710/132115824-6b46e9a2-d90a-4a6c-beaf-dd56fc43aec7.png">
+
+主题列表页：
+
+<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132115934-3bdd2b68-9690-48b4-9c6c-b56670ec5ad2.png">
+
+预览页：
+
+<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132117276-c8e0bd76-ed5c-482e-8929-15a249c740b2.gif">
+
+<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132117574-23a899c8-8d7b-4145-841f-1712b32b2d3f.gif">
+
 
 ## 如何使用
 
@@ -30,32 +58,3 @@
 下载后的`json`文件内容：
 
 <img alt="json content" src="https://user-images.githubusercontent.com/19791710/132115735-d9056c5d-645e-48a3-8ebb-7db53f5b516a.png">
-
-
-## 预览
-
-首页：
-
-<img width="1440" alt="index" src="https://user-images.githubusercontent.com/19791710/132115824-6b46e9a2-d90a-4a6c-beaf-dd56fc43aec7.png">
-
-主题列表页：
-
-<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132115934-3bdd2b68-9690-48b4-9c6c-b56670ec5ad2.png">
-
-预览页：
-
-<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132117276-c8e0bd76-ed5c-482e-8929-15a249c740b2.gif">
-
-<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132117574-23a899c8-8d7b-4145-841f-1712b32b2d3f.gif">
-
-
-
-## 实现思路
-
-`vant` 在 `3.x`版本使用了 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 来组织样式。`vant-theme`就是通过样式覆盖的形式实现的。
-
-## 关于 2.x 版本的主题预览思路
-
-`vant-theme`**目前只支持 `3.x`版本。**
-
-如果你想自己做一个`2.x`版本的主题预览，这里提供一个思路：可以在后端把所有组件的样式进行编译，编译完成后把编译结果（字符串）返回到到前端，前端进行样式替换。类似于 [elementUI](https://element.eleme.cn/#/zh-CN/theme/preview) 的做法
