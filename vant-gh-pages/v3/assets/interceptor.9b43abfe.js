@@ -1,0 +1,1 @@
+import{j as t,n as a}from"./use-translate.bf1abf23.js";import"./with-install.af140ae3.js";function e(e){const{interceptor:n,args:s,done:c,canceled:o}=e;if(n){const e=n.apply(null,s||[]);t(e)?e.then((t=>{t?c():o&&o()})).catch(a):e?c():o&&o()}else c()}export{e as c};

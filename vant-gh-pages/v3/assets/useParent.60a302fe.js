@@ -1,0 +1,1 @@
+import{O as n,J as r,E as a,G as e,M as i}from"./vendor.09b5b9a9.js";function l(l){var t=n(l,null);if(t){var s=i(),{link:u,unlink:d,internalChildren:o}=t;return u(s),r((()=>d(s))),{parent:t,index:a((()=>o.indexOf(s)))}}return{parent:null,index:e(-1)}}export{l as u};
