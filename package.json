@@ -11,6 +11,10 @@
     "type": "git",
     "url": "https://github.com/Aisen60/vant-theme.git"
   },
+  "bugs": {
+    "url": "https://github.com/Aisen60/vant-theme/issues"
+  },
+  "homepage": "https://github.com/Aisen60/vant-theme#readme",
   "keywords": [
     "vue",
     "vue3",
