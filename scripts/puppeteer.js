@@ -137,12 +137,17 @@ async function createJsonFile(type, version = 'v3', data) {
  * 爬取页面数据
  */
 async function reptile() {
-  const version = ['v2', 'v3']
-  const promises = version.map(async v => {
-    await getMenu(v)
-    await getStyle(v)
-  })
-  await Promise.all(promises)
+  // const version = ['v2', 'v3']
+  // const promises = version.map(async v => {
+  //   await getMenu(v)
+  //   await getStyle(v)
+  // })
+  // await Promise.all(promises)
+  await getMenu('v2')
+  await getStyle('v2')
+  await getMenu('v3')
+  await getStyle('v3')
+
 }
 
 module.exports = {
