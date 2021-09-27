@@ -93,7 +93,7 @@ async function getStyle(version = 'v3') {
         if (style.length > 0) {
           const styleItem = {
             id: children[item].key,
-            style
+            styles: style
           }
           styles.push(styleItem)
         }
