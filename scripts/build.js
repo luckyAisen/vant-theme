@@ -1,10 +1,19 @@
-const utils = require('./utils')
+const {
+  downloadSource,
+  copyMobilePage,
+  updateMobilePageTagsInfo,
+  copyMobilePageSourceToPublic,
+  reptiler,
+  runBuild
+} = require('./utils')
 
 async function build() {
-  await utils.downloadCode()
-  await utils.copyFile()
-  await utils.match()
-  utils.runBuild()
+  await downloadSource()
+  await copyMobilePage()
+  await updateMobilePageTagsInfo()
+  await copyMobilePageSourceToPublic()
+  await reptiler()
+  runBuild()
 }
 
 build()
