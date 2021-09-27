@@ -1,1 +1,0 @@
-import{D as t}from"./vendor.09b5b9a9.js";function n(t,n){return{top:0,left:0,right:t,bottom:n,width:t,height:n}}var e=e=>{var i=t(e);return i===window?n(i.innerWidth,i.innerHeight):i&&i.getBoundingClientRect?i.getBoundingClientRect():n(0,0)};export{e as u};

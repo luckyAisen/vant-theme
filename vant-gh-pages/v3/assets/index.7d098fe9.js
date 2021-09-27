@@ -1,1 +1,0 @@
-import{i as t}from"./utils.fd06bcd3.js";import{u as a}from"./index.2baefb73.js";import{D as r}from"./vendor.09b5b9a9.js";function o(o,e,i={}){if(t){var{eventName:s="click"}=i;a(s,(t=>{var a=r(o);a&&!a.contains(t.target)&&e(t)}),{target:document})}}export{o as u};

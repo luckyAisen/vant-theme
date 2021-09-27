@@ -1,0 +1,1 @@
+import{u as e}from"./use-height.8171f077.js";import{e as o}from"./vendor.ef334a89.js";function s(s,r){const t=e(s);return e=>o("div",{class:r("placeholder"),style:{height:t.value?`${t.value}px`:void 0}},[e()])}export{s as u};

@@ -1,1 +1,0 @@
-import{M as o}from"./vendor.09b5b9a9.js";const r={to:[String,Object],url:String,replace:Boolean};function t(o){const r=o.$router,{to:t,url:e,replace:n}=o;t&&r?r[n?"replace":"push"](t):e&&(n?location.replace(e):location.href=e)}function e(){const r=o().proxy;return()=>t(r)}export{t as a,r,e as u};
