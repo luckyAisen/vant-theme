@@ -41,7 +41,7 @@ export default defineComponent({
     const menuActive = computed(() => $store.state.menuActive)
     const isIframeReady = ref(true)
     const iframeEl = ref(null)
-    const iframeUrl = `${process.env.VUE_APP_PUBLICPATH}mobile.html`
+    const iframeUrl = `${process.env.VUE_APP_PUBLICPATH}mobile-v3.html`
     const stopWatchMenuActive = watch(menuActive, newState => {
       iframeReady(() => {
         isIframeReady.value = false
