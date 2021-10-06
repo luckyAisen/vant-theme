@@ -1,1 +1,0 @@
-function t(t){t.stopPropagation()}function n(n,e){("boolean"!=typeof n.cancelable||n.cancelable)&&n.preventDefault(),e&&t(n)}function e(t,n){const e=document.createEvent("HTMLEvents");e.initEvent(n,!0,!0),t.dispatchEvent(e)}export{n as p,t as s,e as t};

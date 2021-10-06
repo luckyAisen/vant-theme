@@ -1,1 +1,0 @@
-import{N as a,y as e}from"./vendor.ef334a89.js";var l=Symbol("van-field");function o(o){var r=a(l,null);r&&!r.customValue.value&&(r.customValue.value=o,e(o,(()=>{r.resetValidation(),r.validateWithTrigger("onChange")})))}export{l as C,o as u};

@@ -1,0 +1,1 @@
+import{B as t}from"./vue-libs.71fdcafc.js";function e(t,e){return{top:0,left:0,right:t,bottom:e,width:t,height:e}}var i=i=>{var n=t(i);return n===window?e(n.innerWidth,n.innerHeight):n&&n.getBoundingClientRect?n.getBoundingClientRect():e(0,0)};export{i as u};

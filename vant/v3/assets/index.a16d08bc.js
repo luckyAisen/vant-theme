@@ -1,0 +1,1 @@
+import{M as a,x as e}from"./vue-libs.71fdcafc.js";var l=Symbol("van-field");function u(u){var i=a(l,null);i&&!i.customValue.value&&(i.customValue.value=u,e(u,(()=>{i.resetValidation(),i.validateWithTrigger("onChange")})))}export{l as C,u};
