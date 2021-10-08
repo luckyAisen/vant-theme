@@ -3,6 +3,8 @@ name: Sync to Gitee
 on:
   push:
     branches: [main, gh-pages]
+  schedule:
+    - cron: "0 21 * * *"
 
 jobs:
   build:
