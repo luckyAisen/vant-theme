@@ -144,7 +144,7 @@ async function reptile() {
   // })
   // await Promise.all(promises)
   await getMenu('v2')
-  await getStyle('v2')
+  // await getStyle('v2')
   await getMenu('v3')
   // await getStyle('v3')
 }
