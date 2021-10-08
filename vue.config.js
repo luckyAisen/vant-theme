@@ -12,7 +12,7 @@ function getMobilePage() {
   return config
 }
 module.exports = {
-  publicPath: process.env.VUE_APP_PUBLICPATH, // 部署应用包时的基本 URL
+  publicPath: process.env.VUE_APP_PUBLICPATH, // 部署应用包时的基本 URL, https://cli.vuejs.org/zh/config/#publicpath
   pages: {
     index: {
       entry: 'src/pages/main/index.ts',
