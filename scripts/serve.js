@@ -5,6 +5,7 @@ const {
   copyMobilePage,
   updateMobilePageTagsInfo,
   copyMobilePageSourceToPublic,
+  updateMobilePageScriptPublicPath,
   reptiler,
   runServe
 } = require('./utils')
@@ -17,6 +18,7 @@ async function serve() {
     await copyMobilePage()
     await updateMobilePageTagsInfo()
     await copyMobilePageSourceToPublic()
+    await updateMobilePageScriptPublicPath()
     await reptiler()
   }
   runServe()

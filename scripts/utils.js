@@ -117,6 +117,25 @@ async function copyMobilePageSourceToPublic() {
 }
 
 /**
+ * 复制 mobile.html 文件中 mobile.js 中的路径
+ */
+async function updateMobilePageScriptPublicPath() {
+  logWithSpinner(`update mobile page script public path`)
+  const mobileFile = `${VANT_MOBILE_PATH}/mobile-v3/index.html`
+  const mobileFileContent = await fs.readFile(mobileFile, 'utf-8')
+  const $ = cheerio.load(mobileFileContent)
+  const fileName = $('script[src]').eq(0).attr('src').split('/').pop()
+  const targetFile = `${VANT_PATH}/v3/assets/${fileName}`
+  const jsContent = await fs.readFile(targetFile, 'utf-8')
+  const newJsContent = jsContent.replace(
+    new RegExp('assets/', 'g'),
+    './assets/'
+  )
+  await fs.writeFile(targetFile, newJsContent)
+  successSpinner(`update script public path completed`)
+}
+
+/**
  * 爬取官网菜单和样式列表
  */
 async function reptiler() {
@@ -141,6 +160,7 @@ module.exports = {
   copyMobilePage,
   updateMobilePageTagsInfo,
   copyMobilePageSourceToPublic,
+  updateMobilePageScriptPublicPath,
   reptiler,
   runServe,
   runBuild
