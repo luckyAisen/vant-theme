@@ -128,8 +128,8 @@ async function updateMobilePageScriptPublicPath() {
   const targetFile = `${VANT_PATH}/v3/assets/${fileName}`
   const jsContent = await fs.readFile(targetFile, 'utf-8')
   const newJsContent = jsContent.replace(
-    new RegExp('assets/', 'g'),
-    './assets/'
+    new RegExp('/vant/v3/', 'g'),
+    '/vant-theme/vant/v3/'
   )
   await fs.writeFile(targetFile, newJsContent)
   successSpinner(`update script public path completed`)
