@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer')
 const fs = require('fs-extra')
-// const WEBSITE = 'https://vant-contrib.gitee.io/vant'
-const WEBSITE = 'https://youzan.github.io/vant'
+const WEBSITE = 'https://vant-contrib.gitee.io/vant'
+// const WEBSITE = 'https://youzan.github.io/vant'
 const JSON_PATH = 'src/json/'
 const VERSION_MAP = {
   v2: '/',
