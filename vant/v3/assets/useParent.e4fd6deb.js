@@ -1,1 +1,0 @@
-import{M as f,H as i,C as l,D as o,J as d}from"./vue-libs.71fdcafc.js";function v(e){var n=f(e,null);if(n){var r=d(),{link:a,unlink:t,internalChildren:u}=n;a(r),i(()=>t(r));var s=l(()=>u.indexOf(r));return{parent:n,index:s}}return{parent:null,index:o(-1)}}export{v as u};

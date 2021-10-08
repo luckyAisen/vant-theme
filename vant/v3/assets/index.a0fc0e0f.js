@@ -1,1 +1,0 @@
-import{i as o}from"./utils.39620306.js";import{u as c}from"./index.92de2fdc.js";import{B as f}from"./vue-libs.71fdcafc.js";function d(i,t,s={}){if(!!o){var{eventName:a="click"}=s,n=e=>{var r=f(i);r&&!r.contains(e.target)&&t(e)};c(a,n,{target:document})}}export{d as u};
