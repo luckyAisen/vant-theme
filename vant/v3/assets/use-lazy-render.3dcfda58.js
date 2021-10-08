@@ -1,1 +1,1 @@
-import{D as a,x as e}from"./vue-libs.71fdcafc.js";function u(u){const s=a(!1);return e(u,(a=>{a&&(s.value=a)}),{immediate:!0}),a=>()=>s.value?a():null}export{u};
+import{D as i,x as r}from"./vue-libs.71fdcafc.js";function u(t){const a=i(!1);return r(t,e=>{e&&(a.value=e)},{immediate:!0}),e=>()=>a.value?e():null}export{u};

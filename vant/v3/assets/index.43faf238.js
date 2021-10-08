@@ -1,1 +1,1 @@
-import{B as t}from"./vue-libs.71fdcafc.js";function e(t,e){return{top:0,left:0,right:t,bottom:e,width:t,height:e}}var i=i=>{var n=t(i);return n===window?e(n.innerWidth,n.innerHeight):n&&n.getBoundingClientRect?n.getBoundingClientRect():e(0,0)};export{i as u};
+import{B as u}from"./vue-libs.71fdcafc.js";function o(n){return n===window}function t(n,e){return{top:0,left:0,right:n,bottom:e,width:n,height:e}}var a=n=>{var e=u(n);if(o(e)){var r=e.innerWidth,i=e.innerHeight;return t(r,i)}return e&&e.getBoundingClientRect?e.getBoundingClientRect():t(0,0)};export{a as u};

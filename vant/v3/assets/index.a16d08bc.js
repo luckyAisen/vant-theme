@@ -1,1 +1,1 @@
-import{M as a,x as e}from"./vue-libs.71fdcafc.js";var l=Symbol("van-field");function u(u){var i=a(l,null);i&&!i.customValue.value&&(i.customValue.value=u,e(u,(()=>{i.resetValidation(),i.validateWithTrigger("onChange")})))}export{l as C,u};
+import{M as i,x as l}from"./vue-libs.71fdcafc.js";var t=Symbol("van-field");function s(e){var a=i(t,null);a&&!a.customValue.value&&(a.customValue.value=e,l(e,()=>{a.resetValidation(),a.validateWithTrigger("onChange")}))}export{t as C,s as u};

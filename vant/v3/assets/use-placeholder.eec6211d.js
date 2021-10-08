@@ -1,1 +1,1 @@
-import{u as e}from"./use-height.ab6478a0.js";import{e as s}from"./vue-libs.71fdcafc.js";function a(a,o){const t=e(a);return e=>s("div",{class:o("placeholder"),style:{height:t.value?`${t.value}px`:void 0}},[e()])}export{a as u};
+import{u}from"./use-height.ab6478a0.js";import{e as i}from"./vue-libs.71fdcafc.js";function h(s,a){const e=u(s);return t=>i("div",{class:a("placeholder"),style:{height:e.value?`${e.value}px`:void 0}},[t()])}export{h as u};

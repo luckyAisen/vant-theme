@@ -1,1 +1,1 @@
-import{D as a,S as s}from"./vue-libs.71fdcafc.js";function u(){const u=a([]);s((()=>{u.value=[]}));return[u,a=>s=>{u.value[a]=s}]}export{u};
+import{D as t,S as o}from"./vue-libs.71fdcafc.js";function u(){const e=t([]);return o(()=>{e.value=[]}),[e,s=>f=>{e.value[s]=f}]}export{u};
