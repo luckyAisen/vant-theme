@@ -1,1 +1,0 @@
-import{i as n}from"./use-translate.789845f9.js";function f(r){if(!n(r))return r;if(Array.isArray(r))return r.map(e=>f(e));if(typeof r=="object"){const e={};return Object.keys(r).forEach(t=>{e[t]=f(r[t])}),e}return r}export{f as d};
