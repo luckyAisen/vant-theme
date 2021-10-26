@@ -1,1 +1,0 @@
-import{l as a,n as e}from"./use-translate.3147781c.js";function p(t,{args:f=[],done:i,canceled:s}){if(t){const l=t.apply(null,f);a(l)?l.then(r=>{r?i():s&&s()}).catch(e):l?i():s&&s()}else i()}export{p as c};
