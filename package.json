@@ -23,10 +23,11 @@
     "vant-theme"
   ],
   "scripts": {
+    "prepare": "husky install",
+    "lint": "vue-cli-service lint",
     "serve": "node scripts/serve.js",
     "build": "node scripts/build.js",
-    "lint": "vue-cli-service lint",
-    "prepare": "husky install"
+    "clean": "node scripts/clean.js"
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.11.0",
@@ -78,6 +79,6 @@
     ]
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=14.0.0"
   }
 }
