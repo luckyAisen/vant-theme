@@ -43,11 +43,9 @@ jobs:
           git config --global user.name 'Aisen60'
           git config --global user.email 'caixusheng60@gmail.com'
           git pull --unshallow
-          # 设置上游仓库
-          # git remote add upstream https://github.com/Aisen60/vant-theme.git
-          # git fetch upstream
-          git add .
-          git commit -m 'ci(github actions): update source'
+          # see: https://stackoverflow.com/questions/8123674/how-to-git-commit-nothing-without-an-error
+          git add -A
+          git diff-index --quiet HEAD || git commit -m 'ci(github actions): update source'
           git push origin main
 
       - name: Deploy gh page
