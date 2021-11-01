@@ -47,7 +47,7 @@ jobs:
           # git remote add upstream https://github.com/Aisen60/vant-theme.git
           # git fetch upstream
           git add .
-          git commit -m 'github actions ci: update source'
+          git commit -m 'ci(github actions): update source'
           git push origin main
 
 
