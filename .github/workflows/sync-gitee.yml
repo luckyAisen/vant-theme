@@ -21,6 +21,7 @@ jobs:
           # Gitee 目标仓库地址
           destination-repo: git@gitee.com:aisen60/vant-theme.git
       
+      # 绕过手机验证码：https://github.com/yanglbme/gitee-pages-action/issues/6#issuecomment-664812675
       - name: Build Gitee Pages
         uses: yanglbme/gitee-pages-action@main
         with:
