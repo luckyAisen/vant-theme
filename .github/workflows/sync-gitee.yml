@@ -2,7 +2,7 @@ name: Sync to Gitee
 
 on:
   push:
-    branches: [main, gh-pages]
+    branches: [gh-pages]
   schedule:
     - cron: "0 21 * * *"
 
@@ -20,3 +20,15 @@ jobs:
           source-repo: git@github.com:Aisen60/vant-theme.git
           # Gitee 目标仓库地址
           destination-repo: git@gitee.com:aisen60/vant-theme.git
+      
+      - name: Build Gitee Pages
+        uses: yanglbme/gitee-pages-action@main
+        with:
+          # Gitee 用户名
+          gitee-username: ${{ secrets.GITEE_USERNAME }}
+          # Gitee 密码
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}
+          # Gitee 仓库
+          gitee-repo: Aisen60/vant-theme
+          # 要部署的分支
+          branch: gh-pages
