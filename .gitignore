@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 dist
-tmp
+.VANT_SOURCE_LOCAL
 public/vant
 src/pages/mobile-v2/index.html
 src/pages/mobile-v3/index.html
