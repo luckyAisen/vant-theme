@@ -34,6 +34,9 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Husky prepare
+        run: npm run prepare
       
       - name: Commit changes
         run: |
