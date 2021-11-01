@@ -28,11 +28,27 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-              
-      - run: npm install
-      - run: npm run build
+      
+      - name: install dependencies
+        run: npm run install
 
-      - name: deploy
+      - name: build project
+        run: npm run build
+      
+      - name: commit changes
+        run: |
+          git config --global user.name 'Aisen60'
+          git config --global user.email 'caixusheng60@gmail.com'
+          git pull --unshallow
+          # 设置上游仓库
+          # git remote add upstream https://github.com/Aisen60/vant-theme.git
+          # git fetch upstream
+          git add .
+          git commit -m 'github actions ci: update source'
+          git push origin main
+
+
+      - name: deploy gh page
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
