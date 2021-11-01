@@ -1,5 +1,5 @@
 const pkg = require('./package.json')
-const { VERSION_LIST } = require('./scripts/utils')
+const { VERSION_LIST } = require('./scripts/constant.js')
 function getMobilePage() {
   const config = {}
   VERSION_LIST.map(version => {
