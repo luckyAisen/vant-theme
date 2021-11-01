@@ -1,8 +1,11 @@
 const puppeteer = require('puppeteer')
 const fs = require('fs-extra')
-// const WEBSITE = 'https://vant-contrib.gitee.io/vant'
-const WEBSITE = 'https://youzan.github.io/vant'
-const JSON_PATH = 'src/json/'
+const {
+  VANT_WEBSITE,
+  VANT_MENU_CONCAT_JSON,
+  VANT_STYLES_CONCAT_JSON
+} = require('./constant.js')
+
 const VERSION_MAP = {
   v2: '/',
   v3: '/v3'
@@ -30,7 +33,7 @@ async function initBrowser(options) {
  */
 async function getMenu(version = 'v3') {
   const page = await initBrowser()
-  await page.goto(`${WEBSITE}${VERSION_MAP[version]}/#/zh-CN`, {
+  await page.goto(`${VANT_WEBSITE}${VERSION_MAP[version]}/#/zh-CN`, {
     waitUntil: 'networkidle2'
   })
   menus = await page.evaluate(menuHandle, version)
@@ -84,7 +87,7 @@ async function getStyle(version = 'v3') {
     if (children && children.length > 0) {
       for (let item = 0; item < children.length; item++) {
         await page.goto(
-          `${WEBSITE}${VERSION_MAP[version]}/#${children[item].key}`,
+          `${VANT_WEBSITE}${VERSION_MAP[version]}/#${children[item].key}`,
           {
             waitUntil: 'networkidle2'
           }
@@ -128,7 +131,10 @@ function styleHandle() {
  * @param {String} version 版本
  */
 async function createJsonFile(type, version = 'v3', data) {
-  const path = `${JSON_PATH}${type}-${version}.json`
+  const path =
+    type === 'menus'
+      ? VANT_MENU_CONCAT_JSON(version)
+      : VANT_STYLES_CONCAT_JSON(version)
   await fs.ensureFile(path)
   await fs.outputFile(path, JSON.stringify(data))
 }
@@ -141,15 +147,17 @@ async function reptile() {
   // const promises = version.map(async v => {
   //   await getMenu(v)
   //   await getStyle(v)
+  //   return null
+  //   // return Promise.resolve()
   // })
-  // await Promise.all(promises)
+  // await Promise.all(promises).catch(err=>{
+  //   console.log(err)
+  // })
   await getMenu('v2')
-  // await getStyle('v2')
+  await getStyle('v2')
   await getMenu('v3')
-  // await getStyle('v3')
+  await getStyle('v3')
 }
-
-reptile()
 
 module.exports = {
   initBrowser,

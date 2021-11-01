@@ -1,18 +1,24 @@
 const { spawn } = require('child_process')
-const download = require('download-git-repo')
+const downloadGitRepo  = require('download-git-repo')
 const fs = require('fs-extra')
 const cheerio = require('cheerio')
-const { reptile } = require('./puppeteer')
+const { reptile }  = require('./puppeteer.js')
 const {
   logWithSpinner,
   successSpinner,
   failSpinner,
   stopSpinner
-} = require('./spinner')
-const VERSION_LIST = ['v2', 'v3']
-const TMP_PATH = 'tmp'
-const VANT_PATH = 'public/vant'
-const VANT_MOBILE_PATH = 'src/pages'
+} = require('./spinner.js')
+const {
+  VANT_GIT_REPO,
+  VANT_SOURCE_LOCAL,
+  VERSION_LIST,
+  VANT_MOBILE_PAGE_CONCAT_PATH,
+  VANT_MENU_CONCAT_JSON,
+  VANT_STYLES_CONCAT_JSON,
+  VANT_PUBLIC_PATH
+} = require('./constant.js')
+
 let versionUrlMap = { v2: [], v3: [] }
 
 /**
@@ -20,7 +26,7 @@ let versionUrlMap = { v2: [], v3: [] }
  * @param {String} path 文件路径
  * @returns {Boolean}
  */
-async function pathExists(path) {
+async function localPathExists(path) {
   logWithSpinner(`check ${path} is exists?`)
   const exists = await fs.pathExists(`${path}`)
   if (exists) {
@@ -38,7 +44,7 @@ async function pathExists(path) {
 function downloadSource() {
   logWithSpinner(`downloading vant gh pages source`)
   return new Promise((resolve, reject) => {
-    download('youzan/vant#gh-pages', TMP_PATH, function (err) {
+    downloadGitRepo(VANT_GIT_REPO, VANT_SOURCE_LOCAL, function (err) {
       if (err) {
         failSpinner('download failed')
         stopSpinner()
@@ -58,8 +64,11 @@ async function copyMobilePage() {
   logWithSpinner(`handle copy mobile page file to src`)
   const promises = VERSION_LIST.map(async v => {
     const sourceFile =
-      v === 'v2' ? `${TMP_PATH}/mobile.html` : `${TMP_PATH}/v3/mobile.html`
-    const targetFile = `${VANT_MOBILE_PATH}/mobile-${v}/index.html`
+      v === 'v2'
+        ? `${VANT_SOURCE_LOCAL}/mobile.html`
+        : `${VANT_SOURCE_LOCAL}/v3/mobile.html`
+    // const targetFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-${v}/index.html`
+    const targetFile = VANT_MOBILE_PAGE_CONCAT_PATH(v)
     return await fs.copy(sourceFile, targetFile)
   })
   await Promise.all(promises)
@@ -72,7 +81,8 @@ async function copyMobilePage() {
 async function updateMobilePageTagsInfo() {
   logWithSpinner(`update mobile page tag url`)
   const promises = VERSION_LIST.map(async v => {
-    const sourceFile = `${VANT_MOBILE_PATH}/mobile-${v}/index.html`
+    // const sourceFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-${v}/index.html`
+    const sourceFile = VANT_MOBILE_PAGE_CONCAT_PATH(v)
     const fileContent = await fs.readFile(sourceFile, 'utf-8')
     const $ = cheerio.load(fileContent)
     $('script').eq(0).remove()
@@ -104,12 +114,18 @@ async function copyMobilePageSourceToPublic() {
   const promises = VERSION_LIST.map(async v => {
     if (v === 'v2') {
       const promise = versionUrlMap.v2.map(async item => {
-        await fs.copy(`${TMP_PATH}/${item}`, `${VANT_PATH}/${item}`)
+        await fs.copy(
+          `${VANT_SOURCE_LOCAL}/${item}`,
+          `${VANT_PUBLIC_PATH}/${item}`
+        )
       })
       await Promise.all(promise)
     }
     if (v === 'v3') {
-      await fs.copy(`${TMP_PATH}/${v}/assets`, `${VANT_PATH}/${v}/assets`)
+      await fs.copy(
+        `${VANT_SOURCE_LOCAL}/${v}/assets`,
+        `${VANT_PUBLIC_PATH}/${v}/assets`
+      )
     }
   })
   await Promise.all(promises)
@@ -119,13 +135,15 @@ async function copyMobilePageSourceToPublic() {
 /**
  * 复制 mobile.html 文件中 mobile.js 中的路径
  */
-async function updateMobilePageScriptPublicPath() {
+async function updateV3MobilePageScriptPublicPath() {
   logWithSpinner(`update mobile page script public path`)
-  const mobileFile = `${VANT_MOBILE_PATH}/mobile-v3/index.html`
+  // const mobileFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-v3/index.html`
+  const version = 'v3'
+  const mobileFile = VANT_MOBILE_PAGE_CONCAT_PATH(version)
   const mobileFileContent = await fs.readFile(mobileFile, 'utf-8')
   const $ = cheerio.load(mobileFileContent)
   const fileName = $('script[src]').eq(0).attr('src').split('/').pop()
-  const targetFile = `${VANT_PATH}/v3/assets/${fileName}`
+  const targetFile = `${VANT_PUBLIC_PATH}/v3/assets/${fileName}`
   const jsContent = await fs.readFile(targetFile, 'utf-8')
   const newJsContent = jsContent.replace(
     new RegExp('/vant/v3/', 'g'),
@@ -152,16 +170,27 @@ function runBuild() {
   spawn('npx', ['vue-cli-service build'], { stdio: 'inherit', shell: true })
 }
 
+async function runClean() {
+  await fs.remove(VANT_SOURCE_LOCAL)
+  await fs.remove(VANT_PUBLIC_PATH)
+  const promises = VERSION_LIST.map(async v => {
+    await fs.remove(VANT_MENU_CONCAT_JSON(v))
+    await fs.remove(VANT_STYLES_CONCAT_JSON(v))
+    await fs.remove(VANT_MOBILE_PAGE_CONCAT_PATH(v))
+    return Promise.resolve()
+  })
+  await Promise.all(promises)
+}
+
 module.exports = {
-  VERSION_LIST,
-  VANT_MOBILE_PATH,
-  pathExists,
+  localPathExists,
   downloadSource,
   copyMobilePage,
   updateMobilePageTagsInfo,
   copyMobilePageSourceToPublic,
-  updateMobilePageScriptPublicPath,
+  updateV3MobilePageScriptPublicPath,
   reptiler,
   runServe,
-  runBuild
+  runBuild,
+  runClean
 }

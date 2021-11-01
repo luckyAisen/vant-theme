@@ -3,17 +3,17 @@ const {
   copyMobilePage,
   updateMobilePageTagsInfo,
   copyMobilePageSourceToPublic,
-  updateMobilePageScriptPublicPath,
+  updateV3MobilePageScriptPublicPath,
   reptiler,
   runBuild
-} = require('./utils')
+} = require('./utils.js')
 
 async function build() {
   await downloadSource()
   await copyMobilePage()
   await updateMobilePageTagsInfo()
   await copyMobilePageSourceToPublic()
-  await updateMobilePageScriptPublicPath()
+  await updateV3MobilePageScriptPublicPath()
   await reptiler()
   runBuild()
 }

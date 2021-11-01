@@ -1,24 +1,25 @@
+const { VANT_MOBILE_PAGE_CONCAT_PATH } = require('./constant.js')
 const {
-  VANT_MOBILE_PATH,
-  pathExists,
+  localPathExists,
   downloadSource,
   copyMobilePage,
   updateMobilePageTagsInfo,
   copyMobilePageSourceToPublic,
-  updateMobilePageScriptPublicPath,
+  updateV3MobilePageScriptPublicPath,
   reptiler,
   runServe
-} = require('./utils')
+} = require('./utils.js')
+
 
 async function serve() {
-  const v2 = `${VANT_MOBILE_PATH}/mobile-v2/index.html`
-  const v3 = `${VANT_MOBILE_PATH}/mobile-v3/index.html`
-  if (!(await pathExists(v2)) || !(await pathExists(v3))) {
+  const v2 = VANT_MOBILE_PAGE_CONCAT_PATH('v2')
+  const v3 = VANT_MOBILE_PAGE_CONCAT_PATH('v3')
+  if (!(await localPathExists(v2)) || !(await localPathExists(v3))) {
     await downloadSource()
     await copyMobilePage()
     await updateMobilePageTagsInfo()
     await copyMobilePageSourceToPublic()
-    await updateMobilePageScriptPublicPath()
+    await updateV3MobilePageScriptPublicPath()
     await reptiler()
   }
   runServe()
