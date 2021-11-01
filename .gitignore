@@ -5,6 +5,7 @@ dist
 public/vant
 src/pages/mobile-v2/index.html
 src/pages/mobile-v3/index.html
+package-lock.json
 
 
 # local env files
