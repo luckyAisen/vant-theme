@@ -1,1 +1,0 @@
-const o="van-hairline",t=`${o}--top`,s=`${o}--left`,O=`${o}--bottom`,R=`${o}--surround`,n=`${o}--top-bottom`,a=`${o}-unset--top-bottom`,B=Symbol("van-form");export{R as B,B as F,a,n as b,t as c,o as d,s as e,O as f};

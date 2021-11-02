@@ -1,0 +1,1 @@
+import{I as s}from"./vue-libs.311a0de3.js";const c={to:[String,Object],url:String,replace:Boolean};function u(e){const o=e.$router,{to:t,url:r,replace:n}=e;t&&o?o[n?"replace":"push"](t):r&&(n?location.replace(r):location.href=r)}function l(){const e=s().proxy;return()=>u(e)}export{u as a,c as r,l as u};
