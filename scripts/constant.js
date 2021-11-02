@@ -1,5 +1,5 @@
-// const VANT_WEBSITE = 'https://youzan.github.io/vant'
-const VANT_WEBSITE = 'https://vant-contrib.gitee.io/vant'
+const VANT_WEBSITE = 'https://youzan.github.io/vant'
+// const VANT_WEBSITE = 'https://vant-contrib.gitee.io/vant'
 const VANT_GIT_REPO = 'youzan/vant#gh-pages'
 const VANT_SOURCE_LOCAL = '.VANT_SOURCE_LOCAL'
 const VERSION_LIST = ['v2', 'v3']
