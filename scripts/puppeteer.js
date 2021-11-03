@@ -10,21 +10,18 @@ const VERSION_MAP = {
   v2: '/',
   v3: '/v3'
 }
-let browser = null
-let menus = []
-let styles = []
 
 /**
  * 初始化 puppeteer
  * @returns
  */
 async function initBrowser(options) {
-  browser = await puppeteer.launch({
+  const browser = await puppeteer.launch({
     // headless: false,
     ...options
   })
   const page = await browser.newPage()
-  return page
+  return { page, browser }
 }
 
 /**
@@ -32,13 +29,14 @@ async function initBrowser(options) {
  * @param {String} version 版本
  */
 async function getMenu(version = 'v3') {
-  const page = await initBrowser()
+  const { page, browser } = await initBrowser()
   await page.goto(`${VANT_WEBSITE}${VERSION_MAP[version]}/#/zh-CN`, {
     waitUntil: 'networkidle2'
   })
-  menus = await page.evaluate(menuHandle, version)
+  const menus = await page.evaluate(menuHandle, version)
   await createJsonFile('menus', version, menus)
   await browser.close()
+  return menus
 }
 
 /**
@@ -80,8 +78,9 @@ function menuHandle(version = 'v3') {
  * @param {String} version 版本
  */
 async function getStyle(version = 'v3') {
-  styles = []
-  const page = await initBrowser()
+  const styles = []
+  const menus = await getMenu(version)
+  const { page, browser } = await initBrowser()
   for (let group = 0; group < menus.length; group++) {
     const children = menus[group].children
     if (children && children.length > 0) {
@@ -143,20 +142,12 @@ async function createJsonFile(type, version = 'v3', data) {
  * 爬取页面数据
  */
 async function reptile() {
-  // const version = ['v2', 'v3']
-  // const promises = version.map(async v => {
-  //   await getMenu(v)
-  //   await getStyle(v)
-  //   return null
-  //   // return Promise.resolve()
-  // })
-  // await Promise.all(promises).catch(err=>{
-  //   console.log(err)
-  // })
-  await getMenu('v2')
-  await getStyle('v2')
-  await getMenu('v3')
-  await getStyle('v3')
+  const version = ['v2', 'v3']
+  for (let i = 0; i < version.length; i++) {
+    const v = version[i]
+    await getMenu(v)
+    await getStyle(v)
+  }
 }
 
 module.exports = {
