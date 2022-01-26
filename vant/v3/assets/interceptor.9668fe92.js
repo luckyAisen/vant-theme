@@ -1,1 +1,0 @@
-import{r as a,s as e}from"./use-translate.fc1c5607.js";function p(t,{args:l=[],done:f,canceled:s}){if(t){const i=t.apply(null,l);a(i)?i.then(r=>{r?f():s&&s()}).catch(e):i?f():s&&s()}else f()}export{p as c};
