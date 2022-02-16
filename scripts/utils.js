@@ -64,9 +64,9 @@ async function copyMobilePage() {
   logWithSpinner(`handle copy mobile page file to src`)
   const promises = VERSION_LIST.map(async v => {
     const sourceFile =
-      v === 'v2'
+      v === 'v3'
         ? `${VANT_SOURCE_LOCAL}/mobile.html`
-        : `${VANT_SOURCE_LOCAL}/v3/mobile.html`
+        : `${VANT_SOURCE_LOCAL}/v2/mobile.html`
     // const targetFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-${v}/index.html`
     const targetFile = VANT_MOBILE_PAGE_CONCAT_PATH(v)
     return await fs.copy(sourceFile, targetFile)
@@ -123,8 +123,8 @@ async function copyMobilePageSourceToPublic() {
     }
     if (v === 'v3') {
       await fs.copy(
-        `${VANT_SOURCE_LOCAL}/${v}/assets`,
-        `${VANT_PUBLIC_PATH}/${v}/assets`
+        `${VANT_SOURCE_LOCAL}/assets`,
+        `${VANT_PUBLIC_PATH}/assets`
       )
     }
   })
@@ -143,13 +143,13 @@ async function updateV3MobilePageScriptPublicPath() {
   const mobileFileContent = await fs.readFile(mobileFile, 'utf-8')
   const $ = cheerio.load(mobileFileContent)
   const fileName = $('script[src]').eq(0).attr('src').split('/').pop()
-  const targetFile = `${VANT_PUBLIC_PATH}/v3/assets/${fileName}`
+  const targetFile = `${VANT_PUBLIC_PATH}/assets/${fileName}`
   const jsContent = await fs.readFile(targetFile, 'utf-8')
   const newJsContent = jsContent.replace(
     new RegExp('/vant/v3/', 'g'),
     '/vant-theme/vant/v3/'
   )
-  await fs.writeFile(targetFile, newJsContent)
+  await fs.writeFile(targetFile, jsContent)
   successSpinner(`update script public path completed`)
 }
 

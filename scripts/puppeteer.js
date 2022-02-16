@@ -7,7 +7,7 @@ const {
 } = require('./constant.js')
 
 const VERSION_MAP = {
-  v2: '/',
+  v2: '/v2',
   v3: '/v3'
 }
 
