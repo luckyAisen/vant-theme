@@ -42,7 +42,9 @@ jobs:
         run: |
           git config --global user.name 'Aisen60'
           git config --global user.email 'caixusheng60@gmail.com'
+          git stash
           git pull --unshallow
+          git stash pop
           # see: https://stackoverflow.com/questions/8123674/how-to-git-commit-nothing-without-an-error
           git add -A
           git diff-index --quiet HEAD || git commit -m 'ci(github actions): update source'
