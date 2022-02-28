@@ -6,7 +6,7 @@ import {
   copyMobilePage,
   // updateMobilePageTagsInfo,
   copyMobilePageSourceToPublic,
-  // updateV3MobilePageScriptPublicPath,
+  updateV3MobilePageScriptPublicPath,
   insertMobilePageScript,
   reptiler,
   runServe,
@@ -19,6 +19,7 @@ async function serve() {
     await downloadSource();
     await copyMobilePage();
     await copyMobilePageSourceToPublic();
+    await updateV3MobilePageScriptPublicPath();
     await insertMobilePageScript();
     await reptiler();
   }
