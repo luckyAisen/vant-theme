@@ -140,8 +140,8 @@ export async function updateV3MobilePageScriptPublicPath() {
   const targetFile = `${VANT_PUBLIC_PATH}/assets/${fileName}`;
   const jsContent = await fs.readFile(targetFile, "utf-8");
   const newJsContent = jsContent.replace(
-    new RegExp("/vant/v3/", "g"),
-    "/vant-theme/vant/v3/"
+    new RegExp("l.href=i", "g"),
+    "l.href='/vant-theme' + i"
   );
   await fs.writeFile(targetFile, newJsContent);
   successSpinner(`update script public path completed`);
