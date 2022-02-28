@@ -1,44 +1,44 @@
-import { Property } from '@/constant/interface'
+import type { Property } from "@/utils/interface";
 
 function parse(value: string): string {
-  let newValue
+  let newValue;
   try {
-    newValue = JSON.parse(value)
+    newValue = JSON.parse(value);
   } catch {
-    newValue = newValue || null
+    newValue = newValue || null;
   }
-  return newValue
+  return newValue;
 }
 
 function stringify(
   value: string | number | Property
 ): string | null | undefined {
-  let newValue
+  let newValue;
   try {
-    newValue = JSON.stringify(value)
+    newValue = JSON.stringify(value);
   } catch {
-    newValue = newValue || null
+    newValue = newValue || null;
   }
-  return newValue
+  return newValue;
 }
 
 export default function useLocalStorage(): Property {
   function setItem(key: string, value: string | number | Property) {
-    const newValue = stringify(value)
-    window.localStorage.setItem(key, newValue as string)
+    const newValue = stringify(value);
+    window.localStorage.setItem(key, newValue as string);
   }
 
   function getItem(key: string): string | number | Property | null {
-    const value = window.localStorage.getItem(key)
+    const value = window.localStorage.getItem(key);
     if (value) {
-      const newValue = parse(value)
-      return newValue
+      const newValue = parse(value);
+      return newValue;
     }
-    return value
+    return value;
   }
 
   return {
     setItem,
-    getItem
-  }
+    getItem,
+  };
 }

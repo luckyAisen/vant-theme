@@ -1,7 +1,7 @@
-const { runClean } = require('./utils.js')
+import { runClean } from "./utils.js";
 
 async function clean() {
-  await runClean()
+  await runClean();
 }
 
-clean()
+clean();

@@ -1,21 +1,19 @@
-const {
+import {
   downloadSource,
   copyMobilePage,
-  updateMobilePageTagsInfo,
+  // updateMobilePageTagsInfo,
   copyMobilePageSourceToPublic,
-  updateV3MobilePageScriptPublicPath,
+  // updateV3MobilePageScriptPublicPath,
   reptiler,
-  runBuild
-} = require('./utils.js')
+  runBuild,
+} from "./utils.js";
 
 async function build() {
-  await downloadSource()
-  await copyMobilePage()
-  await updateMobilePageTagsInfo()
-  await copyMobilePageSourceToPublic()
-  await updateV3MobilePageScriptPublicPath()
-  await reptiler()
-  runBuild()
+  await downloadSource();
+  await copyMobilePage();
+  await copyMobilePageSourceToPublic();
+  await reptiler();
+  runBuild();
 }
 
-build()
+build();
