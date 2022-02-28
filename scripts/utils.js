@@ -42,15 +42,15 @@ export async function localPathExists(path) {
  * @returns
  */
 export function downloadSource() {
-  logWithSpinner(`downloading vant gh pages source`);
+  logWithSpinner(`downloading vant gh pages source start`);
   return new Promise((resolve, reject) => {
     downloadGitRepo(VANT_GIT_REPO, VANT_SOURCE_LOCAL, function (err) {
       if (err) {
-        failSpinner("download failed");
+        failSpinner("downloading vant gh pages source failed");
         stopSpinner();
         reject();
       } else {
-        successSpinner("download success");
+        successSpinner("downloading vant gh pages source completed");
         resolve();
       }
     });
@@ -61,7 +61,7 @@ export function downloadSource() {
  * 复制 mobile 文件到 src/pages 中
  */
 export async function copyMobilePage() {
-  logWithSpinner(`handle copy mobile page file to src`);
+  logWithSpinner(`handle copy mobile page file to src start`);
   const promises = VERSION_LIST.map(async (v) => {
     const sourceFile =
       v === "v3"
@@ -72,14 +72,14 @@ export async function copyMobilePage() {
     return await fs.copy(sourceFile, targetFile);
   });
   await Promise.all(promises);
-  successSpinner(`copy file completed`);
+  successSpinner(`handle copy mobile page file to src completed`);
 }
 
 /**
  * 修改 mobile 文件 标签信息
  */
 export async function updateMobilePageTagsInfo() {
-  logWithSpinner(`update mobile page tag url`);
+  logWithSpinner(`update mobile page tag url start`);
   const promises = VERSION_LIST.map(async (v) => {
     // const sourceFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-${v}/index.html`
     const sourceFile = VANT_MOBILE_PAGE_CONCAT_PATH(v);
@@ -103,14 +103,14 @@ export async function updateMobilePageTagsInfo() {
     await fs.writeFile(sourceFile, $.html());
   });
   await Promise.all(promises);
-  successSpinner(`update tag url completed`);
+  successSpinner(`update mobile page tag url completed`);
 }
 
 /**
  * 复制 mobile 文件中所需的资源到 public 目录下
  */
 export async function copyMobilePageSourceToPublic() {
-  logWithSpinner(`copy mobile source to public`);
+  logWithSpinner(`copy mobile source to public start`);
   const promises = VERSION_LIST.map(async (v) => {
     if (v === "v2") {
       await fs.copy(`${VANT_SOURCE_LOCAL}/${v}`, `${VANT_PUBLIC_PATH}/${v}`);
@@ -123,14 +123,14 @@ export async function copyMobilePageSourceToPublic() {
     }
   });
   await Promise.all(promises);
-  successSpinner(`copy mobile source completed`);
+  successSpinner(`copy mobile source to public completed`);
 }
 
 /**
  * 复制 mobile.html 文件中 mobile.js 中的路径
  */
 export async function updateV3MobilePageScriptPublicPath() {
-  logWithSpinner(`update mobile page script public path`);
+  logWithSpinner(`update mobile page script public path start`);
   // const mobileFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-v3/index.html`
   const version = "v3";
   const mobileFile = VANT_MOBILE_PAGE_CONCAT_PATH(version);
@@ -144,7 +144,7 @@ export async function updateV3MobilePageScriptPublicPath() {
     "l.href='/vant-theme' + i"
   );
   await fs.writeFile(targetFile, newJsContent);
-  successSpinner(`update script public path completed`);
+  successSpinner(`update mobile page script public path completed`);
 }
 
 /**
@@ -168,9 +168,9 @@ export async function insertMobilePageScript() {
  * 爬取官网菜单和样式列表
  */
 export async function reptiler() {
-  logWithSpinner(`reptile vant docs menu and styles `);
+  logWithSpinner(`reptile vant docs menu and styles start`);
   await reptile();
-  successSpinner(`reptile vant menu and styles completed`);
+  successSpinner(`reptile vant docs menu and styles completed`);
 }
 
 export function runServe() {
