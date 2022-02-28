@@ -1,0 +1,56 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+  schedule:
+    - cron: "0 21 * * *"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Husky prepare
+        run: npm run prepare
+      
+      - name: Commit changes
+        run: |
+          git config --global user.name 'Aisen60'
+          git config --global user.email 'caixusheng60@gmail.com'
+          git pull --unshallow
+          # see: https://stackoverflow.com/questions/8123674/how-to-git-commit-nothing-without-an-error
+          git add -A
+          git diff-index --quiet HEAD || git commit -m 'ci(github actions): update source'
+          git push origin main --force
+
+      - name: Deploy gh page
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GH_PAGES }}
+          publish_dir: ./dist
