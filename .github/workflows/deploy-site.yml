@@ -48,9 +48,14 @@ jobs:
       - name: Commit changes
         run: |
           # see: https://stackoverflow.com/questions/8123674/how-to-git-commit-nothing-without-an-error
-          git add -A
-          git diff-index --quiet HEAD || git commit -m 'ci(github actions): update source'
-          git push origin main --force
+          # git add -A
+          # git diff-index --quiet HEAD || git commit -m 'ci(github actions): update source'
+          # git push origin main --force
+          if [ -n "$(git status -s)" ];then
+            git add .
+            git commit -m "ci(github actions): update source"
+            git push -f
+          fi
 
       - name: Deploy gh page
         uses: peaceiris/actions-gh-pages@v3
