@@ -28,23 +28,25 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
+      - name: Set git config
+        run: |
+          git config --global user.name 'Aisen60'
+          git config --global user.email 'caixusheng60@gmail.com'
+          git checkout main
+          git pull --unshallow
       
       - name: Install dependencies
         run: npm install
 
+      - name: Husky prepare
+        run: npm run prepare
+
       - name: Build project
         run: npm run build
 
-      - name: Husky prepare
-        run: npm run prepare
-      
       - name: Commit changes
         run: |
-          git config --global user.name 'Aisen60'
-          git config --global user.email 'caixusheng60@gmail.com'
-          git stash
-          git pull --unshallow
-          git stash pop
           # see: https://stackoverflow.com/questions/8123674/how-to-git-commit-nothing-without-an-error
           git add -A
           git diff-index --quiet HEAD || git commit -m 'ci(github actions): update source'
