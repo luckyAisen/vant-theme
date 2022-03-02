@@ -2,6 +2,7 @@
   <n-space justify="space-between" align="center" class="app-header-container">
     <n-space class="header-logo">
       <router-link to="/"> {{ title }} </router-link>
+      <span>（适用于 Vant 3）</span>
     </n-space>
     <n-space justify="space-between">
       <a
