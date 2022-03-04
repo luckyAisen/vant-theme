@@ -80,12 +80,14 @@ export const APP_STYLE_LIST: Style[] = [
       "--van-danger-color",
       "--van-warning-color",
       "--van-text-color",
+      "--van-text-color-2",
+      "--van-text-color-3",
+      "--van-text-link-color",
       "--van-active-color",
       "--van-active-opacity",
       "--van-disabled-opacity",
       "--van-background-color",
       "--van-background-color-light",
-      "--van-text-link-color",
 
       "--van-padding-base",
       "--van-padding-xs",
@@ -98,7 +100,6 @@ export const APP_STYLE_LIST: Style[] = [
       "--van-font-size-sm",
       "--van-font-size-md",
       "--van-font-size-lg",
-
       "--van-font-weight-bold",
       "--van-line-height-xs",
       "--van-line-height-sm",
