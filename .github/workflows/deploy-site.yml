@@ -3,8 +3,7 @@ name: GitHub Pages
 on:
   push:
     branches:
-      - main
-  pull_request:
+      - dev
   schedule:
     - cron: "0 21 * * *"
 

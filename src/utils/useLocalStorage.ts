@@ -1,4 +1,7 @@
-import type { Property } from "@/utils/interface";
+interface Dispatch {
+  getItem: (key: string) => unknown;
+  setItem: (key: string, value: unknown) => void;
+}
 
 function parse(value: string): string {
   let newValue;
@@ -10,9 +13,7 @@ function parse(value: string): string {
   return newValue;
 }
 
-function stringify(
-  value: string | number | Property
-): string | null | undefined {
+function stringify(value: unknown): string | null | undefined {
   let newValue;
   try {
     newValue = JSON.stringify(value);
@@ -22,13 +23,8 @@ function stringify(
   return newValue;
 }
 
-export default function useLocalStorage(): Property {
-  function setItem(key: string, value: string | number | Property) {
-    const newValue = stringify(value);
-    window.localStorage.setItem(key, newValue as string);
-  }
-
-  function getItem(key: string): string | number | Property | null {
+export default function useLocalStorage(): Dispatch {
+  function getItem(key: string): unknown {
     const value = window.localStorage.getItem(key);
     if (value) {
       const newValue = parse(value);
@@ -37,8 +33,13 @@ export default function useLocalStorage(): Property {
     return value;
   }
 
+  function setItem(key: string, value: unknown) {
+    const newValue = stringify(value);
+    window.localStorage.setItem(key, newValue as string);
+  }
+
   return {
-    setItem,
     getItem,
+    setItem,
   };
 }

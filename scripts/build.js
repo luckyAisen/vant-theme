@@ -1,22 +1,39 @@
+import { VERSION_LIST, VANT_MOBILE_PAGE_CONCAT_PATH } from "./constant.js";
 import {
-  downloadSource,
-  copyMobilePage,
-  // updateMobilePageTagsInfo,
-  copyMobilePageSourceToPublic,
-  updateV3MobilePageScriptPublicPath,
-  insertMobilePageScript,
-  reptiler,
+  localPathExists,
+  downloadVantGhSource,
+  initializeVantPublic,
+  copyVantAssetsToPublic,
+  copyVantMobilePage,
+  updateMobilePageTagsInfo,
+  updateMobileJSPath,
+  // insertMobileScript,
+  reptileMenu,
+  reptileCSSVariables,
   runBuild,
+  runClean,
 } from "./utils.js";
 
-async function build() {
-  await downloadSource();
-  await copyMobilePage();
-  await copyMobilePageSourceToPublic();
-  await updateV3MobilePageScriptPublicPath();
-  await insertMobilePageScript();
-  await reptiler();
-  runBuild();
-}
+const build = async () => {
+  await runClean();
+  await downloadVantGhSource();
+  await initializeVantPublic();
+  const version = VERSION_LIST;
+  for (let i = 0; i < version.length; i++) {
+    const v = version[i];
+    const mobilePath = VANT_MOBILE_PAGE_CONCAT_PATH(v);
+    if (!(await localPathExists(mobilePath))) {
+      await copyVantAssetsToPublic(v);
+      await copyVantMobilePage(v);
+      await updateMobilePageTagsInfo(v);
+      await updateMobileJSPath(v);
+      // await insertMobileScript(v);
+      const menus = await reptileMenu(v, "zh-CN");
+      await reptileMenu(v, "en-US");
+      await reptileCSSVariables(v, menus);
+    }
+  }
+  await runBuild();
+};
 
 build();

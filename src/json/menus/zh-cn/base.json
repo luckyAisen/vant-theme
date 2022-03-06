@@ -1,0 +1,11 @@
+{
+  "type": "group",
+  "label": "基础样式变量",
+  "key": "base group",
+  "children": [
+    {
+      "label": "基础样式",
+      "key": "base"
+    }
+  ]
+}

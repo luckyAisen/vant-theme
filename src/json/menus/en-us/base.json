@@ -1,0 +1,11 @@
+{
+  "type": "group",
+  "label": "Basic Css Variables",
+  "key": "base group",
+  "children": [
+    {
+      "label": "Base",
+      "key": "base"
+    }
+  ]
+}

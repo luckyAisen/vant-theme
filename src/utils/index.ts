@@ -1,38 +1,20 @@
 import dayjs from "dayjs";
-import type { Style, Attr } from "@/utils/interface";
+import type { Attr, Preview } from "@/utils/interface";
 import { saveAs } from "file-saver";
 
-export const doc = document.documentElement;
+export const docBody = document.body;
 
-export function getVarStyle(name: string, el = doc): string {
-  return getComputedStyle(el).getPropertyValue(name);
-}
+export const docIframe =
+  document.querySelector("iframe")?.contentWindow?.document?.body;
 
-export function setVarStyle(key: string, value: string, el = doc): void {
-  el.style.setProperty(key, value);
-}
-
-export function setVarStyleByConfig(
-  config: { [propName: string]: string },
-  el = doc
-): void {
-  for (const varName in config) {
-    const varValue = config[varName] as string;
-    setVarStyle(varName, varValue, el);
-  }
-}
-
-export function clearStyle(el = doc): void {
-  el.setAttribute("style", "");
-}
-
-export function getComponentStyle(
-  stylesItem: Style = { id: "", styles: [] }
+export function getPageCssVarByConfig(
+  componentStyles: string[],
+  el = docBody
 ): Attr[] {
   const attrsList: Attr[] = [];
-  stylesItem.styles.map((style) => {
+  componentStyles.forEach((style) => {
     const varName = style;
-    const varValue = getVarStyle(style);
+    const varValue = getPageCssVar(style, el);
     const obj: Attr = {
       varName,
       varValue,
@@ -46,6 +28,25 @@ export function getComponentStyle(
     attrsList.push(obj);
   });
   return attrsList;
+}
+
+export function getPageCssVar(name: string, el = docBody): string {
+  return window.getComputedStyle(el).getPropertyValue(name);
+}
+
+export function setPageCssVarByConfig(config: Preview, el = docBody) {
+  for (const varName in config) {
+    const varValue = config[varName];
+    setPageCssVar(varName, varValue, el);
+  }
+}
+
+export function setPageCssVar(name: string, value: string, el = docBody) {
+  el.style.setProperty(name, value);
+}
+
+export function clearStyle(el = docBody) {
+  el.setAttribute("style", "");
 }
 
 export function getTime(): number {

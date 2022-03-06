@@ -1,29 +1,55 @@
-import { VANT_MOBILE_PAGE_CONCAT_PATH } from "./constant.js";
-
+import {
+  VANT_SOURCE_LOCAL,
+  VERSION_LIST,
+  VANT_MOBILE_PAGE_CONCAT_PATH,
+} from "./constant.js";
 import {
   localPathExists,
-  downloadSource,
-  copyMobilePage,
-  // updateMobilePageTagsInfo,
-  copyMobilePageSourceToPublic,
-  updateV3MobilePageScriptPublicPath,
-  insertMobilePageScript,
-  reptiler,
+  downloadVantGhSource,
+  initializeVantPublic,
+  copyVantAssetsToPublic,
+  copyVantMobilePage,
+  updateMobilePageTagsInfo,
+  updateMobileJSPath,
+  // insertMobileScript,
+  reptileMenu,
+  reptileCSSVariables,
   runServe,
 } from "./utils.js";
 
-async function serve() {
-  const v2 = VANT_MOBILE_PAGE_CONCAT_PATH("v2");
-  const v3 = VANT_MOBILE_PAGE_CONCAT_PATH("v3");
-  if (!(await localPathExists(v2)) || !(await localPathExists(v3))) {
-    await downloadSource();
-    await copyMobilePage();
-    await copyMobilePageSourceToPublic();
-    await updateV3MobilePageScriptPublicPath();
-    await insertMobilePageScript();
-    await reptiler();
+const serve = async () => {
+  if (!(await localPathExists(VANT_SOURCE_LOCAL))) {
+    await downloadVantGhSource();
+    await initializeVantPublic();
   }
-  runServe();
-}
+  const version = VERSION_LIST;
+  for (let i = 0; i < version.length; i++) {
+    const v = version[i];
+    const mobilePath = VANT_MOBILE_PAGE_CONCAT_PATH(v);
+    if (!(await localPathExists(mobilePath))) {
+      await copyVantAssetsToPublic(v);
+      await copyVantMobilePage(v);
+      await updateMobilePageTagsInfo(v);
+      await updateMobileJSPath(v);
+      // await insertMobileScript(v);
+      const menus = await reptileMenu(v, "zh-CN");
+      await reptileMenu(v, "en-US");
+      await reptileCSSVariables(v, menus);
+    }
+  }
+  await runServe();
+};
 
 serve();
+// initializeVantPublic();
+// copyVantAssetsToPublic("v3");
+// copyVantMobilePage("v4");
+// updateMobilePageTagsInfo("v4");
+// updateMobileJSPath("v3");
+// reptileMenu("v2", "zh-CN");
+// reptileMenu("v2", "en-US");
+// reptileMenu("v3", "zh-CN");
+// reptileMenu("v3", "en-US");
+// reptileMenu("v4", "zh-CN");
+// reptileMenu("v4", "en-US");
+// reptileCSSVariables("v2");

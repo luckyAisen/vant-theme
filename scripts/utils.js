@@ -1,15 +1,11 @@
+import { resolve } from "path";
 import { spawn } from "child_process";
 import downloadGitRepo from "download-git-repo";
 import fs from "fs-extra";
 import cheerio from "cheerio";
-import { reptile } from "./puppeteer.js";
+import puppeteer from "puppeteer";
 import {
-  logWithSpinner,
-  successSpinner,
-  failSpinner,
-  stopSpinner,
-} from "./spinner.js";
-import {
+  VANT_WEBSITE,
   VANT_GIT_REPO,
   VANT_SOURCE_LOCAL,
   VERSION_LIST,
@@ -18,193 +14,347 @@ import {
   VANT_STYLES_CONCAT_JSON,
   VANT_PUBLIC_PATH,
 } from "./constant.js";
+import {
+  logWithSpinner,
+  successSpinner,
+  failSpinner,
+  stopSpinner,
+} from "./spinner.js";
 
-let versionUrlMap = { v2: [], v3: [] };
+export const pathResolve = (dir) => {
+  return resolve(dir);
+};
 
 /**
  * 判断文件是否存在
  * @param {String} path 文件路径
- * @returns {Boolean}
  */
-export async function localPathExists(path) {
-  logWithSpinner(`check ${path} is exists?`);
-  const exists = await fs.pathExists(`${path}`);
+export const localPathExists = async (path) => {
+  const newPath = pathResolve(path);
+  logWithSpinner(`check ${newPath} is exists`);
+  const exists = await fs.pathExists(`${newPath}`);
   if (exists) {
-    successSpinner(`${path} is exists`);
+    successSpinner(`${newPath} is exists`);
   } else {
-    failSpinner(`${path} no exists`);
+    failSpinner(`${newPath} no exists`);
   }
   return exists;
-}
+};
 
 /**
  * 下载 vant gh pages 资源
- * @returns
  */
-export function downloadSource() {
-  logWithSpinner(`downloading vant gh pages source start`);
+export const downloadVantGhSource = () => {
   return new Promise((resolve, reject) => {
+    logWithSpinner(`downloading vant gh pages source start`);
     downloadGitRepo(VANT_GIT_REPO, VANT_SOURCE_LOCAL, function (err) {
       if (err) {
         failSpinner("downloading vant gh pages source failed");
         stopSpinner();
         reject();
       } else {
-        successSpinner("downloading vant gh pages source completed");
+        successSpinner("downloading vant gh pages source complete");
         resolve();
       }
     });
   });
-}
+};
+
+/**
+ * 初始化 vant 静态资源文件夹
+ */
+export const initializeVantPublic = async () => {
+  logWithSpinner(`initialize vant public path start`);
+  await fs.ensureDir(pathResolve(VANT_PUBLIC_PATH));
+  successSpinner(`initialize vant public path complete`);
+};
+
+/**
+ * 复制 vant gh pages 资源到 public 文件夹
+ * @param {String} v 版本
+ */
+export const copyVantAssetsToPublic = async (v) => {
+  let src;
+  let dest;
+  switch (v) {
+    case "v2":
+      src = `${VANT_SOURCE_LOCAL}/${v}`;
+      dest = `${VANT_PUBLIC_PATH}/${v}`;
+      break;
+    case "v3":
+      src = `${VANT_SOURCE_LOCAL}/assets`;
+      dest = `${VANT_PUBLIC_PATH}/${v}`;
+      break;
+    case "v4":
+      src = `${VANT_SOURCE_LOCAL}/${v}/assets`;
+      dest = `${VANT_PUBLIC_PATH}/${v}`;
+      break;
+  }
+  logWithSpinner(`copy vant assets to ${dest} start`);
+  await fs.copy(src, dest);
+  successSpinner(`copy vant assets to ${dest} complete`);
+};
 
 /**
  * 复制 mobile 文件到 src/pages 中
+ * @param {String} v 版本
  */
-export async function copyMobilePage() {
-  logWithSpinner(`handle copy mobile page file to src start`);
-  const promises = VERSION_LIST.map(async (v) => {
-    const sourceFile =
-      v === "v3"
-        ? `${VANT_SOURCE_LOCAL}/mobile.html`
-        : `${VANT_SOURCE_LOCAL}/v2/mobile.html`;
-    // const targetFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-${v}/index.html`
-    const targetFile = VANT_MOBILE_PAGE_CONCAT_PATH(v);
-    return await fs.copy(sourceFile, targetFile);
-  });
-  await Promise.all(promises);
-  successSpinner(`handle copy mobile page file to src completed`);
-}
+export const copyVantMobilePage = async (v) => {
+  let src;
+  const dest = VANT_MOBILE_PAGE_CONCAT_PATH(v);
+  switch (v) {
+    case "v2":
+    case "v4":
+      src = `${VANT_SOURCE_LOCAL}/${v}/mobile.html`;
+      break;
+    case "v3":
+      src = `${VANT_SOURCE_LOCAL}/mobile.html`;
+      break;
+  }
+  logWithSpinner(`copy mobile page to ${dest} start`);
+  await fs.copy(src, dest);
+  successSpinner(`copy mobile page to ${dest} complete`);
+};
 
 /**
- * 修改 mobile 文件 标签信息
+ * 修改 mobile 页面中静态资源路径
+ * @param {String} v 版本
  */
-export async function updateMobilePageTagsInfo() {
-  logWithSpinner(`update mobile page tag url start`);
-  const promises = VERSION_LIST.map(async (v) => {
-    // const sourceFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-${v}/index.html`
-    const sourceFile = VANT_MOBILE_PAGE_CONCAT_PATH(v);
-    const fileContent = await fs.readFile(sourceFile, "utf-8");
-    const $ = cheerio.load(fileContent);
-    $("script").eq(0).remove();
-    const tags = {
-      "script[src]": "src",
-      'link[rel="modulepreload"]': "href",
-      'link[rel="stylesheet"]': "href",
-    };
-    for (let tag in tags) {
-      const selector = $(tag);
-      const type = tags[tag];
-      selector.each(function () {
-        const src = $(this).attr(type).slice(1);
-        versionUrlMap[v].push(src.split("vant/")[1]);
-        $(this).attr(type, `<%= BASE_URL %>${src}`);
-      });
-    }
-    await fs.writeFile(sourceFile, $.html());
-  });
-  await Promise.all(promises);
-  successSpinner(`update mobile page tag url completed`);
-}
+export const updateMobilePageTagsInfo = async (v) => {
+  const src = VANT_MOBILE_PAGE_CONCAT_PATH(v);
+  logWithSpinner(`update ${src} page tag url start`);
+  const fileContent = await fs.readFile(src, "utf-8");
+  const $ = cheerio.load(fileContent);
+  const tags = {
+    "script[src]": "src",
+    'link[rel="modulepreload"]': "href",
+    'link[rel="stylesheet"]': "href",
+  };
+  for (let tag in tags) {
+    const selector = $(tag);
+    const type = tags[tag];
+    selector.each(function () {
+      let regExpStr;
+      let replaceStr;
+      switch (v) {
+        case "v2":
+          regExpStr = "/vant/v2";
+          replaceStr = `/vant/${v}`;
+          break;
+        case "v3":
+          regExpStr = "/vant/assets";
+          replaceStr = `/vant/${v}`;
+          break;
+        case "v4":
+          regExpStr = `/vant/${v}/assets`;
+          replaceStr = `/vant/${v}`;
+          break;
+      }
+      const newUrl = $(this)
+        .attr(type)
+        .replace(new RegExp(regExpStr, "g"), replaceStr);
+      $(this).attr(type, newUrl);
+    });
+  }
+  await fs.writeFile(src, $.html());
+  successSpinner(`update ${src} page tag url complete`);
+};
 
 /**
- * 复制 mobile 文件中所需的资源到 public 目录下
+ * 修改 mobile.js 中的模块引入路径
+ * @param {String} v 版本
  */
-export async function copyMobilePageSourceToPublic() {
-  logWithSpinner(`copy mobile source to public start`);
-  const promises = VERSION_LIST.map(async (v) => {
-    if (v === "v2") {
-      await fs.copy(`${VANT_SOURCE_LOCAL}/${v}`, `${VANT_PUBLIC_PATH}/${v}`);
-    }
-    if (v === "v3") {
-      await fs.copy(
-        `${VANT_SOURCE_LOCAL}/assets`,
-        `${VANT_PUBLIC_PATH}/assets`
-      );
-    }
-  });
-  await Promise.all(promises);
-  successSpinner(`copy mobile source to public completed`);
-}
-
-/**
- * 复制 mobile.html 文件中 mobile.js 中的路径
- */
-export async function updateV3MobilePageScriptPublicPath() {
-  logWithSpinner(`update mobile page script public path start`);
-  // const mobileFile = `${VANT_MOBILE_LOCAL_PREFIX}/mobile-v3/index.html`
-  const version = "v3";
-  const mobileFile = VANT_MOBILE_PAGE_CONCAT_PATH(version);
-  const mobileFileContent = await fs.readFile(mobileFile, "utf-8");
-  const $ = cheerio.load(mobileFileContent);
+export const updateMobileJSPath = async (v) => {
+  logWithSpinner(`update mobile${v}.js path start`);
+  if (v === "v2") {
+    successSpinner(`mobile${v}.js no need update`);
+    return;
+  }
+  const src = VANT_MOBILE_PAGE_CONCAT_PATH(v);
+  const srcContent = await fs.readFile(src, "utf-8");
+  const $ = cheerio.load(srcContent);
   const fileName = $("script[src]").eq(0).attr("src").split("/").pop();
-  const targetFile = `${VANT_PUBLIC_PATH}/assets/${fileName}`;
+  const targetFile = `${VANT_PUBLIC_PATH}/${v}/${fileName}`;
   const jsContent = await fs.readFile(targetFile, "utf-8");
+  const regExpStr = "l.href=i";
+  let replaceStr;
+  switch (v) {
+    case "v3":
+      replaceStr = `((i) => {
+        const iarr = i.split("/assets");
+        iarr.splice(1, 0, "/v3");
+        return l.href = '/vant-theme' + iarr.join("");
+      })(i)`;
+      break;
+    case "v4":
+      replaceStr = `((i) => {
+        const iarr = i.split("/assets");
+        // iarr.splice(1, 0, "/v4");
+        return l.href = '/vant-theme' + iarr.join("");
+      })(i)`;
+      break;
+  }
   const newJsContent = jsContent.replace(
-    new RegExp("l.href=i", "g"),
-    "l.href='/vant-theme' + i"
+    new RegExp(regExpStr, "g"),
+    replaceStr
   );
   await fs.writeFile(targetFile, newJsContent);
-  successSpinner(`update mobile page script public path completed`);
-}
+  successSpinner(`update mobile${v}.js path complete`);
+};
 
 /**
  * 向 mobile 页面插入自定义脚本
+ * @param {String} v 版本
  */
-export async function insertMobilePageScript() {
-  logWithSpinner(`insert mobile page script start`);
-  const promises = VERSION_LIST.map(async (v) => {
-    const sourceFile = VANT_MOBILE_PAGE_CONCAT_PATH(v);
-    const fileContent = await fs.readFile(sourceFile, "utf-8");
-    const $ = cheerio.load(fileContent);
-    const script = '<script type="module" src="../mobile.ts"></script>';
-    $("#app").after(script);
-    await fs.writeFile(sourceFile, $.html());
+export const insertMobileScript = async (v) => {
+  logWithSpinner(`insert mobile script start`);
+  const src = VANT_MOBILE_PAGE_CONCAT_PATH(v);
+  const fileContent = await fs.readFile(src, "utf-8");
+  const $ = cheerio.load(fileContent);
+  const script = '<script type="module" src="./mobile.ts"></script>';
+  $("#app").after(script);
+  await fs.writeFile(src, $.html());
+  successSpinner(`insert mobile script complete`);
+};
+
+/**
+ * 初始化 puppeteer
+ */
+export async function initBrowser(options) {
+  const browser = await puppeteer.launch({
+    // headless: false,
+    ...options,
   });
-  await Promise.all(promises);
-  successSpinner(`insert mobile page script completed`);
+  const page = await browser.newPage();
+  return { page, browser };
 }
 
 /**
- * 爬取官网菜单和样式列表
+ * 爬取 vant 官网菜单目录
+ * @param {String} v 版本
+ * @param {String} language 语言 中文：zh-CN 英文：en-US
  */
-export async function reptiler() {
-  logWithSpinner(`reptile vant docs menu and styles start`);
-  await reptile();
-  successSpinner(`reptile vant docs menu and styles completed`);
-}
+export const reptileMenu = async (v, language = "zh-CN") => {
+  logWithSpinner(`reptile vant ${v} ${language} docs menu start`);
+  const { page, browser } = await initBrowser();
+  await page.goto(`${VANT_WEBSITE}/${v}/#/${language}`, {
+    waitUntil: "networkidle2",
+  });
+  const menus = await page.evaluate((v) => {
+    const lengthMap = {
+      v2: 1,
+      v3: 2,
+      v4: 1,
+    };
+    const vantDocsMenu = [];
+    const nav__group = document.querySelectorAll(".van-doc-nav__group");
+    Array.from(nav__group).map((group, index) => {
+      // if (index !== 0 && index !== nav__group.length - 2) {
+      if (index !== 0 && index < nav__group.length - lengthMap[v]) {
+        const groupItem = {};
+        groupItem.type = "group";
+        groupItem.label = group.querySelector(".van-doc-nav__title").innerText;
+        groupItem.key = group.querySelector(".van-doc-nav__title").innerText;
+        groupItem.children = [];
+        const nav__item = group.querySelectorAll(".van-doc-nav__item");
+        Array.from(nav__item).map((item) => {
+          const el = item.querySelector("a");
+          const navItem = {};
+          navItem.label = el.innerText;
+          navItem.key = el.getAttribute("href").split("#")[1];
+          groupItem.children.push(navItem);
+        });
+        vantDocsMenu.push(groupItem);
+      }
+    });
+    return vantDocsMenu;
+  }, v);
+  const path = VANT_MENU_CONCAT_JSON(v, language.toLocaleLowerCase());
+  await fs.outputFile(path, JSON.stringify(menus));
+  await browser.close();
+  successSpinner(`reptile vant ${v} ${language} docs menu complete`);
+  return menus;
+};
 
-export function runServe() {
+/**
+ * 爬取 vant 官网菜单目录
+ * @param {String} v 版本
+ * @param {Array} menu 菜单
+ */
+export const reptileCSSVariables = async (v, menu) => {
+  let menus = [];
+  if (menu === undefined) {
+    menus = await reptileMenu(v);
+  } else {
+    menus = menu;
+  }
+  logWithSpinner(`reptile vant ${v} docs css variables start`);
+  const styles = [];
+  const { page, browser } = await initBrowser();
+  for (let group = 0; group < menus.length; group++) {
+    const children = menus[group].children;
+    if (children && children.length > 0) {
+      for (let item = 0; item < children.length; item++) {
+        await page.goto(`${VANT_WEBSITE}/${v}/#${children[item].key}`, {
+          waitUntil: "networkidle2",
+        });
+        const style = await page.evaluate(() => {
+          const ysbl = document.querySelector("#yang-shi-bian-liang");
+          if (!ysbl) {
+            return [];
+          }
+          const styleGroup = ysbl.nextElementSibling.nextElementSibling
+            .querySelector("tbody")
+            .querySelectorAll("tr");
+          const stylesList = Array.from(styleGroup).map((item) => {
+            return item.querySelector("td").innerText;
+          });
+          return stylesList;
+        });
+        if (style.length > 0) {
+          const styleItem = {
+            id: children[item].key,
+            styles: style,
+          };
+          styles.push(styleItem);
+        }
+      }
+    }
+  }
+  const path = VANT_STYLES_CONCAT_JSON(v);
+  await fs.outputFile(path, JSON.stringify(styles));
+  await browser.close();
+  successSpinner(`reptile vant ${v} docs css variables complete`);
+};
+
+/**
+ * 启动项目
+ */
+export const runServe = async () => {
   spawn("npx", ["vite"], { stdio: "inherit", shell: true });
-}
+};
 
-export function runBuild() {
+/**
+ * 项目打包
+ */
+export const runBuild = async () => {
   spawn("npx", ["vue-tsc --noEmit && vite build"], {
     stdio: "inherit",
     shell: true,
   });
-}
+};
 
-export async function runClean() {
+export const runClean = async () => {
+  logWithSpinner(`clean start`);
   await fs.remove(VANT_SOURCE_LOCAL);
   await fs.remove(VANT_PUBLIC_PATH);
-  const promises = VERSION_LIST.map(async (v) => {
-    await fs.remove(VANT_MENU_CONCAT_JSON(v));
-    await fs.remove(VANT_STYLES_CONCAT_JSON(v));
+  const version = VERSION_LIST;
+  for (let i = 0; i < version.length; i++) {
+    const v = version[i];
     await fs.remove(VANT_MOBILE_PAGE_CONCAT_PATH(v));
-    return Promise.resolve();
-  });
-  await Promise.all(promises);
-}
-
-// export default {
-//   localPathExists,
-//   downloadSource,
-//   copyMobilePage,
-//   updateMobilePageTagsInfo,
-//   copyMobilePageSourceToPublic,
-//   updateV3MobilePageScriptPublicPath,
-//   reptiler,
-//   runServe,
-//   runBuild,
-//   runClean,
-// };
+    await fs.remove(VANT_MENU_CONCAT_JSON(v, "zh-CN"));
+    await fs.remove(VANT_MENU_CONCAT_JSON(v, "en-US"));
+    await fs.remove(VANT_STYLES_CONCAT_JSON(v));
+  }
+  successSpinner(`clean complete`);
+};
