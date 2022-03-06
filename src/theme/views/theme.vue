@@ -121,6 +121,8 @@ const $message = useMessage();
 
 const { version, getVersion, getThemeList } = storeToRefs($store);
 
+$message.info("有新版本😯，需要清除一下 localStorage ~");
+
 const stopWatchVersion = watch(
   version,
   (v) => {
