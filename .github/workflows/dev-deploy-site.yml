@@ -3,9 +3,7 @@ name: GitHub Pages
 on:
   push:
     branches:
-      - main
-  schedule:
-    - cron: "0 21 * * *"
+      - dev
 
 jobs:
   deploy:
@@ -32,7 +30,7 @@ jobs:
         run: |
           git config --global user.name 'Aisen60'
           git config --global user.email 'caixusheng60@gmail.com'
-          git checkout main
+          git checkout dev
           git pull --unshallow
       
       - name: Install dependencies
@@ -49,7 +47,7 @@ jobs:
           # see: https://stackoverflow.com/questions/8123674/how-to-git-commit-nothing-without-an-error
           # git add -A
           # git diff-index --quiet HEAD || git commit -m 'ci(github actions): update source'
-          # git push origin main --force
+          # git push origin dev --force
           if [ -n "$(git status -s)" ];then
             git add .
             git commit -m "ci(github actions): update source"
@@ -58,7 +56,7 @@ jobs:
 
       - name: Deploy gh page
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/dev' }}
         with:
           github_token: ${{ secrets.GH_PAGES }}
           publish_dir: ./dist
