@@ -10,16 +10,10 @@ let queue: Fn[] = [];
 
 let isIframeReady = false;
 
-export function iframeReady(callback: Fn): void {
-  if (isIframeReady) {
-    callback();
-  } else {
-    queue.push(callback);
-  }
-}
+let listener: (event: MessageEvent) => void;
 
-if (window.top === window) {
-  window.addEventListener("message", (event) => {
+export const addListener = () => {
+  const fn = (event: MessageEvent) => {
     if (event.data.type === "iframeReady") {
       isIframeReady = true;
       const iframe = document.querySelector("iframe");
@@ -40,14 +34,29 @@ if (window.top === window) {
           : event.data.value;
       $store.menuChange(hash);
     }
-  });
+  };
+  window.addEventListener("message", fn);
+  listener = fn;
+};
+
+export function iframeReady(callback: Fn): void {
+  if (isIframeReady) {
+    callback();
+  } else {
+    queue.push(callback);
+  }
 }
 
-export function postMessageToChild(message: PMessage) {
+export function postMessageToChild(message: PMessage, cb: Fn) {
   const iframe = document.querySelector("iframe");
   if (iframe) {
     iframeReady(() => {
       iframe?.contentWindow?.postMessage(message, "*");
+      cb();
     });
   }
 }
+
+export const removeListener = () => {
+  window.removeEventListener("message", listener);
+};

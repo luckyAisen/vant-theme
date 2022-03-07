@@ -1,5 +1,16 @@
 <template>
-  <n-layout has-sider position="absolute" style="top: 64px">
+  <n-space vertical class="preview-layout-skeleton" v-if="pageLoading">
+    <n-skeleton class="skeleton-menu" />
+    <n-skeleton class="skeleton-console" />
+    <n-skeleton class="skeleton-mobile" />
+  </n-space>
+  <n-layout
+    class="preview-layout"
+    :class="{ active: !pageLoading }"
+    has-sider
+    position="absolute"
+    style="top: 64px"
+  >
     <n-layout-sider
       bordered
       collapse-mode="transform"
@@ -94,10 +105,12 @@ import { ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import useMainStore from "../stores";
 import {
+  NSpace,
   NLayout,
   NMenu,
   NLayoutSider,
   NSpin,
+  NSkeleton,
   NButton,
   useDialog,
   useMessage,
@@ -109,7 +122,12 @@ import {
   VANT_THEME_CSS_MAP,
   VANT_THEME_MESSAGE_REPLACEPATH,
 } from "@/utils/constant";
-import { postMessageToChild } from "@/utils/message";
+import {
+  addListener,
+  removeListener,
+  iframeReady,
+  postMessageToChild,
+} from "@/utils/message";
 import {
   docBody,
   getPageCssVarByConfig,
@@ -133,12 +151,15 @@ const stylesList = ref<Attr[]>([]);
 
 const iframeUrl = $store.getMobilePath();
 
-const isIframeShow = ref(false);
+const pageLoading = ref(true);
+
+const isIframeShow = ref(true);
 
 let stopWatchMenuActive: { (): void; (): void };
 
 const initialze = () => {
   insertVantCssLink(() => {
+    addListener();
     const body = docBody;
     setPageCssVarByConfig(previewConfig.value, body);
     stopWatchMenuActive = watch(
@@ -146,13 +167,24 @@ const initialze = () => {
       (newState) => {
         getMenus();
         getStyles();
-        postMessageToChild({
-          type: VANT_THEME_MESSAGE_REPLACEPATH,
-          value: newState,
-        });
+        isIframeShow.value = true;
+        postMessageToChild(
+          {
+            type: VANT_THEME_MESSAGE_REPLACEPATH,
+            value: newState,
+          },
+          () => {
+            setTimeout(() => {
+              isIframeShow.value = false;
+            }, 0);
+          }
+        );
       },
       { immediate: true }
     );
+    setTimeout(() => {
+      pageLoading.value = false;
+    }, 500);
   });
 };
 
@@ -252,5 +284,6 @@ onUnmounted(() => {
   clearStyle(docBody);
   clearStyle(document.querySelector("iframe")?.contentWindow?.document?.body);
   menuChange("base");
+  removeListener();
 });
 </script>

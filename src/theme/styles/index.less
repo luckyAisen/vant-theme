@@ -238,6 +238,39 @@ a {
   }
 }
 
+.preview-layout-skeleton{
+  display: flex;
+  height: calc(100% - 60px);
+
+  .skeleton-menu{
+    width: 300px;
+    min-width: 300px;
+    height: 100%;
+  }
+
+  .skeleton-console{
+    flex:1;
+    margin: 0 4px;
+    height: 100%;
+  }
+
+  .skeleton-mobile{
+    width: 400px;
+    min-width: 400px;
+    height: 100%;
+  }
+}
+
+.preview-layout{
+  opacity: 0;
+  z-index: -1;
+
+  &.active{
+    opacity: 1;
+    z-index: 1;
+  }
+}
+
 .modal-component {
   .modal-footer {
     display: flex;

@@ -50,7 +50,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
-          github_token: ${{ secrets.GITHUB_ACTIONS_TOKEN }}
+          github_token: ${{ secrets.ACTIONS_TOKEN }}
           branch: main
 
       - name: Deploy gh page

@@ -77,7 +77,8 @@ const useMainStore = defineStore("main", {
         disabled: false,
       },
     ] as VersionItem[],
-    menuActive: storage.getItem(VANT_THEME_MENUACTIVE) as string,
+    // menuActive: storage.getItem(VANT_THEME_MENUACTIVE) as string,
+    menuActive: "base",
     userConfig: (storage.getItem(VANT_THEME_USER_CONFIG) || {
       v3: [],
       v4: [],
