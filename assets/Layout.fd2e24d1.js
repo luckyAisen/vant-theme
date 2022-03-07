@@ -1,4 +1,4 @@
-import{n as m,F as S,e as B,b as I,s as T,G as $,f as C,g as O,j as x,u as v,h as j,i as z,z as E}from"./context.a7ef65c1.js";import{b as L,r as y,p as R,l as w,i as p}from"./vendor.eaef4322.js";const{cubicBezierEaseInOut:l,cubicBezierEaseOut:P,cubicBezierEaseIn:F}=S;function A({overflow:a="hidden",duration:e=".3s",originalTransition:o="",leavingDelay:t="0s",foldPadding:s=!1,enterToProps:n=void 0,leaveToProps:i=void 0,reverse:h=!1}={}){const d=h?"leave":"enter",r=h?"enter":"leave";return[m(`&.fade-in-height-expand-transition-${r}-from,
+import{n as m,G as S,e as B,b as I,s as T,H as $,f as C,g as O,j as x,u as v,h as j,i as z,z as E}from"./context.888d7748.js";import{b as L,r as y,p as R,l as w,i as p}from"./vendor.809c7e32.js";const{cubicBezierEaseInOut:l,cubicBezierEaseOut:P,cubicBezierEaseIn:H}=S;function A({overflow:a="hidden",duration:e=".3s",originalTransition:o="",leavingDelay:t="0s",foldPadding:s=!1,enterToProps:n=void 0,leaveToProps:i=void 0,reverse:h=!1}={}){const d=h?"leave":"enter",r=h?"enter":"leave";return[m(`&.fade-in-height-expand-transition-${r}-from,
  &.fade-in-height-expand-transition-${d}-to`,Object.assign(Object.assign({},n),{opacity:1})),m(`&.fade-in-height-expand-transition-${r}-to,
  &.fade-in-height-expand-transition-${d}-from`,Object.assign(Object.assign({},i),{opacity:0,marginTop:"0 !important",marginBottom:"0 !important",paddingTop:s?"0 !important":void 0,paddingBottom:s?"0 !important":void 0})),m(`&.fade-in-height-expand-transition-${r}-active`,`
  overflow: ${a};
@@ -14,13 +14,13 @@ import{n as m,F as S,e as B,b as I,s as T,G as $,f as C,g as O,j as x,u as v,h a
  overflow: ${a};
  transition:
  max-height ${e} ${l},
- opacity ${e} ${F},
+ opacity ${e} ${H},
  margin-top ${e} ${l},
  margin-bottom ${e} ${l},
  padding-top ${e} ${l},
  padding-bottom ${e} ${l}
  ${o?","+o:""}
- `)]}const H=a=>{const{baseColor:e,textColor2:o,bodyColor:t,cardColor:s,dividerColor:n,actionColor:i,scrollbarColor:h,scrollbarColorHover:d,invertedColor:r}=a;return{textColor:o,textColorInverted:"#FFF",color:t,colorEmbedded:i,headerColor:s,headerColorInverted:r,footerColor:i,footerColorInverted:r,headerBorderColor:n,headerBorderColorInverted:r,footerBorderColor:n,footerBorderColorInverted:r,siderBorderColor:n,siderBorderColorInverted:r,siderColor:s,siderColorInverted:r,siderToggleButtonBorder:`1px solid ${n}`,siderToggleButtonColor:e,siderToggleButtonIconColor:o,siderToggleButtonIconColorInverted:o,siderToggleBarColor:$(t,h),siderToggleBarColorHover:$(t,d),__invertScrollbar:"true"}},V=B({name:"Layout",common:I,peers:{Scrollbar:T},self:H});var K=V,N=C("layout",`
+ `)]}const F=a=>{const{baseColor:e,textColor2:o,bodyColor:t,cardColor:s,dividerColor:n,actionColor:i,scrollbarColor:h,scrollbarColorHover:d,invertedColor:r}=a;return{textColor:o,textColorInverted:"#FFF",color:t,colorEmbedded:i,headerColor:s,headerColorInverted:r,footerColor:i,footerColorInverted:r,headerBorderColor:n,headerBorderColorInverted:r,footerBorderColor:n,footerBorderColorInverted:r,siderBorderColor:n,siderBorderColorInverted:r,siderColor:s,siderColorInverted:r,siderToggleButtonBorder:`1px solid ${n}`,siderToggleButtonColor:e,siderToggleButtonIconColor:o,siderToggleButtonIconColorInverted:o,siderToggleBarColor:$(t,h),siderToggleBarColorHover:$(t,d),__invertScrollbar:"true"}},V=B({name:"Layout",common:I,peers:{Scrollbar:T},self:F});var K=V,N=C("layout",`
  color: var(--n-text-color);
  background-color: var(--n-color);
  box-sizing: border-box;
