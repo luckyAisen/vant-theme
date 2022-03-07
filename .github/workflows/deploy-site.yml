@@ -13,7 +13,10 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout main branch code
+        uses: actions/checkout@v3
+        with:
+          ref: main
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -27,13 +30,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
-      - name: Set git config
-        run: |
-          git config --global user.name 'Aisen60'
-          git config --global user.email 'caixusheng60@gmail.com'
-          git checkout main
-          git pull --unshallow
       
       - name: Install dependencies
         run: npm install
@@ -46,15 +42,16 @@ jobs:
 
       - name: Commit changes
         run: |
-          # see: https://stackoverflow.com/questions/8123674/how-to-git-commit-nothing-without-an-error
-          # git add -A
-          # git diff-index --quiet HEAD || git commit -m 'ci(github actions): update source'
-          # git push origin main --force
-          if [ -n "$(git status -s)" ];then
-            git add .
-            git commit -m "ci(github actions): update source"
-            git push -f
-          fi
+          git config --global user.email 'caixusheng60@gmail.com'
+          git config --global user.name 'GitHub Action'
+          git add .
+          git commit -m "ci: github actions"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_ACTIONS_TOKEN }}
+          branch: main
 
       - name: Deploy gh page
         uses: peaceiris/actions-gh-pages@v3
