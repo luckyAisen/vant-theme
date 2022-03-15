@@ -1,6 +1,6 @@
 {
   "name": "vant-theme",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "online theme preview built on Vant UI",
   "license": "MIT",
   "author": {
@@ -36,7 +36,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "file-saver": "^2.0.5",
+    "jszip": "^3.7.1",
     "pinia": "^2.0.11",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12"
