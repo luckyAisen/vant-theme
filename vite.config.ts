@@ -36,10 +36,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        theme: resolve(__dirname, "src/theme/index.html"),
-        "mobile-v2": resolve(__dirname, "src/mobile/v2.html"),
-        "mobile-v3": resolve(__dirname, "src/mobile/v3.html"),
-        "mobile-v4": resolve(__dirname, "src/mobile/v4.html"),
+        theme: resolve(__dirname, "src/page/theme/index.html"),
+        console: resolve(__dirname, "src/page/console/index.html"),
+        "mobile-v2": resolve(__dirname, "src/page/mobile/v2.html"),
+        "mobile-v3": resolve(__dirname, "src/page/mobile/v3.html"),
+        "mobile-v4": resolve(__dirname, "src/page/mobile/v4.html"),
       },
     },
   },

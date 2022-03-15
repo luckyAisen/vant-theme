@@ -1,1 +1,320 @@
-[{"type":"group","label":"Basic Components","key":"Basic Components","children":[{"label":"Button","key":"/en-US/button"},{"label":"Cell","key":"/en-US/cell"},{"label":"ConfigProvider","key":"/en-US/config-provider"},{"label":"Icon","key":"/en-US/icon"},{"label":"Image","key":"/en-US/image"},{"label":"Layout","key":"/en-US/col"},{"label":"Popup","key":"/en-US/popup"},{"label":"Built-in style","key":"/en-US/style"},{"label":"Toast","key":"/en-US/toast"}]},{"type":"group","label":"Form Components","key":"Form Components","children":[{"label":"Calendar","key":"/en-US/calendar"},{"label":"Cascader","key":"/en-US/cascader"},{"label":"Checkbox","key":"/en-US/checkbox"},{"label":"DatetimePicker","key":"/en-US/datetime-picker"},{"label":"Field","key":"/en-US/field"},{"label":"Form","key":"/en-US/form"},{"label":"NumberKeyboard","key":"/en-US/number-keyboard"},{"label":"PasswordInput","key":"/en-US/password-input"},{"label":"Picker","key":"/en-US/picker"},{"label":"Radio","key":"/en-US/radio"},{"label":"Rate","key":"/en-US/rate"},{"label":"Search","key":"/en-US/search"},{"label":"Slider","key":"/en-US/slider"},{"label":"Stepper","key":"/en-US/stepper"},{"label":"Switch","key":"/en-US/switch"},{"label":"Uploader","key":"/en-US/uploader"}]},{"type":"group","label":"Action Components","key":"Action Components","children":[{"label":"ActionSheet","key":"/en-US/action-sheet"},{"label":"Dialog","key":"/en-US/dialog"},{"label":"DropdownMenu","key":"/en-US/dropdown-menu"},{"label":"Loading","key":"/en-US/loading"},{"label":"Notify","key":"/en-US/notify"},{"label":"Overlay","key":"/en-US/overlay"},{"label":"PullRefresh","key":"/en-US/pull-refresh"},{"label":"ShareSheet","key":"/en-US/share-sheet"},{"label":"SwipeCell","key":"/en-US/swipe-cell"}]},{"type":"group","label":"Display Components","key":"Display Components","children":[{"label":"Badge","key":"/en-US/badge"},{"label":"Circle","key":"/en-US/circle"},{"label":"Collapse","key":"/en-US/collapse"},{"label":"CountDown","key":"/en-US/count-down"},{"label":"Divider","key":"/en-US/divider"},{"label":"Empty","key":"/en-US/empty"},{"label":"ImagePreview","key":"/en-US/image-preview"},{"label":"Lazyload","key":"/en-US/lazyload"},{"label":"List","key":"/en-US/list"},{"label":"NoticeBar","key":"/en-US/notice-bar"},{"label":"Popover","key":"/en-US/popover"},{"label":"Progress","key":"/en-US/progress"},{"label":"Skeleton","key":"/en-US/skeleton"},{"label":"Steps","key":"/en-US/steps"},{"label":"Sticky","key":"/en-US/sticky"},{"label":"Swipe","key":"/en-US/swipe"},{"label":"Tag","key":"/en-US/tag"}]},{"type":"group","label":"Navigation Components","key":"Navigation Components","children":[{"label":"ActionBar","key":"/en-US/action-bar"},{"label":"Grid","key":"/en-US/grid"},{"label":"IndexBar","key":"/en-US/index-bar"},{"label":"NavBar","key":"/en-US/nav-bar"},{"label":"Pagination","key":"/en-US/pagination"},{"label":"Sidebar","key":"/en-US/sidebar"},{"label":"Tab","key":"/en-US/tab"},{"label":"Tabbar","key":"/en-US/tabbar"},{"label":"TreeSelect","key":"/en-US/tree-select"}]},{"type":"group","label":"Business Components","key":"Business Components","children":[{"label":"AddressEdit","key":"/en-US/address-edit"},{"label":"AddressList","key":"/en-US/address-list"},{"label":"Area","key":"/en-US/area"},{"label":"Card","key":"/en-US/card"},{"label":"ContactCard","key":"/en-US/contact-card"},{"label":"ContactEdit","key":"/en-US/contact-edit"},{"label":"ContactList","key":"/en-US/contact-list"},{"label":"Coupon","key":"/en-US/coupon-list"},{"label":"SubmitBar","key":"/en-US/submit-bar"}]}]
+[
+  {
+    "type": "group",
+    "label": "Basic Components",
+    "key": "Basic Components",
+    "children": [
+      {
+        "label": "Button",
+        "key": "/en-US/button"
+      },
+      {
+        "label": "Cell",
+        "key": "/en-US/cell"
+      },
+      {
+        "label": "ConfigProvider",
+        "key": "/en-US/config-provider"
+      },
+      {
+        "label": "Icon",
+        "key": "/en-US/icon"
+      },
+      {
+        "label": "Image",
+        "key": "/en-US/image"
+      },
+      {
+        "label": "Layout",
+        "key": "/en-US/col"
+      },
+      {
+        "label": "Popup",
+        "key": "/en-US/popup"
+      },
+      {
+        "label": "Built-in style",
+        "key": "/en-US/style"
+      },
+      {
+        "label": "Toast",
+        "key": "/en-US/toast"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": "Form Components",
+    "key": "Form Components",
+    "children": [
+      {
+        "label": "Calendar",
+        "key": "/en-US/calendar"
+      },
+      {
+        "label": "Cascader",
+        "key": "/en-US/cascader"
+      },
+      {
+        "label": "Checkbox",
+        "key": "/en-US/checkbox"
+      },
+      {
+        "label": "DatetimePicker",
+        "key": "/en-US/datetime-picker"
+      },
+      {
+        "label": "Field",
+        "key": "/en-US/field"
+      },
+      {
+        "label": "Form",
+        "key": "/en-US/form"
+      },
+      {
+        "label": "NumberKeyboard",
+        "key": "/en-US/number-keyboard"
+      },
+      {
+        "label": "PasswordInput",
+        "key": "/en-US/password-input"
+      },
+      {
+        "label": "Picker",
+        "key": "/en-US/picker"
+      },
+      {
+        "label": "Radio",
+        "key": "/en-US/radio"
+      },
+      {
+        "label": "Rate",
+        "key": "/en-US/rate"
+      },
+      {
+        "label": "Search",
+        "key": "/en-US/search"
+      },
+      {
+        "label": "Slider",
+        "key": "/en-US/slider"
+      },
+      {
+        "label": "Stepper",
+        "key": "/en-US/stepper"
+      },
+      {
+        "label": "Switch",
+        "key": "/en-US/switch"
+      },
+      {
+        "label": "Uploader",
+        "key": "/en-US/uploader"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": "Action Components",
+    "key": "Action Components",
+    "children": [
+      {
+        "label": "ActionSheet",
+        "key": "/en-US/action-sheet"
+      },
+      {
+        "label": "Dialog",
+        "key": "/en-US/dialog"
+      },
+      {
+        "label": "DropdownMenu",
+        "key": "/en-US/dropdown-menu"
+      },
+      {
+        "label": "Loading",
+        "key": "/en-US/loading"
+      },
+      {
+        "label": "Notify",
+        "key": "/en-US/notify"
+      },
+      {
+        "label": "Overlay",
+        "key": "/en-US/overlay"
+      },
+      {
+        "label": "PullRefresh",
+        "key": "/en-US/pull-refresh"
+      },
+      {
+        "label": "ShareSheet",
+        "key": "/en-US/share-sheet"
+      },
+      {
+        "label": "SwipeCell",
+        "key": "/en-US/swipe-cell"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": "Display Components",
+    "key": "Display Components",
+    "children": [
+      {
+        "label": "Badge",
+        "key": "/en-US/badge"
+      },
+      {
+        "label": "Circle",
+        "key": "/en-US/circle"
+      },
+      {
+        "label": "Collapse",
+        "key": "/en-US/collapse"
+      },
+      {
+        "label": "CountDown",
+        "key": "/en-US/count-down"
+      },
+      {
+        "label": "Divider",
+        "key": "/en-US/divider"
+      },
+      {
+        "label": "Empty",
+        "key": "/en-US/empty"
+      },
+      {
+        "label": "ImagePreview",
+        "key": "/en-US/image-preview"
+      },
+      {
+        "label": "Lazyload",
+        "key": "/en-US/lazyload"
+      },
+      {
+        "label": "List",
+        "key": "/en-US/list"
+      },
+      {
+        "label": "NoticeBar",
+        "key": "/en-US/notice-bar"
+      },
+      {
+        "label": "Popover",
+        "key": "/en-US/popover"
+      },
+      {
+        "label": "Progress",
+        "key": "/en-US/progress"
+      },
+      {
+        "label": "Skeleton",
+        "key": "/en-US/skeleton"
+      },
+      {
+        "label": "Steps",
+        "key": "/en-US/steps"
+      },
+      {
+        "label": "Sticky",
+        "key": "/en-US/sticky"
+      },
+      {
+        "label": "Swipe",
+        "key": "/en-US/swipe"
+      },
+      {
+        "label": "Tag",
+        "key": "/en-US/tag"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": "Navigation Components",
+    "key": "Navigation Components",
+    "children": [
+      {
+        "label": "ActionBar",
+        "key": "/en-US/action-bar"
+      },
+      {
+        "label": "Grid",
+        "key": "/en-US/grid"
+      },
+      {
+        "label": "IndexBar",
+        "key": "/en-US/index-bar"
+      },
+      {
+        "label": "NavBar",
+        "key": "/en-US/nav-bar"
+      },
+      {
+        "label": "Pagination",
+        "key": "/en-US/pagination"
+      },
+      {
+        "label": "Sidebar",
+        "key": "/en-US/sidebar"
+      },
+      {
+        "label": "Tab",
+        "key": "/en-US/tab"
+      },
+      {
+        "label": "Tabbar",
+        "key": "/en-US/tabbar"
+      },
+      {
+        "label": "TreeSelect",
+        "key": "/en-US/tree-select"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": "Business Components",
+    "key": "Business Components",
+    "children": [
+      {
+        "label": "AddressEdit",
+        "key": "/en-US/address-edit"
+      },
+      {
+        "label": "AddressList",
+        "key": "/en-US/address-list"
+      },
+      {
+        "label": "Area",
+        "key": "/en-US/area"
+      },
+      {
+        "label": "Card",
+        "key": "/en-US/card"
+      },
+      {
+        "label": "ContactCard",
+        "key": "/en-US/contact-card"
+      },
+      {
+        "label": "ContactEdit",
+        "key": "/en-US/contact-edit"
+      },
+      {
+        "label": "ContactList",
+        "key": "/en-US/contact-list"
+      },
+      {
+        "label": "Coupon",
+        "key": "/en-US/coupon-list"
+      },
+      {
+        "label": "SubmitBar",
+        "key": "/en-US/submit-bar"
+      }
+    ]
+  }
+]
