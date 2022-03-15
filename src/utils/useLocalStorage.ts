@@ -1,8 +1,3 @@
-interface Dispatch {
-  getItem: (key: string) => unknown;
-  setItem: (key: string, value: unknown) => void;
-}
-
 function parse(value: string): string {
   let newValue;
   try {
@@ -23,17 +18,17 @@ function stringify(value: unknown): string | null | undefined {
   return newValue;
 }
 
-export default function useLocalStorage(): Dispatch {
-  function getItem(key: string): unknown {
+export default function useLocalStorage() {
+  function getItem<T>(key: string): T {
     const value = window.localStorage.getItem(key);
     if (value) {
       const newValue = parse(value);
-      return newValue;
+      return newValue as unknown as T;
     }
-    return value;
+    return value as unknown as T;
   }
 
-  function setItem(key: string, value: unknown) {
+  function setItem<T>(key: string, value: T) {
     const newValue = stringify(value);
     window.localStorage.setItem(key, newValue as string);
   }
