@@ -1,39 +1,13 @@
 <template>
   <div class="vant-theme-theme">
-    <div class="vant-theme-theme__empty" v-if="versionAllTheme.length === 0">
-      <div class="vant-theme-theme__empty-bg"></div>
-      <div class="vant-theme-theme__empty-title">欢迎使用 vant-theme</div>
-      <div class="vant-theme-theme__empty-subtitle">
-        一个 vant 组件库在线主题预览工具，在这可以自定义你的 vant 主题风格。
-      </div>
-      <div class="vant-theme-theme__empty-btn">
-        <n-button size="small" type="info" @click="operationHandler('add', {})">
-          创建主题
-        </n-button>
-        <n-upload
-          accept="application/json"
-          :show-file-list="false"
-          @change="uploadChange"
-          :disabled="uploadLoading"
-          style="width: auto"
-        >
-          <n-button
-            size="small"
-            quaternary
-            type="info"
-            :loading="uploadLoading"
-          >
-            导入主题
-          </n-button>
-        </n-upload>
-      </div>
-    </div>
-    <template v-else>
-      <div class="vant-theme-theme__header">
-        <div class="vant-theme-theme__header-title">
-          所有主题（{{ versionInfo.title }}）
+    <div class="vant-theme-theme__container">
+      <div class="vant-theme-theme__empty" v-if="versionAllTheme.length === 0">
+        <div class="vant-theme-theme__empty-bg"></div>
+        <div class="vant-theme-theme__empty-title">欢迎使用 vant-theme</div>
+        <div class="vant-theme-theme__empty-subtitle">
+          一个 vant 组件库在线主题预览工具，在这可以自定义你的 vant 主题风格。
         </div>
-        <div class="vant-theme-theme__header-btn">
+        <div class="vant-theme-theme__empty-btn">
           <n-button
             size="small"
             type="info"
@@ -46,6 +20,7 @@
             :show-file-list="false"
             @change="uploadChange"
             :disabled="uploadLoading"
+            style="width: auto"
           >
             <n-button
               size="small"
@@ -58,94 +33,130 @@
           </n-upload>
         </div>
       </div>
-      <div class="vant-theme-theme__list">
-        <div
-          class="theme-item"
-          v-for="theme in versionAllTheme"
-          :key="theme.id"
-          @click="operationHandler('see', theme)"
-        >
-          <div class="theme-item__info">
-            <p class="theme-item__info-name">
-              <span>名称：</span>
-              <span>
-                {{ theme.name }}
-              </span>
-            </p>
-            <p v-if="theme.describe" class="theme-item__info-describe">
-              <span>描述：</span>
-              <span>{{ theme.describe }}</span>
-            </p>
-            <p class="theme-item__info-time">
-              <span>创建时间：</span>
-              <span>{{ parseTime(theme.create) }}</span>
-            </p>
-            <p class="theme-item__info-time">
-              <span>修改时间：</span>
-              <span>{{ parseTime(theme.update) }}</span>
-            </p>
+      <template v-else>
+        <div class="vant-theme-theme__header">
+          <div class="vant-theme-theme__header-title">
+            所有主题（{{ versionInfo.title }}）
           </div>
-          <div class="theme-item__table">
-            <div class="theme-item__table-row theme-item__table-header">
-              <p class="theme-item__table-row__name">变量名</p>
-              <p class="theme-item__table-row__value">变量值</p>
-              <p class="theme-item__table-row__demo">示例</p>
-            </div>
-            <div
-              class="theme-item__table-row"
-              v-for="(value, key) in defaultColor"
-              :key="value"
+          <div class="vant-theme-theme__header-btn">
+            <n-button
+              size="small"
+              type="info"
+              @click="operationHandler('add', {})"
             >
-              <p class="theme-item__table-row__name">
-                {{ key }}
-                <n-tag
-                  v-if="mainColor === key"
-                  type="success"
-                  size="small"
-                  round
-                  :color="{
-                    color: filterColor(theme, key, value),
-                    borderColor: filterColor(theme, key, value),
-                    textColor: '#ffffff',
-                  }"
-                >
-                  主调色
-                </n-tag>
+              创建主题
+            </n-button>
+            <n-upload
+              accept="application/json"
+              :show-file-list="false"
+              @change="uploadChange"
+              :disabled="uploadLoading"
+            >
+              <n-button
+                size="small"
+                quaternary
+                type="info"
+                :loading="uploadLoading"
+              >
+                导入主题
+              </n-button>
+            </n-upload>
+          </div>
+        </div>
+        <div class="vant-theme-theme__list">
+          <div
+            class="theme-item"
+            v-for="theme in versionAllTheme"
+            :key="theme.id"
+            @click="operationHandler('see', theme)"
+          >
+            <div class="theme-item__info">
+              <p class="theme-item__info-name">
+                <span>名称：</span>
+                <span>
+                  {{ theme.name }}
+                </span>
               </p>
-              <p class="theme-item__table-row__value">
-                {{ filterColor(theme, key, value) }}
+              <p v-if="theme.describe" class="theme-item__info-describe">
+                <span>描述：</span>
+                <span>{{ theme.describe }}</span>
               </p>
-              <p class="theme-item__table-row__demo">
-                <span
-                  class="theme-item__table-row__demo-color"
-                  :style="{ backgroundColor: filterColor(theme, key, value) }"
-                ></span>
+              <p class="theme-item__info-time">
+                <span>创建时间：</span>
+                <span>{{ parseTime(theme.create) }}</span>
+              </p>
+              <p class="theme-item__info-time">
+                <span>修改时间：</span>
+                <span>{{ parseTime(theme.update) }}</span>
               </p>
             </div>
+            <div class="theme-item__table">
+              <div class="theme-item__table-row theme-item__table-header">
+                <p class="theme-item__table-row__name">变量名</p>
+                <p class="theme-item__table-row__value">变量值</p>
+                <p class="theme-item__table-row__demo">示例</p>
+              </div>
+              <div
+                class="theme-item__table-row"
+                v-for="(value, key) in defaultColor"
+                :key="value"
+              >
+                <p class="theme-item__table-row__name">
+                  {{ key }}
+                  <n-tag
+                    v-if="mainColor === key"
+                    type="success"
+                    size="small"
+                    round
+                    :color="{
+                      color: 'var(--vant-theme-blue)',
+                      borderColor: 'var(--vant-theme-blue)',
+                      textColor: '#ffffff',
+                    }"
+                  >
+                    当前 vant 版本主调色
+                  </n-tag>
+                </p>
+                <p class="theme-item__table-row__value">
+                  {{ filterColor(theme, key, value) }}
+                </p>
+                <p class="theme-item__table-row__demo">
+                  <span
+                    class="theme-item__table-row__demo-color"
+                    :style="{ backgroundColor: filterColor(theme, key, value) }"
+                  ></span>
+                </p>
+              </div>
+            </div>
+            <n-dropdown
+              trigger="hover"
+              :options="dropdownOptions"
+              placement="bottom-start"
+              @select="
+                (key) => {
+                  operationHandler(key, theme);
+                }
+              "
+            >
+              <n-icon
+                class="theme-item__more"
+                size="24"
+                :key="theme.id"
+                @click.stop=""
+              >
+                <reorder-three />
+              </n-icon>
+            </n-dropdown>
           </div>
-          <n-dropdown
-            trigger="hover"
-            :options="dropdownOptions"
-            placement="bottom-start"
-            @select="
-              (key) => {
-                operationHandler(key, theme);
-              }
-            "
-          >
-            <n-icon class="theme-item__more" size="24" :key="theme.id">
-              <reorder-three />
-            </n-icon>
-          </n-dropdown>
         </div>
-      </div>
-    </template>
-    <modal-component
-      :type="modal.optionType"
-      :show="modal.visible"
-      @confirm="modalConfirm"
-      @close="toggleModalVisible(false, modal.optionType)"
-    />
+      </template>
+      <modal-component
+        :type="modal.optionType"
+        :show="modal.visible"
+        @confirm="modalConfirm"
+        @close="toggleModalVisible(false, modal.optionType)"
+      />
+    </div>
   </div>
 </template>
 
@@ -158,14 +169,15 @@ import {
   NTag,
   NDropdown,
   NIcon,
-  useDialog,
   useMessage,
+  useDialog,
   type UploadFileInfo,
 } from "naive-ui";
 import { ReorderThree } from "@vicons/ionicons5";
 import useMainStore from "@/stores";
 import { parseTime } from "@/utils";
 import {
+  APP_BASE_URL,
   V2_DEFAULT_COLOR,
   V3_DEFAULT_COLOR,
   V4_DEFAULT_COLOR,
@@ -184,9 +196,9 @@ const defaultColor = ref<DefauleColor>();
 
 const mainColor = ref<Color>();
 
-const $dialog = useDialog();
-
 const $message = useMessage();
+
+const $dialog = useDialog();
 
 const dropdownOptions = [
   {
@@ -266,9 +278,7 @@ const operationHandler = async (key: string, theme: Theme) => {
     case "see": {
       const id = theme.id as number;
       $store.useTheme(id);
-      window.location.href = `${
-        import.meta.env.BASE_URL
-      }src/page/console/index.html`;
+      window.location.href = `${APP_BASE_URL}src/page/console/index.html`;
       break;
     }
     case "add": {

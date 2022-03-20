@@ -15,9 +15,6 @@ import {
   APP_HEADER_LANGUAGE,
   APP_HEADER_DEFAULT_VERSION,
   APP_HEADER_DEFAULT_LANGUAG,
-  V2_BASE_VARIABLES,
-  V3_BASE_VARIABLES,
-  V4_BASE_VARIABLES,
 } from "@/utils/constant";
 import type {
   SchemeColor,
@@ -29,9 +26,11 @@ import type {
   StringProp,
   Theme,
   ModalValue,
+  Style,
 } from "@/utils/type";
 
 import { getDefaultTheme } from "@/utils/iframeSync";
+import { getBasicCssVariables } from "@/json/styles";
 
 const storage = useLocalStorage();
 
@@ -45,6 +44,8 @@ type State = {
   userConfig: UserConfig;
   currentConfig: StringProp;
   currentConfigId: number | string;
+  addRouteState: boolean;
+  listenSyncPathState: boolean;
 };
 
 const defaultUserConfig = {
@@ -85,6 +86,8 @@ const useMainStore = defineStore("main", {
       storage.getItem(VANT_THEME_CURRENT_CONFIG) || defaultCurrentConfig,
     currentConfigId:
       storage.getItem(VANT_THEME_CURRENT_CONFIG_ID) || defaultCurrentConfigId,
+    addRouteState: false,
+    listenSyncPathState: false,
   }),
   getters: {
     /**
@@ -110,6 +113,16 @@ const useMainStore = defineStore("main", {
       const version = state.version;
       const config = state.userConfig;
       return config[version];
+    },
+
+    /**
+     * 获取当前版本主题
+     */
+    versionCurrentTheme(state: State) {
+      const version = state.version;
+      const config = state.userConfig;
+      const currentConfigId = state.currentConfigId;
+      return config[version].filter((item) => item.id === currentConfigId)[0];
     },
   },
   actions: {
@@ -244,16 +257,13 @@ const useMainStore = defineStore("main", {
      */
     async downloadTheme(id: number) {
       const version = this.version;
-      const variablesMap = {
-        v2: V2_BASE_VARIABLES,
-        v3: V3_BASE_VARIABLES,
-        v4: V4_BASE_VARIABLES,
-      };
-      const baseVariables = variablesMap[version];
+      const language = this.language;
+      const baseVariables = await getBasicCssVariables(version, language);
       const currentTheme = toRaw(this.userConfig)[version].filter(
         (item) => item.id === id
       )[0];
-      return download(version, currentTheme, baseVariables);
+      const base = baseVariables.children?.map((item) => item.label);
+      return download(version, currentTheme, base as string[]);
     },
 
     /**
@@ -294,8 +304,70 @@ const useMainStore = defineStore("main", {
         (item) => item.id === id
       )[0];
       this.currentConfig = currentTheme.config as StringProp;
-      storage.setItem(VANT_THEME_CURRENT_CONFIG, id);
-      storage.setItem(VANT_THEME_CURRENT_CONFIG_ID, currentTheme.config);
+      storage.setItem(VANT_THEME_CURRENT_CONFIG, currentTheme.config);
+      storage.setItem(VANT_THEME_CURRENT_CONFIG_ID, id);
+    },
+
+    /**
+     * 清除 当前主题配置
+     */
+    clearCurrentConfig() {
+      this.currentConfig = defaultCurrentConfig;
+      storage.setItem(VANT_THEME_CURRENT_CONFIG, defaultCurrentConfig);
+    },
+
+    /**
+     * 清除 当前主题id
+     */
+    clearCurrentConfigId() {
+      this.currentConfigId = defaultCurrentConfigId;
+      storage.setItem(VANT_THEME_CURRENT_CONFIG_ID, defaultCurrentConfigId);
+    },
+
+    test(state: boolean) {
+      this.addRouteState = state;
+    },
+
+    /**
+     * 设置 iframe postmessage 的路由同步状态
+     * @param state
+     */
+    setListenSyncPathState(state: boolean) {
+      this.listenSyncPathState = state;
+    },
+
+    /**
+     * 设置样式
+     */
+    setVariables(config: StringProp) {
+      const version = this.version;
+      const userConfig = this.userConfig;
+      const versionConfig = userConfig[version];
+      const newOriginTheme = toRaw(this.versionCurrentTheme);
+      const index = versionConfig.findIndex(
+        (item) => item.id === newOriginTheme.id
+      );
+      newOriginTheme.config = { ...newOriginTheme.config, ...config };
+      this.updateUserConfigHandler("update", version, {
+        index,
+        theme: newOriginTheme,
+      });
+    },
+
+    /**
+     * 重置所有样式
+     */
+    clearVariables(currentId: number) {
+      const version = this.version;
+      const userConfig = this.userConfig;
+      const versionConfig = userConfig[version];
+      const newOriginTheme = toRaw(this.versionCurrentTheme);
+      const index = versionConfig.findIndex((item) => item.id === currentId);
+      newOriginTheme.config = {};
+      this.updateUserConfigHandler("update", version, {
+        index,
+        theme: newOriginTheme,
+      });
     },
   },
 });

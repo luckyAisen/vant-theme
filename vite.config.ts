@@ -36,6 +36,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
+        // main: fileURLToPath(new URL("./", "index.html"")),
         theme: resolve(__dirname, "src/page/theme/index.html"),
         console: resolve(__dirname, "src/page/console/index.html"),
         "mobile-v2": resolve(__dirname, "src/page/mobile/v2.html"),

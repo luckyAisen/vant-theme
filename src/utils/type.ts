@@ -49,15 +49,19 @@ export type ModalValue = {
 
 export type Menu = {
   type?: string;
-  label?: string;
-  key?: string;
+  label: string;
+  value: string;
   children?: Menu[];
 };
 
 export type Style = {
-  id: string;
-  styles: string[];
+  type?: VariablesComponent;
+  label: string;
+  value: string;
+  children?: Style[];
 };
+
+export type VariablesComponent = "n-color-picker" | "n-input";
 
 export type Preview = StringProp;
 export type Attr = {

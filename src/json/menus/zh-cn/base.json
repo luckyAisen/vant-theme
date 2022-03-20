@@ -1,11 +1,11 @@
 {
   "type": "group",
   "label": "基础样式变量",
-  "key": "base group",
+  "value": "base group",
   "children": [
     {
       "label": "基础样式",
-      "key": "base"
+      "value": "/zh-CN"
     }
   ]
 }

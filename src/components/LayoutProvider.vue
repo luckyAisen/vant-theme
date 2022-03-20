@@ -1,5 +1,8 @@
 <template>
-  <app-provider :dark="$props.app.dark">
+  <app-provider
+    :scheme-color="$props.app.schemeColor"
+    :language="$props.app.language"
+  >
     <div class="vant-theme-app">
       <app-header
         :links="$props.header.links"

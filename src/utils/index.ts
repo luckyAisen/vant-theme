@@ -1,7 +1,8 @@
 import pkg from "../../package.json";
 import dayjs from "dayjs";
 import jszip from "jszip";
-import type { Version, Theme, StringProp } from "./type";
+import { VERSION_VARIABLES_EL } from "./constant";
+import type { Version, Theme, StringProp, Style } from "./type";
 
 export const parseTime = (time: dayjs.ConfigType): string => {
   return dayjs(time).format("YYYY-MM-DD HH:mm");
@@ -38,32 +39,31 @@ export const download = async (
   if ((version === "v3" || version === "v4") && config) {
     const zip = new jszip();
     let cssCode = `:root {`;
+    let jsonCode = `{`;
     const jsonBaseCode: StringProp = {};
-    const jsonComponentCode: StringProp = {};
     for (const k in config) {
       cssCode += `\n ${k}: ${config[k]};`;
-      if (baseVariables.includes(k)) {
-        jsonBaseCode[k] = config[k];
+      if (!baseVariables.includes(k)) {
+        jsonCode += `\n"${scribeToHump(k)}": "${config[k]}",`;
       } else {
-        jsonComponentCode[scribeToHump(k)] = config[k];
+        jsonBaseCode[k] = config[k];
       }
     }
     cssCode += "\n}";
-    let jsonFinalCode;
     if (Object.keys(jsonBaseCode).length > 0) {
-      const str1 = JSON.stringify(jsonComponentCode).replace(/([}])/g, "");
-      const str2 = JSON.stringify(jsonBaseCode).replace(/([{])/g, "");
-      const info = `
-      /**  
-      zh-CN: 基础变量只能通过 root 选择器修改，不能通过 ConfigProvider 组件修改。https://youzan.github.io/vant/${version}/#/zh-CN/config-provider#zhu-ti-bian-liang
-      en-US: The basic variables can only be modified through the root selector. https://youzan.github.io/vant/${version}/#/zh-CN/config-provider#variables
-      */\n`;
-      jsonFinalCode = str1 + info + str2;
-    } else {
-      jsonFinalCode = JSON.stringify(jsonComponentCode);
+      jsonCode += `
+/**  
+zh-CN: 基础变量只能通过 root 选择器修改，不能通过 ConfigProvider 组件修改。https://youzan.github.io/vant/${version}/#/zh-CN/config-provider#zhu-ti-bian-liang
+en-US: The basic variables can only be modified through the root selector. https://youzan.github.io/vant/${version}/#/zh-CN/config-provider#variables
+*/`;
+      for (const k in jsonBaseCode) {
+        jsonCode += `\n"${k}": "${config[k]}",`;
+      }
     }
+    jsonCode += "\n}";
+
     zip.file("variables.css", cssCode);
-    zip.file("config-provider.json", jsonFinalCode);
+    zip.file("config-provider.json", jsonCode);
     zip.file(`${pkg.name}.json`, JSON.stringify(theme));
     // 生成zip文件并下载
     zip
@@ -86,4 +86,26 @@ export const download = async (
         document.body.removeChild(eleLink);
       });
   }
+};
+
+export const getCssVar = (name: string, version: Version): string => {
+  const el = VERSION_VARIABLES_EL[version];
+  const value = window.getComputedStyle(el).getPropertyValue(name);
+  return value.trim();
+};
+
+export const setCssVar = (label: string, value: string, version: Version) => {
+  const el = VERSION_VARIABLES_EL[version];
+  el.style.setProperty(label, value);
+};
+
+export const setCssVarByConfig = (styles: StringProp, version: Version) => {
+  for (const item in styles) {
+    setCssVar(item, styles[item], version);
+  }
+};
+
+export const clearCssVar = (version: Version) => {
+  const el = VERSION_VARIABLES_EL[version];
+  el.setAttribute("style", "");
 };

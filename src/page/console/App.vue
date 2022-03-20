@@ -6,7 +6,7 @@
     @switch-scheme-color="switchSchemeColor"
     @switch-version="switchVersion"
   >
-    <theme-view />
+    <console-panel />
   </layout-provider>
 </template>
 
@@ -17,7 +17,8 @@ import useMainStore from "@/stores";
 import { APP_BASE_URL, APP_HEADER_LINKS } from "@/utils/constant";
 import type { VersionInfo } from "@/utils/type";
 import LayoutProvider from "@/components/LayoutProvider.vue";
-import ThemeView from "./theme.vue";
+import ConsolePanel from "./ConsolePanel.vue";
+import { syncThemeToChild } from "@/utils/iframeSync";
 
 const $store = useMainStore();
 
@@ -40,6 +41,7 @@ const headerProps = computed(() => ({
 const switchSchemeColor = () => {
   const newColor = schemeColor.value === "dark" ? "light" : "dark";
   $store.setSchemeColor(newColor);
+  syncThemeToChild(newColor);
 };
 
 const switchVersion = (info: VersionInfo) => {

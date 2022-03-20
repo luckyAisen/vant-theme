@@ -11,7 +11,7 @@ import {
   copyVantMobilePage,
   updateMobilePageTagsInfo,
   updateMobileJSPath,
-  // insertMobileScript,
+  insertMobileScript,
   reptileMenu,
   reptileCSSVariables,
   runServe,
@@ -31,10 +31,11 @@ const serve = async () => {
       await copyVantMobilePage(v);
       await updateMobilePageTagsInfo(v);
       await updateMobileJSPath(v);
-      // await insertMobileScript(v);
-      const menus = await reptileMenu(v, "zh-CN");
-      await reptileMenu(v, "en-US");
-      await reptileCSSVariables(v, menus);
+      await insertMobileScript(v);
+      const zhCNMenus = await reptileMenu(v, "zh-CN");
+      const enUSMenus = await reptileMenu(v, "en-US");
+      await reptileCSSVariables(v, "zh-CN", zhCNMenus);
+      await reptileCSSVariables(v, "en-US", enUSMenus);
     }
   }
   await runServe();
@@ -52,4 +53,5 @@ serve();
 // reptileMenu("v3", "en-US");
 // reptileMenu("v4", "zh-CN");
 // reptileMenu("v4", "en-US");
-// reptileCSSVariables("v2");
+// reptileCSSVariables("v4");
+// reptileCSSVariables("v3", "en-US");

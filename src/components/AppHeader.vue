@@ -1,8 +1,8 @@
 <template>
   <div class="vant-theme-header">
     <div class="vant-theme-header__top">
-      <a class="vant-theme-header__logo" :href="APP_WEBSITE">
-        <img src="/logo.png" />
+      <a class="vant-theme-header__logo" :href="APP_BASE_URL">
+        <img :src="$props.schemeColor === 'dark' ? darkLogo : lightLogo" />
         <span class="vant-theme-header__title">{{ $props.title }}</span>
         <span class="vant-theme-header__subtitle">
           （{{ $props.subtitle }}）
@@ -75,7 +75,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { APP_WEBSITE } from "@/utils/constant";
+import { APP_BASE_URL } from "@/utils/constant";
 import type { AppHeaderLinks, SchemeColor, VersionInfo } from "@/utils/type";
 
 export interface Props {
@@ -94,9 +94,13 @@ const $emit = defineEmits<{
   (e: "switch-version", info: VersionInfo): void;
 }>();
 
-const lightThemePng = `${import.meta.env.BASE_URL}light-theme.png`;
+const lightLogo = `${APP_BASE_URL}logo.png`;
 
-const darkThemePng = `${import.meta.env.BASE_URL}dark-theme.png`;
+const darkLogo = `${APP_BASE_URL}logo-dark.png`;
+
+const lightThemePng = `${APP_BASE_URL}light-theme.png`;
+
+const darkThemePng = `${APP_BASE_URL}dark-theme.png`;
 
 const showVersionPop = ref(false);
 

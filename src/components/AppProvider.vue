@@ -1,5 +1,10 @@
 <template>
-  <n-config-provider :theme="$props.dark ? darkTheme : null">
+  <n-config-provider
+    :theme="dark"
+    :theme-overrides="themeOverrides"
+    :locale="locale"
+    :date-locale="dateLocale"
+  >
     <n-loading-bar-provider>
       <n-message-provider>
         <n-notification-provider>
@@ -13,6 +18,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, watchEffect } from "vue";
 import {
   NConfigProvider,
   NLoadingBarProvider,
@@ -20,11 +26,40 @@ import {
   NNotificationProvider,
   NDialogProvider,
   darkTheme,
+  zhCN,
+  dateZhCN,
+  type GlobalTheme,
+  type GlobalThemeOverrides,
+  type NLocale,
+  type NDateLocale,
 } from "naive-ui";
+import type { SchemeColor, Language } from "@/utils/type";
 
 export interface Props {
-  dark: boolean;
+  schemeColor: SchemeColor;
+  language: Language;
 }
 
 const $props = defineProps<Props>();
+
+const dark = ref<GlobalTheme | null>();
+
+const themeOverrides: GlobalThemeOverrides = {
+  Button: {
+    colorInfo: "#1989FAFF",
+    borderInfo: "1px solid #1989FAFF",
+    colorError: "#ee0a24FF",
+    borderError: "1px solid #ee0a24",
+  },
+};
+
+const locale = ref<NLocale | null>(null);
+
+const dateLocale = ref<NDateLocale | null>(null);
+
+watchEffect(() => {
+  dark.value = $props.schemeColor === "dark" ? darkTheme : null;
+  locale.value = $props.language === "en-US" ? null : zhCN;
+  dateLocale.value = $props.language === "en-US" ? null : dateZhCN;
+});
 </script>

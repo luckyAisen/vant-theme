@@ -254,14 +254,14 @@ export const reptileMenu = async (v, language = "zh-CN") => {
         const groupItem = {};
         groupItem.type = "group";
         groupItem.label = group.querySelector(".van-doc-nav__title").innerText;
-        groupItem.key = group.querySelector(".van-doc-nav__title").innerText;
+        groupItem.value = group.querySelector(".van-doc-nav__title").innerText;
         groupItem.children = [];
         const nav__item = group.querySelectorAll(".van-doc-nav__item");
         Array.from(nav__item).map((item) => {
           const el = item.querySelector("a");
           const navItem = {};
           navItem.label = el.innerText;
-          navItem.key = el.getAttribute("href").split("#")[1];
+          navItem.value = el.getAttribute("href").split("#")[1];
           groupItem.children.push(navItem);
         });
         vantDocsMenu.push(groupItem);
@@ -279,27 +279,42 @@ export const reptileMenu = async (v, language = "zh-CN") => {
 /**
  * 爬取 vant 官网菜单目录
  * @param {String} v 版本
+ * @param {String} language 语言 中文：zh-CN 英文：en-US
  * @param {Array} menu 菜单
  */
-export const reptileCSSVariables = async (v, menu) => {
+export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   let menus = [];
   if (menu === undefined) {
-    menus = await reptileMenu(v);
+    menus = await reptileMenu(v, language);
   } else {
     menus = menu;
   }
-  logWithSpinner(`reptile vant ${v} docs css variables start`);
+  logWithSpinner(`reptile vant ${v} ${language} docs css variables start`);
   const styles = [];
   const { page, browser } = await initBrowser();
   for (let group = 0; group < menus.length; group++) {
     const children = menus[group].children;
     if (children && children.length > 0) {
       for (let item = 0; item < children.length; item++) {
-        await page.goto(`${VANT_WEBSITE}/${v}/#${children[item].key}`, {
+        await page.goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
           waitUntil: "networkidle2",
         });
-        const style = await page.evaluate(() => {
-          const ysbl = document.querySelector("#yang-shi-bian-liang");
+        let el;
+        if (language === "zh-CN") {
+          el = "#yang-shi-bian-liang";
+        } else {
+          if (v === "v2") {
+            el = "#less-variables";
+          } else {
+            el = "#css-variables";
+          }
+        }
+        const style = await page.evaluate((el) => {
+          // const el =
+          //   language === "zh-CN"
+          //     ? document.querySelector("#yang-shi-bian-liang")
+          //     : document.querySelector("#css-variables");
+          const ysbl = document.querySelector(el);
           if (!ysbl) {
             return [];
           }
@@ -307,24 +322,28 @@ export const reptileCSSVariables = async (v, menu) => {
             .querySelector("tbody")
             .querySelectorAll("tr");
           const stylesList = Array.from(styleGroup).map((item) => {
-            return item.querySelector("td").innerText;
+            return {
+              label: item.querySelector("td").innerText,
+              value: "",
+            };
           });
           return stylesList;
-        });
+        }, el);
         if (style.length > 0) {
           const styleItem = {
-            id: children[item].key,
-            styles: style,
+            label: children[item].label,
+            value: children[item].value,
+            children: style,
           };
           styles.push(styleItem);
         }
       }
     }
   }
-  const path = VANT_STYLES_CONCAT_JSON(v);
+  const path = VANT_STYLES_CONCAT_JSON(v, language.toLocaleLowerCase());
   await fs.outputFile(path, JSON.stringify(styles));
   await browser.close();
-  successSpinner(`reptile vant ${v} docs css variables complete`);
+  successSpinner(`reptile vant ${v} ${language} docs css variables complete`);
 };
 
 /**
@@ -354,7 +373,8 @@ export const runClean = async () => {
     await fs.remove(VANT_MOBILE_PAGE_CONCAT_PATH(v));
     await fs.remove(VANT_MENU_CONCAT_JSON(v, "zh-CN"));
     await fs.remove(VANT_MENU_CONCAT_JSON(v, "en-US"));
-    await fs.remove(VANT_STYLES_CONCAT_JSON(v));
+    await fs.remove(VANT_STYLES_CONCAT_JSON(v, "zh-CN"));
+    await fs.remove(VANT_STYLES_CONCAT_JSON(v, "en-US"));
   }
   successSpinner(`clean complete`);
 };

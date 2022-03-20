@@ -1,11 +1,11 @@
 {
   "type": "group",
   "label": "Basic Css Variables",
-  "key": "base group",
+  "value": "base group",
   "children": [
     {
       "label": "Base",
-      "key": "base"
+      "value": "/en-US"
     }
   ]
 }

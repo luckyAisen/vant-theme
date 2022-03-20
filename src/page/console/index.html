@@ -7,6 +7,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vant-theme - online theme preview built on Vant UI</title>
   <script>
+
+    (function () {
+      var version = localStorage.getItem("VANT_THEME_VERSION");
+      var language = localStorage.getItem("VANT_THEME_LANGUAGE");
+      var userConfig = localStorage.getItem("VANT_THEME_USER_CONFIG");
+      var currentId = localStorage.getItem("VANT_THEME_CURRENT_CONFIG_ID");
+      if (
+        !version ||
+        !language ||
+        !userConfig ||
+        !currentId
+      ) {
+        window.location.href = '/vant-theme/'
+      }
+      if (currentId) {
+        var cssMap = {
+          v2: "https://cdn.jsdelivr.net/npm/vant@2/lib/index.css",
+          v3: "https://cdn.jsdelivr.net/npm/vant/lib/index.css",
+          v4: "https://cdn.jsdelivr.net/npm/vant@4.0.0-alpha.1/lib/index.css",
+        };
+        var link = document.createElement("link");
+        link.rel = "stylesheet"
+        link.type = "text/css"
+        link.href = cssMap[version.replace(/\"/g, '')];
+        document.head.appendChild(link)
+      }
+    })()
+
     var _hmt = _hmt || [];
     (function () {
       var hm = document.createElement("script");
