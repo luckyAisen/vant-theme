@@ -26,10 +26,10 @@ export let zhCNMenu: Menu[] = [];
 
 export let enUSMenu: Menu[] = [];
 
-const createRoutes = async () => {
+const createRoutes = () => {
   const v = Storage.getItem<Version>(VANT_THEME_VERSION);
-  const menu1 = await getMenu(v, "zh-CN");
-  const menu2 = await getMenu(v, "en-US");
+  const menu1 = getMenu(v, "zh-CN");
+  const menu2 = getMenu(v, "en-US");
   const zhCNRoute = createRoutesHandler(menu1);
   const enUSRoute = createRoutesHandler(menu2);
   zhCNMenu = menu1;
@@ -60,7 +60,7 @@ const createRoutesHandler = (menu: Menu[]): RouteRecordRaw[] => {
 
 const router = createRouter({
   history: createWebHashHistory(APP_BASE_URL),
-  routes: await createRoutes(),
+  routes: createRoutes(),
 });
 
 router.afterEach((to) => {

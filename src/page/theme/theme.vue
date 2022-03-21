@@ -109,8 +109,14 @@
                     size="small"
                     round
                     :color="{
-                      color: 'var(--vant-theme-blue)',
-                      borderColor: 'var(--vant-theme-blue)',
+                      color:
+                        versionInfo.key === 'v3' || versionInfo.key === 'v2'
+                          ? 'var(--vant-theme-red)'
+                          : 'var(--vant-theme-blue)',
+                      borderColor:
+                        versionInfo.key === 'v3' || versionInfo.key === 'v2'
+                          ? 'var(--vant-theme-red)'
+                          : 'var(--vant-theme-blue)',
                       textColor: '#ffffff',
                     }"
                   >

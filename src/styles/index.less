@@ -42,6 +42,13 @@ a {
   flex-direction: column;
 }
 
+.vant-theme-app-loading{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
 .vant-theme-header {
   width: 100%;
   background-color: var(--vant-theme-header-background);
@@ -291,7 +298,7 @@ a {
 
       &:hover{
         // border-color:var(--vant-theme-blue);
-        box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       }
 
       &__info{
@@ -423,6 +430,10 @@ a {
     height: calc(100% - calc(var(--vant-theme-padding) * 2));
     scroll-behavior:smooth;
 
+    .n-spin-container{
+      height: 100%;
+    }
+
     &__group{
       padding-bottom:10px;
       &-title{
@@ -458,6 +469,10 @@ a {
     padding:var(--vant-theme-padding);
     display: flex;
     justify-content: center;
+
+    .n-spin-container,.n-spin-content{
+      height: 100%;
+    }
 
     .console-panel-mobile__container{
       width: 360px;

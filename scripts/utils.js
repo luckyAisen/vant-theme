@@ -365,7 +365,7 @@ export const runBuild = async () => {
 
 export const runClean = async () => {
   logWithSpinner(`clean start`);
-  await fs.remove(VANT_SOURCE_LOCAL);
+  // await fs.remove(VANT_SOURCE_LOCAL);
   await fs.remove(VANT_PUBLIC_PATH);
   const version = VERSION_LIST;
   for (let i = 0; i < version.length; i++) {

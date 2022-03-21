@@ -21,18 +21,6 @@
       ) {
         window.location.href = '/vant-theme/'
       }
-      if (currentId) {
-        var cssMap = {
-          v2: "https://cdn.jsdelivr.net/npm/vant@2/lib/index.css",
-          v3: "https://cdn.jsdelivr.net/npm/vant/lib/index.css",
-          v4: "https://cdn.jsdelivr.net/npm/vant@4.0.0-alpha.1/lib/index.css",
-        };
-        var link = document.createElement("link");
-        link.rel = "stylesheet"
-        link.type = "text/css"
-        link.href = cssMap[version.replace(/\"/g, '')];
-        document.head.appendChild(link)
-      }
     })()
 
     var _hmt = _hmt || [];

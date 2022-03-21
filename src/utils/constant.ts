@@ -113,3 +113,9 @@ export const VERSION_VARIABLES_EL = {
   v3: document.documentElement,
   v4: document.body,
 };
+
+export const VANT_VERSION_CSS = {
+  v2: "https://cdn.jsdelivr.net/npm/vant@2/lib/index.css",
+  v3: "https://cdn.jsdelivr.net/npm/vant/lib/index.css",
+  v4: "https://cdn.jsdelivr.net/npm/vant@4.0.0-alpha.1/lib/index.css",
+};

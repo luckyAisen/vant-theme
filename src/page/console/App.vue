@@ -1,5 +1,12 @@
 <template>
+  <n-spin
+    v-if="!loadVantCssState || !iframeState || !createRouteState"
+    :show="true"
+    class="vant-theme-app-loading"
+  />
+
   <layout-provider
+    v-show="loadVantCssState && iframeState && createRouteState"
     :app="appProps"
     :header="headerProps"
     :router="false"
@@ -11,6 +18,7 @@
 </template>
 
 <script lang="ts" setup>
+import { NSpin } from "naive-ui";
 import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import useMainStore from "@/stores";
@@ -22,7 +30,15 @@ import { syncThemeToChild } from "@/utils/iframeSync";
 
 const $store = useMainStore();
 
-const { schemeColor, language, versionInfo, versionList } = storeToRefs($store);
+const {
+  schemeColor,
+  language,
+  versionInfo,
+  versionList,
+  loadVantCssState,
+  iframeState,
+  createRouteState,
+} = storeToRefs($store);
 
 const appProps = computed(() => ({
   schemeColor: schemeColor.value,

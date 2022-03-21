@@ -43,10 +43,10 @@ const serve = async () => {
 
 serve();
 // initializeVantPublic();
-// copyVantAssetsToPublic("v3");
+// copyVantAssetsToPublic("v4");
 // copyVantMobilePage("v4");
 // updateMobilePageTagsInfo("v4");
-// updateMobileJSPath("v3");
+// updateMobileJSPath("v4");
 // reptileMenu("v2", "zh-CN");
 // reptileMenu("v2", "en-US");
 // reptileMenu("v3", "zh-CN");

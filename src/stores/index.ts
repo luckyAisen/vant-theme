@@ -26,7 +26,6 @@ import type {
   StringProp,
   Theme,
   ModalValue,
-  Style,
 } from "@/utils/type";
 
 import { getDefaultTheme } from "@/utils/iframeSync";
@@ -44,7 +43,9 @@ type State = {
   userConfig: UserConfig;
   currentConfig: StringProp;
   currentConfigId: number | string;
-  addRouteState: boolean;
+  loadVantCssState: boolean;
+  iframeState: boolean;
+  createRouteState: boolean;
   listenSyncPathState: boolean;
 };
 
@@ -86,7 +87,9 @@ const useMainStore = defineStore("main", {
       storage.getItem(VANT_THEME_CURRENT_CONFIG) || defaultCurrentConfig,
     currentConfigId:
       storage.getItem(VANT_THEME_CURRENT_CONFIG_ID) || defaultCurrentConfigId,
-    addRouteState: false,
+    loadVantCssState: false,
+    iframeState: false,
+    createRouteState: false,
     listenSyncPathState: false,
   }),
   getters: {
@@ -324,13 +327,29 @@ const useMainStore = defineStore("main", {
       storage.setItem(VANT_THEME_CURRENT_CONFIG_ID, defaultCurrentConfigId);
     },
 
-    test(state: boolean) {
-      this.addRouteState = state;
+    /**
+     * 设置 vant css 文件加载状态
+     */
+    setLoadVantCssState(state: boolean) {
+      this.loadVantCssState = state;
+    },
+
+    /**
+     * 设置 iframe 状态
+     */
+    setIframeState(state: boolean) {
+      this.iframeState = state;
+    },
+
+    /**
+     * 设置路由加载状态
+     */
+    setCreateRouteState(state: boolean) {
+      this.createRouteState = state;
     },
 
     /**
      * 设置 iframe postmessage 的路由同步状态
-     * @param state
      */
     setListenSyncPathState(state: boolean) {
       this.listenSyncPathState = state;

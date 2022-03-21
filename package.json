@@ -18,9 +18,12 @@
   "keywords": [
     "vue",
     "vue3",
-    "vant",
+    "vant 2",
+    "vant 3",
+    "vant 4",
     "theme",
-    "vant-theme"
+    "vant-theme",
+    "aisen60"
   ],
   "type": "module",
   "scripts": {

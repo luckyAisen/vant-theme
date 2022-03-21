@@ -16,9 +16,14 @@
         </div>
       </div>
     </div>
+
     <div class="console-panel-container">
-      <console-nav :options="menuOption" />
-      <console-mobile :src="mobileUrl" @load="iframeLoad" />
+      <console-nav :options="menuOption" :loading="menuLoading" />
+      <console-mobile
+        :src="mobileUrl"
+        :loading="mobileLoading"
+        @load="iframeLoad"
+      />
       <console-var :options="styleOption" @complete="setVariables" />
     </div>
   </div>
@@ -26,16 +31,17 @@
 
 <script lang="ts" setup>
 import { ref, reactive, watch, nextTick, toRaw } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { zhCNMenu, enUSMenu } from "./router";
 import useMainStore from "@/stores";
 import { NButton, NSpin, useMessage, useDialog } from "naive-ui";
 import { getCssVar, setCssVar, setCssVarByConfig, clearCssVar } from "@/utils/";
-import { APP_BASE_URL } from "@/utils/constant";
+import { APP_BASE_URL, VANT_VERSION_CSS } from "@/utils/constant";
 import ConsoleNav from "./ConsoleNav.vue";
 import ConsoleMobile from "./ConsoleMobile.vue";
 import ConsoleVar from "./ConsoleVar.vue";
+import getMenu from "@/json/menus";
 import getStyles from "@/json/styles";
 import type { Menu, Style } from "@/utils/type";
 import type { Props as VariablesProps } from "./VariablesComponent.vue";
@@ -47,8 +53,6 @@ import {
 } from "@/utils/iframeSync";
 
 const $route = useRoute();
-
-const $router = useRouter();
 
 const $store = useMainStore();
 
@@ -62,7 +66,6 @@ const {
   versionCurrentTheme,
   language,
   listenSyncPathState,
-  addRouteState,
 } = storeToRefs($store);
 
 // const mobileUrl = computed(() => {
@@ -70,9 +73,13 @@ const {
 //   return `${APP_BASE_URL}src/page/mobile/${versionInfo.value.key}.html#/${language.value}`;
 // });
 
-const mobileUrl = `${APP_BASE_URL}src/page/mobile/${versionInfo.value.key}.html#/${language.value}`;
+const menuLoading = ref<boolean>(true);
 
 const menuOption = ref<Menu[]>([]);
+
+const mobileUrl = `${APP_BASE_URL}src/page/mobile/${versionInfo.value.key}.html#/${language.value}`;
+
+const mobileLoading = ref<boolean>(true);
 
 let versionStyle: Style[] = [];
 
@@ -80,18 +87,34 @@ let versionStyle: Style[] = [];
 
 let styleOption = reactive<Style>({ label: "", value: "", children: [] });
 
-const getVersionMenu = async () => {
-  const menuMap = {
-    "zh-CN": zhCNMenu,
-    "en-US": enUSMenu,
-  };
-  const menu = menuMap[language.value];
-  menuOption.value = menu;
+const getVantVerionStyle = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = VANT_VERSION_CSS[versionInfo.value.key];
+    document.head.appendChild(link);
+    link.onload = function () {
+      console.log("vant css loading complete");
+      $store.setLoadVantCssState(true);
+      resolve();
+    };
+    link.onerror = function () {
+      reject();
+    };
+  });
 };
 
 const getVersionStyle = async () => {
-  const allStyle = await getStyles(versionInfo.value.key, language.value);
-  versionStyle = allStyle;
+  versionStyle = await getStyles(versionInfo.value.key, language.value);
+  console.log("current version all css variables:", versionStyle);
+};
+
+const getVersionMenu = async () => {
+  const menu = await getMenu(versionInfo.value.key, language.value);
+  menuOption.value = menu;
+  menuLoading.value = false;
+  console.log("current menu:", menu);
 };
 
 const getStyleOption = async () => {
@@ -125,11 +148,8 @@ const getStyleOption = async () => {
     styleOption.label = "";
     styleOption.value = "";
     styleOption.children = [];
-    // debugger;
-    // if (styleOption.children) {
-    //   styleOption.children.length = 0;
-    // }
   }
+  console.log(`current component:`, styleOption);
 };
 
 const initVariables = () => {
@@ -191,17 +211,33 @@ const init = async () => {
       },
     });
   } else {
-    getVersionMenu();
-    getVersionStyle().then(getStyleOption);
+    // await getVantVerionStyle();
+    // await getVersionStyle();
+    // await getStyleOption();
+    await getVantVerionStyle();
   }
 };
 
 const iframeLoad = () => {
+  getVersionMenu();
+  getVersionStyle().then(getStyleOption);
   initVariables();
   syncThemeToChild(schemeColor.value);
+  $store.setIframeState(true);
+  $store.setCreateRouteState(true);
+  mobileLoading.value = false;
 };
 
 init();
+
+// watch(
+//   () => createRouteState.value,
+//   (state) => {
+//     if (state) {
+//       $store.setCreateRouteState(false);
+//     }
+//   }
+// );
 
 watch(
   () => $route.path,
