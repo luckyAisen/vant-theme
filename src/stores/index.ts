@@ -9,7 +9,6 @@ import {
   VANT_THEME_VERSION,
   VANT_THEME_LANGUAGE,
   VANT_THEME_USER_CONFIG,
-  VANT_THEME_CURRENT_CONFIG,
   VANT_THEME_CURRENT_CONFIG_ID,
   APP_HEADER_VERSION,
   APP_HEADER_LANGUAGE,
@@ -26,6 +25,7 @@ import type {
   StringProp,
   Theme,
   ModalValue,
+  OldUserConfig,
 } from "@/utils/type";
 
 import { getDefaultTheme } from "@/utils/iframeSync";
@@ -34,6 +34,7 @@ import { getBasicCssVariables } from "@/json/styles";
 const storage = useLocalStorage();
 
 type State = {
+  needBackups: boolean;
   appVersion?: string;
   schemeColor: SchemeColor;
   version: Version;
@@ -41,7 +42,6 @@ type State = {
   language: Language;
   languageList: LanguageInfo[];
   userConfig: UserConfig;
-  currentConfig: StringProp;
   currentConfigId: number | string;
   loadVantCssState: boolean;
   iframeState: boolean;
@@ -55,7 +55,7 @@ const defaultUserConfig = {
   v4: [],
 };
 
-const defaultCurrentConfig = {};
+// const defaultCurrentConfig = {};
 
 const defaultCurrentConfigId = "";
 
@@ -75,7 +75,8 @@ function generateTheme(payload: Theme): Theme {
 
 const useMainStore = defineStore("main", {
   state: (): State => ({
-    appVersion: storage.getItem(VANT_THEME_APP_VERSION),
+    needBackups: false,
+    appVersion: storage.getItem(VANT_THEME_APP_VERSION) || pkg.version,
     schemeColor: getDefaultTheme(),
     version: storage.getItem(VANT_THEME_VERSION) || APP_HEADER_DEFAULT_VERSION,
     versionList: APP_HEADER_VERSION,
@@ -83,8 +84,6 @@ const useMainStore = defineStore("main", {
       storage.getItem(VANT_THEME_LANGUAGE) || APP_HEADER_DEFAULT_LANGUAG,
     languageList: APP_HEADER_LANGUAGE,
     userConfig: storage.getItem(VANT_THEME_USER_CONFIG) || defaultUserConfig,
-    currentConfig:
-      storage.getItem(VANT_THEME_CURRENT_CONFIG) || defaultCurrentConfig,
     currentConfigId:
       storage.getItem(VANT_THEME_CURRENT_CONFIG_ID) || defaultCurrentConfigId,
     loadVantCssState: false,
@@ -133,18 +132,53 @@ const useMainStore = defineStore("main", {
      * 初始化
      */
     async init() {
+      const appVersion = this.appVersion;
       const schemeColor = this.schemeColor;
       const version = this.version;
       const language = this.language;
       const userConfig = this.userConfig;
-      const currentConfig = this.currentConfig;
       const currentConfigId = this.currentConfigId;
+      storage.setItem(VANT_THEME_APP_VERSION, appVersion);
       storage.setItem(VANT_THEME_SCHEMECOLOR, schemeColor);
       storage.setItem(VANT_THEME_VERSION, version);
       storage.setItem(VANT_THEME_LANGUAGE, language);
+      // if (!appVersion || appVersion !== pkg.version) {
+      //   this.handleOldVersionConfig();
+      // }
       storage.setItem(VANT_THEME_USER_CONFIG, userConfig);
-      storage.setItem(VANT_THEME_CURRENT_CONFIG, currentConfig);
       storage.setItem(VANT_THEME_CURRENT_CONFIG_ID, currentConfigId);
+    },
+
+    /**
+     * 将旧版本的数据转换成新版本的数据
+     */
+    handleOldVersionConfig() {
+      const oldUserConfig: OldUserConfig = storage.getItem(
+        "VANT_THEME_USER_CONFIG"
+      );
+      const newUserConfig: UserConfig = { v2: [], v3: [], v4: [] };
+      oldUserConfig &&
+        Object.keys(oldUserConfig).forEach((v) => {
+          newUserConfig[v as Version] = [];
+          const child = oldUserConfig[v as Version];
+          if (child && child.length > 0) {
+            child.forEach((item) => {
+              newUserConfig[v as Version].push({
+                version: v as Version,
+                id: item.id,
+                name: item.name,
+                describe: "",
+                config: item.theme,
+                create: item.update,
+                update: item.update,
+              });
+            });
+          }
+        });
+      console.log(newUserConfig);
+      storage.removeItem("base");
+      storage.removeItem("VANT_THEME_PREVIEW_CONFIG");
+      storage.removeItem("VANT_THEME_PREVIEW_ID");
     },
 
     /**
@@ -301,22 +335,8 @@ const useMainStore = defineStore("main", {
      * 使用主题
      */
     useTheme(id: number) {
-      const version = this.version;
       this.currentConfigId = id;
-      const currentTheme = toRaw(this.userConfig)[version].filter(
-        (item) => item.id === id
-      )[0];
-      this.currentConfig = currentTheme.config as StringProp;
-      storage.setItem(VANT_THEME_CURRENT_CONFIG, currentTheme.config);
       storage.setItem(VANT_THEME_CURRENT_CONFIG_ID, id);
-    },
-
-    /**
-     * 清除 当前主题配置
-     */
-    clearCurrentConfig() {
-      this.currentConfig = defaultCurrentConfig;
-      storage.setItem(VANT_THEME_CURRENT_CONFIG, defaultCurrentConfig);
     },
 
     /**

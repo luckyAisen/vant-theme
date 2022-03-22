@@ -28,6 +28,10 @@ export type UserConfig = {
   [keyof in Version]: Theme[];
 };
 
+export type OldUserConfig = {
+  [keyof in Version]: (Theme & { theme: StringProp })[];
+};
+
 export type Theme = {
   version?: Version;
   id?: number;

@@ -205,7 +205,6 @@ const init = async () => {
     $message.error("主题不存在", {
       duration: 1800,
       onLeave: () => {
-        $store.clearCurrentConfig();
         $store.clearCurrentConfigId();
         window.location.href = `${APP_BASE_URL}`;
       },
@@ -229,15 +228,6 @@ const iframeLoad = () => {
 };
 
 init();
-
-// watch(
-//   () => createRouteState.value,
-//   (state) => {
-//     if (state) {
-//       $store.setCreateRouteState(false);
-//     }
-//   }
-// );
 
 watch(
   () => $route.path,

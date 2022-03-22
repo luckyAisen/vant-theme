@@ -33,8 +33,18 @@ export default function useLocalStorage() {
     window.localStorage.setItem(key, newValue as string);
   }
 
+  function removeItem(key: string) {
+    window.localStorage.removeItem(key);
+  }
+
+  function clear() {
+    window.localStorage.clear();
+  }
+
   return {
     getItem,
     setItem,
+    removeItem,
+    clear,
   };
 }
