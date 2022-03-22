@@ -2,9 +2,9 @@
 
 `vant-theme`是一个 `vant` 组件库**在线主题预览工具**，如果你有`vant`组件库**定制主题、动态切换主题**的需求，可以使用此工具。`vant-theme`可以修改`vant`组件库所提供的**样式变量**，它能够及时反馈和呈现修改过后的内容。
 
-`vant` 在 `3.x`版本使用了 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 来组织样式。**`vant-theme`就是通过样式覆盖的形式实现的。**
+`vant 3` 和 `vant 4` 版本使用了 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 来组织样式。**`vant-theme`就是通过样式覆盖的形式实现的。**
 
-**目前只支持 `Vant 3`版本，在不久后将支持 `Vant 2`版本。**
+**目前只支持 `vant 3` 和 `vant 4` 版本，在不久后将支持 `Vant 2`版本。**
 
 在线预览：https://aisen60.github.io/vant-theme 或者 https://aisen60.gitee.io/vant-theme
 
@@ -20,46 +20,31 @@
 
 ## 预览
 
-首页：
+<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/159396139-4d336e45-3db6-4ec7-ac2b-9edd48549478.png">
 
-<img width="1440" alt="index" src="https://user-images.githubusercontent.com/19791710/132115824-6b46e9a2-d90a-4a6c-beaf-dd56fc43aec7.png">
+<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/159396492-4bc23e86-dcee-4d67-8954-ce0f14355dc0.png">
 
-主题列表页：
+<img width="1440" alt="console" src="https://user-images.githubusercontent.com/19791710/159396755-7b0c2f5e-c671-4a9f-af5a-81372d1a2795.png">
 
-<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132115934-3bdd2b68-9690-48b4-9c6c-b56670ec5ad2.png">
+<img width="1440" alt="console" src="https://user-images.githubusercontent.com/19791710/159396961-c4d63d0f-a06e-4462-9c98-d0d8641a6de6.png">
 
-预览页：
-
-<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132117276-c8e0bd76-ed5c-482e-8929-15a249c740b2.gif">
-
-<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/132117574-23a899c8-8d7b-4145-841f-1712b32b2d3f.gif">
+<video src="https://user-images.githubusercontent.com/19791710/159398423-f183a57d-3768-47e2-a6e8-7c7890a82842.mov" controls="controls">
+</video>
 
 ## 如何使用
 
-当修改完样式后，点击**下载主题文件**按钮，会得到一份`css`文件和一份`json`文件。
+当修改完样式后，点击**下载主题**按钮，会下载一份压缩包，压缩包中包含了 `vant-theme.json`、`variables.css`、`config-provider.json` 这三个文件。其中 `vant-theme.json` 是 `vant-theme` 配置文件，你可以通过**导入主题**的方式将主题进行导入。`variables.css`、`config-provider.json` 是样式变量配置文件，你可以通过 [CSS 覆盖 ](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#tong-guo-css-fu-gai)的方式，或者 [ConfigProvider 覆盖 ](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#tong-guo-configprovider-fu-gai)的方式来配置你的主题。具体请查看官方文档：[定制主题](https://vant-contrib.gitee.io/vant/#/zh-CN/config-provider#ding-zhi-zhu-ti) 。
 
-[通过 CSS 覆盖](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#tong-guo-css-fu-gai)的方式，将下载后的`css`文件引入到项目中，就可以覆盖 `vant` 官方默认样式了。
+<img width="1440" alt="console" src="https://user-images.githubusercontent.com/19791710/159399640-e3101455-bc1e-472a-aaaa-157ce26007d1.png">
 
-或者[通过 ConfigProvider 覆盖](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#tong-guo-configprovider-fu-gai)的方式，将下载后的`json`文件中的内容配置到`van-config-provider`组件的`theme-vars`中。
+`vant-theme.json`文件内容：
 
-具体请查看官方文档：[定制主题](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#ding-zhi-zhu-ti) 。
+<img width="1440"  alt="vant-theme.json content" src="https://user-images.githubusercontent.com/19791710/159399918-78246cf0-b402-427c-a68c-8679f4875e88.png">
 
-下载主题文件按钮所在的位置：
+`variables.css`文件内容：
 
-![download button](https://user-images.githubusercontent.com/19791710/132115673-0bbee24f-181e-4367-94bf-33c733cf7991.png)
+<img width="1440"  alt="variables.css content" src="https://user-images.githubusercontent.com/19791710/159399997-1e8c296a-47b9-4787-a043-7f81b1446fad.png">
 
-下载后的`css`文件内容：
+`config-provider.json`文件内容：
 
-<img alt="css content" src="https://user-images.githubusercontent.com/19791710/132115723-e7d01e32-6374-4d02-ac78-705ec8a9667a.png">
-
-下载后的`json`文件内容：
-
-<img alt="json content" src="https://user-images.githubusercontent.com/19791710/132115735-d9056c5d-645e-48a3-8ebb-7db53f5b516a.png">
-
-## Todo
-
-- [x] 使用无头浏览器自动抓取官网样式变量，实现与官方的**样式变量**保持同步。
-- [ ] 支持 `Vant 2` 版本。
-- [ ] 修改记录的撤销、回退。
-- [x] 将项目脚手架修改为 `Vite`
-- [ ] 国际化
+<img width="1440"  alt="config-provider.json content" src="https://user-images.githubusercontent.com/19791710/159399982-20762726-1ddd-4c2f-a62f-8a31a00ece0d.png">
