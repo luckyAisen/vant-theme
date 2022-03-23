@@ -1,3 +1,6 @@
 node_modules
 dist
 .VANT_SOURCE_LOCAL
+public
+src/json/menus
+src/json/styles
