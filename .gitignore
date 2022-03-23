@@ -16,9 +16,6 @@ dist-ssr
 coverage
 *.local
 .VANT_SOURCE_LOCAL
-public/vant
-src/mobile-v2/index.html
-src/mobile-v3/index.html
 
 /cypress/videos/
 /cypress/screenshots/
