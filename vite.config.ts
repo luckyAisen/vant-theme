@@ -43,6 +43,7 @@ export default defineConfig({
         "mobile-v3": resolve(__dirname, "src/page/mobile/v3.html"),
         "mobile-v4": resolve(__dirname, "src/page/mobile/v4.html"),
       },
+      external: [/\/vant\/v\d\/.*/],
     },
   },
 
