@@ -30,6 +30,7 @@
     "prepare": "husky install",
     "serve": "node scripts/serve.js",
     "build": "node scripts/build.js",
+    "reptile:css": "node scripts/reptile-css.js",
     "clean": "node scripts/clean.js",
     "preview": "vite preview --port 5050",
     "test:unit": "vitest --environment jsdom",
