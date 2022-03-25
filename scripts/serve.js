@@ -32,10 +32,10 @@ const serve = async () => {
       await updateMobilePageTagsInfo(v);
       await updateMobileJSPath(v);
       await insertMobileScript(v);
-      const zhCNMenus = await reptileMenu(v, "zh-CN").then(
+      await reptileMenu(v, "zh-CN").then((zhCNMenus) =>
         reptileCSSVariables(v, "zh-CN", zhCNMenus)
       );
-      const enUSMenus = await reptileMenu(v, "en-US").then(
+      await reptileMenu(v, "en-US").then((enUSMenus) =>
         reptileCSSVariables(v, "en-US", enUSMenus)
       );
       // await reptileCSSVariables(v, "zh-CN", zhCNMenus);
