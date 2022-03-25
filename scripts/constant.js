@@ -1,5 +1,5 @@
 export const VANT_WEBSITE = "https://youzan.github.io/vant";
-// export const VANT_WEBSITE = "https://vant-contrib.gitee.io/vant";
+export const VANT_WEBSITE_GITEE = "https://vant-contrib.gitee.io/vant";
 export const VERSION_LIST = ["v4", "v3", "v2"];
 // export const VERSION_LIST = ["v2", "v3", "v4"];
 // export const VERSION_LIST = ["v3"];
@@ -14,6 +14,7 @@ export const VANT_STYLES_CONCAT_JSON = (v, language = "zh-cn") =>
 
 export default {
   VANT_WEBSITE,
+  VANT_WEBSITE_GITEE,
   VERSION_LIST,
   VANT_GIT_REPO,
   VANT_SOURCE_LOCAL,

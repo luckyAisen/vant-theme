@@ -6,6 +6,7 @@ import cheerio from "cheerio";
 import puppeteer from "puppeteer";
 import {
   VANT_WEBSITE,
+  VANT_WEBSITE_GITEE,
   VANT_GIT_REPO,
   VANT_SOURCE_LOCAL,
   VERSION_LIST,
@@ -283,6 +284,7 @@ export const reptileMenu = async (v, language = "zh-CN") => {
  * @param {Array} menu 菜单
  */
 export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
+  const webUrl = v === "v4" ? VANT_WEBSITE_GITEE : VANT_WEBSITE;
   let menus = [];
   if (menu === undefined) {
     menus = await reptileMenu(v, language);
@@ -299,7 +301,7 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
     if (children && children.length > 0) {
       while (item < children.length) {
         await page
-          .goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
+          .goto(`${webUrl}/${v}/#${children[item].value}`, {
             waitUntil: "networkidle2",
           })
           .then(() => {
