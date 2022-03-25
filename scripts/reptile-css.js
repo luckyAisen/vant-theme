@@ -37,35 +37,38 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
             el = "#css-variables";
           }
         }
-        const style = await page.evaluate((el) => {
-          // const el =
-          //   language === "zh-CN"
-          //     ? document.querySelector("#yang-shi-bian-liang")
-          //     : document.querySelector("#css-variables");
-          const ysbl = document.querySelector(el);
-          if (!ysbl) {
-            return [];
-          }
-          const styleGroup = ysbl.nextElementSibling.nextElementSibling
-            .querySelector("tbody")
-            .querySelectorAll("tr");
-          const stylesList = Array.from(styleGroup).map((item) => {
-            return {
-              label: item.querySelector("td").innerText,
-              value: "",
-            };
+        await page
+          .evaluate((el) => {
+            // const el =
+            //   language === "zh-CN"
+            //     ? document.querySelector("#yang-shi-bian-liang")
+            //     : document.querySelector("#css-variables");
+            const ysbl = document.querySelector(el);
+            if (!ysbl) {
+              return [];
+            }
+            const styleGroup = ysbl.nextElementSibling.nextElementSibling
+              .querySelector("tbody")
+              .querySelectorAll("tr");
+            const stylesList = Array.from(styleGroup).map((item) => {
+              return {
+                label: item.querySelector("td").innerText,
+                value: "",
+              };
+            });
+            return stylesList;
+          }, el)
+          .then((style) => {
+            if (style.length > 0) {
+              const styleItem = {
+                label: children[item].label,
+                value: children[item].value,
+                children: style,
+              };
+              styles.push(styleItem);
+            }
+            item++;
           });
-          return stylesList;
-        }, el);
-        if (style.length > 0) {
-          const styleItem = {
-            label: children[item].label,
-            value: children[item].value,
-            children: style,
-          };
-          styles.push(styleItem);
-        }
-        item++;
       }
     }
     group++;
