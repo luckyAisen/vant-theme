@@ -1,4 +1,4 @@
-name: Dev Branch Reptile V4 Css
+name: Dev Branch Reptile Css
 
 on:
   workflow_dispatch:
