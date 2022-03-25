@@ -292,58 +292,73 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   logWithSpinner(`reptile vant ${v} ${language} docs css variables start`);
   const styles = [];
   const { page, browser } = await initBrowser();
-  for (let group = 0; group < menus.length; group++) {
+  let group = 0,
+    item = 0;
+  while (group < menus.length) {
     const children = menus[group].children;
     if (children && children.length > 0) {
-      for (let item = 0; item < children.length; item++) {
-        await page.goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
-          waitUntil: "networkidle2",
-        });
-        let el;
-        if (language === "zh-CN") {
-          el = "#yang-shi-bian-liang";
-        } else {
-          if (v === "v2") {
-            el = "#less-variables";
-          } else {
-            el = "#css-variables";
-          }
-        }
-        const style = await page.evaluate((el) => {
-          // const el =
-          //   language === "zh-CN"
-          //     ? document.querySelector("#yang-shi-bian-liang")
-          //     : document.querySelector("#css-variables");
-          const ysbl = document.querySelector(el);
-          if (!ysbl) {
-            return [];
-          }
-          const styleGroup = ysbl.nextElementSibling.nextElementSibling
-            .querySelector("tbody")
-            .querySelectorAll("tr");
-          const stylesList = Array.from(styleGroup).map((item) => {
-            return {
-              label: item.querySelector("td").innerText,
-              value: "",
-            };
+      while (item < children.length) {
+        await page
+          .goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
+            waitUntil: "networkidle2",
+          })
+          .then(() => {
+            let el;
+            if (language === "zh-CN") {
+              el = "#yang-shi-bian-liang";
+            } else {
+              if (v === "v2") {
+                el = "#less-variables";
+              } else {
+                el = "#css-variables";
+              }
+            }
+            return page.evaluate((el) => {
+              // const el =
+              //   language === "zh-CN"
+              //     ? document.querySelector("#yang-shi-bian-liang")
+              //     : document.querySelector("#css-variables");
+              const ysbl = document.querySelector(el);
+              if (!ysbl) {
+                return [];
+              } else {
+                const styleGroup = ysbl.nextElementSibling.nextElementSibling
+                  .querySelector("tbody")
+                  .querySelectorAll("tr");
+                const stylesList = [],
+                  itemEl = Array.from(styleGroup);
+                for (let j = 0; j < itemEl.length; j++) {
+                  stylesList.push({
+                    label: itemEl[j].querySelector("td").innerText,
+                    value: "",
+                  });
+                }
+                return stylesList;
+              }
+            }, el);
+          })
+          .then((style) => {
+            if (style.length > 0) {
+              const styleItem = {
+                label: children[item].label,
+                value: children[item].value,
+                children: style,
+              };
+              styles.push(styleItem);
+            }
+            item++;
           });
-          return stylesList;
-        }, el);
-        if (style.length > 0) {
-          const styleItem = {
-            label: children[item].label,
-            value: children[item].value,
-            children: style,
-          };
-          styles.push(styleItem);
-        }
       }
     }
+    group++;
   }
   const path = VANT_STYLES_CONCAT_JSON(v, language.toLocaleLowerCase());
   await fs.outputFile(path, JSON.stringify(styles));
   await browser.close();
   successSpinner(`reptile vant ${v} ${language} docs css variables complete`);
+  console.log("menus:", JSON.stringify(menus));
+  console.log("\n");
+  console.log("styles:", JSON.stringify(styles));
 };
 
 /**
