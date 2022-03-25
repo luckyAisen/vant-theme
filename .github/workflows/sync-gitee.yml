@@ -2,8 +2,6 @@ name: Sync to Gitee
 
 on:
   workflow_dispatch:
-  push:
-    branches: [dev,website,gh-pages]
   schedule:
     - cron: "0 21 * * *"
 
