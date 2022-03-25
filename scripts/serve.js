@@ -32,14 +32,10 @@ const serve = async () => {
       await updateMobilePageTagsInfo(v);
       await updateMobileJSPath(v);
       await insertMobileScript(v);
-      await reptileMenu(v, "zh-CN").then((zhCNMenus) =>
-        reptileCSSVariables(v, "zh-CN", zhCNMenus)
-      );
-      await reptileMenu(v, "en-US").then((enUSMenus) =>
-        reptileCSSVariables(v, "en-US", enUSMenus)
-      );
-      // await reptileCSSVariables(v, "zh-CN", zhCNMenus);
-      // await reptileCSSVariables(v, "en-US", enUSMenus);
+      const zhCNMenus = await reptileMenu(v, "zh-CN");
+      const enUSMenus = await reptileMenu(v, "en-US");
+      await reptileCSSVariables(v, "zh-CN", zhCNMenus);
+      await reptileCSSVariables(v, "en-US", enUSMenus);
     }
   }
   await runServe();
