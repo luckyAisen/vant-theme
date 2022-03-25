@@ -292,10 +292,12 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   logWithSpinner(`reptile vant ${v} ${language} docs css variables start`);
   const styles = [];
   const { page, browser } = await initBrowser();
-  for (let group = 0; group < menus.length; group++) {
+  let group = 0;
+  while (group < menus.length) {
     const children = menus[group].children;
+    let item = 0;
     if (children && children.length > 0) {
-      for (let item = 0; item < children.length; item++) {
+      while (item < children.length) {
         await page.goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
           waitUntil: "networkidle2",
         });
@@ -337,8 +339,10 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
           };
           styles.push(styleItem);
         }
+        item++;
       }
     }
+    group++;
   }
   const path = VANT_STYLES_CONCAT_JSON(v, language.toLocaleLowerCase());
   await fs.outputFile(path, JSON.stringify(styles));

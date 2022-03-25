@@ -87,6 +87,6 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   console.log("styles:", JSON.stringify(styles));
 };
 
-reptileCSSVariables("v2", "zh-CN");
-reptileCSSVariables("v3", "zh-CN");
+// reptileCSSVariables("v2", "zh-CN");
+// reptileCSSVariables("v3", "zh-CN");
 reptileCSSVariables("v4", "zh-CN");
