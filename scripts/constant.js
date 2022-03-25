@@ -1,6 +1,7 @@
 export const VANT_WEBSITE = "https://youzan.github.io/vant";
 // export const VANT_WEBSITE = "https://vant-contrib.gitee.io/vant";
-export const VERSION_LIST = ["v2", "v3", "v4"];
+export const VERSION_LIST = ["v4", "v3", "v2"];
+// export const VERSION_LIST = ["v2", "v3", "v4"];
 // export const VERSION_LIST = ["v3"];
 export const VANT_GIT_REPO = "youzan/vant#gh-pages";
 export const VANT_SOURCE_LOCAL = ".VANT_SOURCE_LOCAL";
