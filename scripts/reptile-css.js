@@ -46,17 +46,20 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
             const ysbl = document.querySelector(el);
             if (!ysbl) {
               return [];
+            } else {
+              const styleGroup = ysbl.nextElementSibling.nextElementSibling
+                .querySelector("tbody")
+                .querySelectorAll("tr");
+              const stylesList = [],
+                itemEl = Array.from(styleGroup);
+              for (let j = 0; j < itemEl.length; j++) {
+                stylesList.push({
+                  label: itemEl[j].querySelector("td").innerText,
+                  value: "",
+                });
+              }
+              return stylesList;
             }
-            const styleGroup = ysbl.nextElementSibling.nextElementSibling
-              .querySelector("tbody")
-              .querySelectorAll("tr");
-            const stylesList = Array.from(styleGroup).map((item) => {
-              return {
-                label: item.querySelector("td").innerText,
-                value: "",
-              };
-            });
-            return stylesList;
           }, el)
           .then((style) => {
             if (style.length > 0) {
@@ -75,9 +78,11 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   }
   const path = VANT_STYLES_CONCAT_JSON(v, language.toLocaleLowerCase());
   await fs.outputFile(path, JSON.stringify(styles));
-  console.log("styles:", JSON.stringify(styles));
   await browser.close();
   successSpinner(`reptile vant ${v} ${language} docs css variables complete`);
+  console.log("menus:", JSON.stringify(menus));
+  console.log("\n");
+  console.log("styles:", JSON.stringify(styles));
 };
 
 reptileCSSVariables("v4", "zh-CN");
