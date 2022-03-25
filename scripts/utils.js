@@ -302,6 +302,7 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
         await page.goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
           waitUntil: "networkidle2",
         });
+        await page.waitFor(500);
         let el;
         if (language === "zh-CN") {
           el = "#yang-shi-bian-liang";
