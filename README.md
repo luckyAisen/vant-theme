@@ -1,6 +1,6 @@
 ## 简介
 
-`vant-theme`是一个 `vant` 组件库**在线主题预览工具**，如果你有`vant`组件库**定制主题、动态切换主题**的需求，可以使用此工具。`vant-theme`可以修改`vant`组件库所提供的**样式变量**，它能够及时反馈和呈现修改过后的内容。
+`vant-theme`一个 `vant` 组件库**在线主题预览工具**，如果你有`vant`组件库**定制主题、动态切换主题**的需求，可以使用此工具。`vant-theme`可以修改`vant`组件库所提供的**样式变量**，它能够及时反馈和呈现修改过后的内容。
 
 `vant 3` 和 `vant 4` 版本使用了 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 来组织样式。**`vant-theme`就是通过样式覆盖的形式实现的。**
 
@@ -31,6 +31,14 @@
 <video src="https://user-images.githubusercontent.com/19791710/159398423-f183a57d-3768-47e2-a6e8-7c7890a82842.mov" controls="controls">
 </video>
 
+### 支持深色模式
+
+<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/160244842-30cbb748-327f-4c94-a9df-d1cce7a6a2bd.png">
+
+<img width="1440" alt="theme" src="https://user-images.githubusercontent.com/19791710/160244816-4b57fe79-1ee3-45cc-8715-e21dcd593d8c.png">
+
+<img width="1440" alt="console" src="https://user-images.githubusercontent.com/19791710/160244821-2eecea82-5544-41f7-8d25-52d6a558a68a.png">
+
 ## 如何使用
 
 当修改完样式后，点击**下载主题**按钮，会下载一份压缩包，压缩包中包含了 `vant-theme.json`、`variables.css`、`config-provider.json` 这三个文件。其中 `vant-theme.json` 是 `vant-theme` 配置文件，你可以通过**导入主题**的方式将主题进行导入。`variables.css`、`config-provider.json` 是样式变量配置文件，你可以通过 [CSS 覆盖 ](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#tong-guo-css-fu-gai)的方式，或者 [ConfigProvider 覆盖 ](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#tong-guo-configprovider-fu-gai)的方式来配置你的主题。具体请查看官方文档：[定制主题](https://vant-contrib.gitee.io/vant/#/zh-CN/config-provider#ding-zhi-zhu-ti) 。
@@ -48,3 +56,7 @@
 `config-provider.json`文件内容：
 
 <img width="1440"  alt="config-provider.json content" src="https://user-images.githubusercontent.com/19791710/159399982-20762726-1ddd-4c2f-a62f-8a31a00ece0d.png">
+
+## 其他
+
+如果这个工具对你有帮助哈，希望给个 star 鼓励一下哈~
