@@ -23,10 +23,11 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   for (let group = 0; group < menus.length; group++) {
     const children = menus[group].children;
     for (let item = 0; item < children.length; item++) {
+      await page.goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
+        waitUntil: "networkidle2",
+      });
       await page
-        .goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
-          waitUntil: "networkidle2",
-        })
+        .waitForTimeout(500)
         .then(() => {
           let el;
           if (language === "zh-CN") {
