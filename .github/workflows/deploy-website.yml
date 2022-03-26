@@ -1,7 +1,11 @@
-name: Dev Branch Reptile Css
+name: Deploy Site By Website Branch
 
 on:
   workflow_dispatch:
+  push:
+    branches: [website]
+  schedule:
+    - cron: "0 21 * * *"
 
 jobs:
   deploy:
@@ -9,10 +13,10 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - name: Checkout dev branch code
+      - name: Checkout website branch code
         uses: actions/checkout@v3
         with:
-          ref: dev
+          ref: website
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -36,29 +40,9 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # - name: Commit changes
-      #   run: |
-      #     git config --global user.email 'caixusheng60@gmail.com'
-      #     git config --global user.name 'GitHub Action'
-      #     git add .
-      #     git commit -m "ci: github actions"
-
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@v0.6.0
-      #   with:
-      #     github_token: ${{ secrets.ACTIONS_TOKEN }}
-      #     branch: main
-
       - name: Deploy gh page
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/dev' }}
+        if: ${{ github.ref == 'refs/heads/website' }}
         with:
           github_token: ${{ secrets.GH_PAGES }}
           publish_dir: ./dist
-      
-      # - name: Deploy gh page
-      #   uses: JamesIves/github-pages-deploy-action@4.1.1
-      #   with:
-      #     branch: gh-pages
-      #     folder: dist
-      #     clean: false
