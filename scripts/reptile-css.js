@@ -16,58 +16,110 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   } else {
     menus = menu;
   }
+  console.log("menus length:", menus.length);
   logWithSpinner(`reptile vant ${v} ${language} docs css variables start`);
   const styles = [];
   const { page, browser } = await initBrowser();
-  let group = 0,
-    item = 0;
-  while (group < menus.length) {
+  for (let group = 0; group < menus.length; group++) {
     const children = menus[group].children;
-    if (children && children.length > 0) {
-      while (item < children.length) {
-        await page.goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
+    for (let item = 0; item < children.length; item++) {
+      await page
+        .goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
           waitUntil: "networkidle2",
-        });
-        let el;
-        if (language === "zh-CN") {
-          el = "#yang-shi-bian-liang";
-        } else {
-          if (v === "v2") {
-            el = "#less-variables";
+        })
+        .then(() => {
+          let el;
+          if (language === "zh-CN") {
+            el = "#yang-shi-bian-liang";
           } else {
-            el = "#css-variables";
-          }
-        }
-        const style = await page.evaluate((el) => {
-          const ysbl = document.querySelector(el);
-          const stylesList = [];
-          if (ysbl) {
-            const styleGroup = ysbl.nextElementSibling.nextElementSibling
-              .querySelector("tbody")
-              .querySelectorAll("tr");
-            const itemEl = Array.from(styleGroup);
-            for (let j = 0; j < itemEl.length; j++) {
-              stylesList.push({
-                label: itemEl[j].querySelector("td").innerText,
-                value: "",
-              });
+            if (v === "v2") {
+              el = "#less-variables";
+            } else {
+              el = "#css-variables";
             }
           }
-          return Promise.resolve(stylesList);
-        }, el);
-        if (style.length > 0) {
-          const styleItem = {
-            label: children[item].label,
-            value: children[item].value,
-            children: style,
-          };
-          styles.push(styleItem);
-        }
-        item++;
-      }
+          return page.evaluate((el) => {
+            const ysbl = document.querySelector(el);
+            const stylesList = [];
+            if (ysbl) {
+              const styleGroup = ysbl.nextElementSibling.nextElementSibling
+                .querySelector("tbody")
+                .querySelectorAll("tr");
+              const itemEl = Array.from(styleGroup);
+              for (let j = 0; j < itemEl.length; j++) {
+                stylesList.push({
+                  label: itemEl[j].querySelector("td").innerText,
+                  value: "",
+                });
+              }
+            }
+            return Promise.resolve(stylesList);
+          }, el);
+        })
+        .then((style) => {
+          if (style.length > 0) {
+            const styleItem = {
+              label: children[item].label,
+              value: children[item].value,
+              children: style,
+            };
+            styles.push(styleItem);
+          }
+        });
     }
-    group++;
   }
+  // while (group < menus.length) {
+  //   const children = menus[group].children;
+  //   console.log("children length:", children.length);
+  //   group++;
+  //   while (item < children.length) {
+  //     await page
+  //       .goto(`${VANT_WEBSITE}/${v}/#${children[item].value}`, {
+  //         waitUntil: "networkidle2",
+  //       })
+  //       .then(() => {
+  //         let el;
+  //         if (language === "zh-CN") {
+  //           el = "#yang-shi-bian-liang";
+  //         } else {
+  //           if (v === "v2") {
+  //             el = "#less-variables";
+  //           } else {
+  //             el = "#css-variables";
+  //           }
+  //         }
+  //         return page.evaluate((el) => {
+  //           const ysbl = document.querySelector(el);
+  //           const stylesList = [];
+  //           if (ysbl) {
+  //             const styleGroup = ysbl.nextElementSibling.nextElementSibling
+  //               .querySelector("tbody")
+  //               .querySelectorAll("tr");
+  //             const itemEl = Array.from(styleGroup);
+  //             for (let j = 0; j < itemEl.length; j++) {
+  //               stylesList.push({
+  //                 label: itemEl[j].querySelector("td").innerText,
+  //                 value: "",
+  //               });
+  //             }
+  //           }
+  //           return Promise.resolve(stylesList);
+  //         }, el);
+  //       })
+  //       .then((style) => {
+  //         if (style.length > 0) {
+  //           const styleItem = {
+  //             label: children[item].label,
+  //             value: children[item].value,
+  //             children: style,
+  //           };
+  //           styles.push(styleItem);
+  //         }
+  //       });
+  //     item++;
+  //   }
+  // }
+  // setTimeout(async () => {
   const path = VANT_STYLES_CONCAT_JSON(v, language.toLocaleLowerCase());
   await fs.outputFile(path, JSON.stringify(styles));
   await browser.close();
@@ -75,6 +127,7 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   console.log("menus:", JSON.stringify(menus));
   console.log("\n");
   console.log("styles:", JSON.stringify(styles));
+  // }, 0);
 };
 
 // reptileCSSVariables("v2", "zh-CN");
