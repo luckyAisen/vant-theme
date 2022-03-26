@@ -223,7 +223,7 @@ export const insertMobileScript = async (v) => {
  */
 export async function initBrowser(options) {
   const browser = await puppeteer.launch({
-    headless: false,
+    // headless: false,
     ...options,
   });
   const page = await browser.newPage();
