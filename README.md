@@ -4,7 +4,7 @@
 
 `vant 3` 和 `vant 4` 版本使用了 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 来组织样式。**`vant-theme`就是通过样式覆盖的形式实现的。**
 
-**目前只支持 `vant 3` 和 `vant 4` 版本，在不久后将支持 `Vant 2`版本。**
+**支持 `Vant` 所有版本。**
 
 在线预览：https://aisen60.github.io/vant-theme 或者 https://aisen60.gitee.io/vant-theme
 
