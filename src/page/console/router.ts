@@ -83,7 +83,10 @@ const scrollIntoView = (parentSelector: string, childSelector: string) => {
   const parent = <HTMLElement>document.querySelector(parentSelector);
   const target = <HTMLElement>document.getElementById(childSelector);
   if (parent && target) {
-    parent.scrollTop = target.offsetTop - 72;
+    const navGroup = document.querySelectorAll(".console-panel-nav__group");
+    const vantThemePadding = 24;
+    parent.scrollTop =
+      target.offsetTop - vantThemePadding * 2 - navGroup.length * 10;
   }
   if (parent && !target) {
     parent.scrollTop = 0;

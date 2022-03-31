@@ -6,7 +6,6 @@ import cheerio from "cheerio";
 import puppeteer from "puppeteer";
 import {
   VANT_WEBSITE,
-  VANT_WEBSITE_GITEE,
   VANT_GIT_REPO,
   VANT_SOURCE_LOCAL,
   VERSION_LIST,

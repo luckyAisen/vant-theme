@@ -44,14 +44,7 @@ const $props = defineProps<Props>();
 
 const dark = ref<GlobalTheme | null>();
 
-const themeOverrides: GlobalThemeOverrides = {
-  Button: {
-    colorInfo: "#1989FAFF",
-    borderInfo: "1px solid #1989FAFF",
-    colorError: "#ee0a24FF",
-    borderError: "1px solid #ee0a24",
-  },
-};
+const themeOverrides: GlobalThemeOverrides = {};
 
 const locale = ref<NLocale | null>(null);
 

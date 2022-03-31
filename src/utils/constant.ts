@@ -35,7 +35,7 @@ export const APP_HEADER_VERSION: VersionInfo[] = [
   {
     key: "v2",
     title: "vant-theme 2",
-    subtitle: "适用于 vue 2、vant 2 暂不支持",
+    subtitle: "适用于 vue 2、vant 2",
   },
   {
     key: "v3",
@@ -113,7 +113,9 @@ export const VERSION_VARIABLES_EL = {
 };
 
 export const VANT_VERSION_CSS = {
-  v2: "https://cdn.jsdelivr.net/npm/vant@2/lib/index.css",
+  v2: `${APP_BASE_URL}v2.css`,
   v3: "https://cdn.jsdelivr.net/npm/vant/lib/index.css",
   v4: "https://cdn.jsdelivr.net/npm/vant@4.0.0-alpha.1/lib/index.css",
 };
+
+export const VANT_THEME_STYLE_TAG_ID = "VANT_THEME_STYLE_TAG_ID";

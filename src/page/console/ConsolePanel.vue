@@ -6,19 +6,24 @@
           当前主题：{{ versionCurrentTheme.name }}
         </div>
         <div class="console-panel-header__top-btn">
+          <n-tooltip trigger="hover" v-if="lessCompileState">
+            <template #trigger>
+              <n-spin size="small" />
+            </template>
+            less 编译中
+          </n-tooltip>
           <n-button type="error" size="small" @click="resetVariables">
             重置所有
           </n-button>
           <n-button type="info" size="small" @click="download">
             下载主题
           </n-button>
-          <n-spin size="small" v-if="false" />
         </div>
       </div>
     </div>
 
     <div class="console-panel-container">
-      <console-nav :options="menuOption" :loading="menuLoading" />
+      <console-nav :options="menuOption" />
       <console-mobile
         :src="mobileUrl"
         :loading="mobileLoading"
@@ -33,9 +38,9 @@
 import { ref, reactive, watch, nextTick, toRaw } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
-import { zhCNMenu, enUSMenu } from "./router";
+import { useFetch } from "@vueuse/core";
 import useMainStore from "@/stores";
-import { NButton, NSpin, useMessage, useDialog } from "naive-ui";
+import { NButton, NSpin, useMessage, useDialog, NTooltip } from "naive-ui";
 import { getCssVar, setCssVar, setCssVarByConfig, clearCssVar } from "@/utils/";
 import { APP_BASE_URL, VANT_VERSION_CSS } from "@/utils/constant";
 import ConsoleNav from "./ConsoleNav.vue";
@@ -43,7 +48,7 @@ import ConsoleMobile from "./ConsoleMobile.vue";
 import ConsoleVar from "./ConsoleVar.vue";
 import getMenu from "@/json/menus";
 import getStyles from "@/json/styles";
-import type { Menu, Style } from "@/utils/type";
+import type { Menu, StringProp, Style } from "@/utils/type";
 import type { Props as VariablesProps } from "./VariablesComponent.vue";
 import {
   syncVariablesInitToChild,
@@ -73,6 +78,8 @@ const {
 //   return `${APP_BASE_URL}src/page/mobile/${versionInfo.value.key}.html#/${language.value}`;
 // });
 
+const lessCompileState = ref<boolean>(false);
+
 const menuLoading = ref<boolean>(true);
 
 const menuOption = ref<Menu[]>([]);
@@ -86,6 +93,13 @@ let versionStyle: Style[] = [];
 // const styleOption = ref<Style>();
 
 let styleOption = reactive<Style>({ label: "", value: "", children: [] });
+
+const getVersionMenu = async () => {
+  const menu = await getMenu(versionInfo.value.key, language.value);
+  menuOption.value = menu;
+  menuLoading.value = false;
+  console.log("current menu:", menu);
+};
 
 const getVantVerionStyle = (): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -110,19 +124,16 @@ const getVersionStyle = async () => {
   console.log("current version all css variables:", versionStyle);
 };
 
-const getVersionMenu = async () => {
-  const menu = await getMenu(versionInfo.value.key, language.value);
-  menuOption.value = menu;
-  menuLoading.value = false;
-  console.log("current menu:", menu);
-};
-
 const getStyleOption = async () => {
   const currentStyle = [...versionStyle].filter(
     (item) => item.value === $route.path
   )[0];
   if (currentStyle) {
     currentStyle.children = currentStyle.children?.map((item) => {
+      // const newLabel =
+      //   versionInfo.value.key === "v2"
+      //     ? item.label.replace("@", "--van-")
+      //     : item.label;
       const value = getCssVar(item.label, versionInfo.value.key);
       const type =
         value.startsWith("#") ||
@@ -153,19 +164,42 @@ const getStyleOption = async () => {
 };
 
 const initVariables = () => {
+  const version = versionInfo.value.key;
   const config = toRaw(versionCurrentTheme.value.config);
   if (config) {
     setCssVarByConfig(config, versionInfo.value.key);
     setTimeout(() => {
-      syncVariablesInitToChild(config, versionInfo.value.key);
+      if (version === "v2" && Object.keys(config).length) {
+        setLessCompileState(true);
+        const payload = versionCurrentTheme.value.config as StringProp;
+        fetchStyle(payload).then((style) => {
+          syncVariablesInitToChild(style, versionInfo.value.key);
+          setLessCompileState(false);
+        });
+      } else {
+        syncVariablesInitToChild(config, versionInfo.value.key);
+      }
     }, 0);
   }
 };
 
 const setVariables = (payload: VariablesProps) => {
+  const version = versionInfo.value.key;
   const { index, label, value } = payload;
-  setCssVar(label, value, versionInfo.value.key);
-  syncVariablesSetToChild({ label, value }, versionInfo.value.key);
+  setCssVar(label, value, version);
+  if (version === "v2") {
+    setLessCompileState(true);
+    const payload = {
+      ...versionCurrentTheme.value.config,
+      [label]: value,
+    };
+    fetchStyle(payload).then((style) => {
+      syncVariablesInitToChild(style, version);
+      setLessCompileState(false);
+    });
+  } else {
+    syncVariablesSetToChild({ label, value }, version);
+  }
   if (styleOption.children) {
     // styleOption.value?.children;
     styleOption.children[index].value = value;
@@ -200,6 +234,29 @@ const download = () => {
     });
 };
 
+const fetchStyle = async (payload: StringProp): Promise<string> => {
+  // return await useFetch<string>(
+  //   "https://vant-theme-service.vercel.app/api/update-theme"
+  // )
+  //   .post(toRaw(payload))
+  //   .text()
+  //   .then(({ data }) => {
+  //     console.log(data.value);
+  //     return data.value as string;
+  //   });
+
+  const res = await useFetch<string>(
+    "https://vant-theme-service.vercel.app/api/update-theme"
+  )
+    .post(toRaw(payload))
+    .text();
+  return res.data.value as string;
+};
+
+const setLessCompileState = async (state: boolean) => {
+  lessCompileState.value = state;
+};
+
 const init = async () => {
   if (!versionCurrentTheme.value) {
     $message.error("主题不存在", {
@@ -210,9 +267,6 @@ const init = async () => {
       },
     });
   } else {
-    // await getVantVerionStyle();
-    // await getVersionStyle();
-    // await getStyleOption();
     await getVantVerionStyle();
   }
 };

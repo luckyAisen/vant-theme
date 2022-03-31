@@ -36,8 +36,8 @@ export const download = async (
   baseVariables: string[]
 ) => {
   const { name, config } = theme;
+  const zip = new jszip();
   if ((version === "v3" || version === "v4") && config) {
-    const zip = new jszip();
     let cssCode = `:root {`;
     let jsonCode = `{`;
     const jsonBaseCode: StringProp = {};
@@ -49,7 +49,6 @@ export const download = async (
         jsonBaseCode[k] = config[k];
       }
     }
-    cssCode += "\n}";
     if (Object.keys(jsonBaseCode).length > 0) {
       jsonCode += `
 /**  
@@ -60,43 +59,69 @@ en-US: The basic variables can only be modified through the root selector. https
         jsonCode += `\n"${k}": "${config[k]}",`;
       }
     }
+    cssCode += "\n}";
     jsonCode += "\n}";
-
     zip.file("variables.css", cssCode);
     zip.file("config-provider.json", jsonCode);
-    zip.file(`${pkg.name}.json`, JSON.stringify(theme));
-    // 生成zip文件并下载
-    zip
-      .generateAsync({
-        type: "blob",
-      })
-      .then(function (content) {
-        // 下载的文件名
-        const filename = `${name}.zip`;
-        // 创建隐藏的可下载链接
-        const eleLink = document.createElement("a");
-        eleLink.download = filename;
-        eleLink.style.display = "none";
-        // 下载内容转变成blob地址
-        eleLink.href = URL.createObjectURL(content);
-        // 触发点击
-        document.body.appendChild(eleLink);
-        eleLink.click();
-        // 然后移除
-        document.body.removeChild(eleLink);
-      });
   }
+  if (version === "v2") {
+    let lessCode = "";
+    for (const k in config) {
+      lessCode += `${k}: ${config[k]};\n`;
+    }
+    const vueConfigJs = `
+/**  
+zh-CN: https://youzan.github.io/vant/v2/#/zh-CN/theme#ding-zhi-fang-fa
+en-US: https://youzan.github.io/vant/v2/#/en-US/theme#how-to-custom-theme
+*/;
+module.exports = {
+  css: {
+    loaderOptions: {
+      less: {
+        modifyVars: {
+          'hack': \`true; @import "variables.less";\`,
+        },
+      },
+    },
+  },
+};`;
+    zip.file("variables.less", lessCode);
+    zip.file("vue.config.js", vueConfigJs);
+  }
+  zip.file(`${pkg.name}.json`, JSON.stringify(theme));
+  // 生成zip文件并下载
+  zip
+    .generateAsync({
+      type: "blob",
+    })
+    .then(function (content) {
+      // 下载的文件名
+      const filename = `${name}.zip`;
+      // 创建隐藏的可下载链接
+      const eleLink = document.createElement("a");
+      eleLink.download = filename;
+      eleLink.style.display = "none";
+      // 下载内容转变成blob地址
+      eleLink.href = URL.createObjectURL(content);
+      // 触发点击
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      // 然后移除
+      document.body.removeChild(eleLink);
+    });
 };
 
-export const getCssVar = (name: string, version: Version): string => {
+export const getCssVar = (label: string, version: Version): string => {
   const el = VERSION_VARIABLES_EL[version];
-  const value = window.getComputedStyle(el).getPropertyValue(name);
+  const newLabel = version === "v2" ? label.replace("@", "--van-") : label;
+  const value = window.getComputedStyle(el).getPropertyValue(newLabel);
   return value.trim();
 };
 
 export const setCssVar = (label: string, value: string, version: Version) => {
   const el = VERSION_VARIABLES_EL[version];
-  el.style.setProperty(label, value);
+  const newLabel = version === "v2" ? label.replace("@", "--van-") : label;
+  el.style.setProperty(newLabel, value);
 };
 
 export const setCssVarByConfig = (styles: StringProp, version: Version) => {

@@ -1,24 +1,24 @@
 <template>
   <div class="console-panel-nav">
-    <n-spin :show="$props.loading">
+    <!-- <n-spin :show="$props.loading"> -->
+    <div
+      class="console-panel-nav__group"
+      v-for="component in $props.options"
+      :key="component.value"
+    >
+      <div class="console-panel-nav__group-title">{{ component.label }}</div>
       <div
-        class="console-panel-nav__group"
-        v-for="component in $props.options"
-        :key="component.value"
+        class="console-panel-nav__group-item"
+        v-for="menu in component.children"
+        :key="menu.value"
+        :id="`nav-${menu.value}`"
       >
-        <div class="console-panel-nav__group-title">{{ component.label }}</div>
-        <div
-          class="console-panel-nav__group-item"
-          v-for="menu in component.children"
-          :key="menu.value"
-          :id="`nav-${menu.value}`"
-        >
-          <router-link :to="menu.value" active-class="active">
-            {{ menu.label }}
-          </router-link>
-        </div>
+        <router-link :to="menu.value" active-class="active">
+          {{ menu.label }}
+        </router-link>
       </div>
-    </n-spin>
+    </div>
+    <!-- </n-spin> -->
   </div>
 </template>
 
@@ -29,7 +29,7 @@ import type { Menu } from "@/utils/type";
 
 type Props = {
   options: Menu[];
-  loading: boolean;
+  // loading: boolean;
 };
 
 const $props = defineProps<Props>();

@@ -76,7 +76,8 @@ function generateTheme(payload: Theme): Theme {
 const useMainStore = defineStore("main", {
   state: (): State => ({
     needBackups: false,
-    appVersion: storage.getItem(VANT_THEME_APP_VERSION) || pkg.version,
+    // appVersion: storage.getItem(VANT_THEME_APP_VERSION) || pkg.version,
+    appVersion: pkg.version,
     schemeColor: getDefaultTheme(),
     version: storage.getItem(VANT_THEME_VERSION) || APP_HEADER_DEFAULT_VERSION,
     versionList: APP_HEADER_VERSION,
@@ -99,11 +100,12 @@ const useMainStore = defineStore("main", {
       const version = state.version;
       const versionList = toRaw(state.versionList);
       versionList.forEach((item) => {
-        if (item.key === "v2") {
-          item.disabled = true;
-        } else {
-          item.disabled = version === item.key ? true : false;
-        }
+        // if (item.key === "v2") {
+        //   item.disabled = true;
+        // } else {
+        //   item.disabled = version === item.key ? true : false;
+        // }
+        item.disabled = version === item.key ? true : false;
       });
       return versionList.filter((item) => item.key === version)[0];
     },

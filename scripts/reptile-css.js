@@ -16,7 +16,6 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   } else {
     menus = menu;
   }
-  console.log("menus length:", menus.length);
   logWithSpinner(`reptile vant ${v} ${language} docs css variables start`);
   const styles = [];
   const { page, browser } = await initBrowser();

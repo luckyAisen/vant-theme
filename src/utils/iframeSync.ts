@@ -82,7 +82,10 @@ export function syncThemeToChild(theme: SchemeColor) {
   }
 }
 
-export function syncVariablesInitToChild(styles: StringProp, version: Version) {
+export function syncVariablesInitToChild(
+  styles: StringProp | string,
+  version: Version
+) {
   const iframe = document.querySelector("iframe");
   if (iframe) {
     iframeReady(() => {
