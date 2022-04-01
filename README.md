@@ -55,12 +55,6 @@
 
 <img width="1440" alt="config-provider.json content" src="https://user-images.githubusercontent.com/19791710/159399982-20762726-1ddd-4c2f-a62f-8a31a00ece0d.png">
 
-## 交流
-
-`vant-theme` 使用或者其他问题，都可以在群内讨论或提问。
-
-<img width="200" alt="wechat" src="https://user-images.githubusercontent.com/19791710/161285670-ab52226c-c51c-422e-9804-675b3660c0b5.jpg">
-
 ## 其他
 
 如果这个工具对你有帮助哈，希望给个 star 鼓励一下哈~
