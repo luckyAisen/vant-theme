@@ -1,22 +1,20 @@
 ## 简介
 
-`vant-theme`一个 `vant` 组件库**在线主题预览工具**，如果你有`vant`组件库**定制主题、动态切换主题**的需求，可以使用此工具。`vant-theme`可以修改`vant`组件库所提供的**样式变量**，它能够及时反馈和呈现修改过后的内容。
+`vant-theme` 是一个 `vant` 组件库**在线主题预览工具**，**支持 `Vant` 所有版本。**
 
-`vant 3` 和 `vant 4` 版本使用了 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 来组织样式。**`vant-theme`就是通过样式覆盖的形式实现的。**
+如果你有**定制主题、动态切换主题**的需求，可以使用此工具。
 
-**支持 `Vant` 所有版本。**
+`vant-theme` 通过 `vant` 提供的**样式变量**进行修改，它能够及时反馈修改后的样式。
 
 在线预览：https://aisen60.github.io/vant-theme 或者 https://aisen60.gitee.io/vant-theme
 
 仓库地址：https://github.com/Aisen60/vant-theme
 
-## 为什么要做这个工具？
+`vant-theme` 最初的目的是为了解决以下问题：
 
-它能解决以下两个问题：
+- 在线快速预览，快速的效果反馈，所见即所得。你不在需要在编辑器中重复的进行配置，你只需要在 `vant-theme` 中把你需要自定义的组件样式配置好，下载到本地后引入即可。
 
-1、在线快速预览，快速的效果反馈，所见即所得。你不在需要在编辑器中重复的进行配置，你只需要在`vant-theme` 中把你需要自定义的组件样式配置好，下载到本地后引入即可。
-
-2、你可以分享给你公司的设计师，让 TA 在设计页面时，就能根据你团队的设计规范来设计组件了。当设计师交付设计稿给前端时，顺便把下载后的文件交付给你。可以省去一些相关的沟通和人力工作。
+- 你可以分享给你公司的设计师，让 TA 在设计页面时，就能根据你团队的设计规范来设计组件了。当设计师交付设计稿给前端时，顺便把下载后的文件交付给你。可以省去一些相关的沟通和人力工作。
 
 ## 预览
 
@@ -47,15 +45,21 @@
 
 `vant-theme.json`文件内容：
 
-<img width="1440"  alt="vant-theme.json content" src="https://user-images.githubusercontent.com/19791710/159399918-78246cf0-b402-427c-a68c-8679f4875e88.png">
+<img width="1440" alt="vant-theme.json content" src="https://user-images.githubusercontent.com/19791710/159399918-78246cf0-b402-427c-a68c-8679f4875e88.png">
 
 `variables.css`文件内容：
 
-<img width="1440"  alt="variables.css content" src="https://user-images.githubusercontent.com/19791710/159399997-1e8c296a-47b9-4787-a043-7f81b1446fad.png">
+<img width="1440" alt="variables.css content" src="https://user-images.githubusercontent.com/19791710/159399997-1e8c296a-47b9-4787-a043-7f81b1446fad.png">
 
 `config-provider.json`文件内容：
 
-<img width="1440"  alt="config-provider.json content" src="https://user-images.githubusercontent.com/19791710/159399982-20762726-1ddd-4c2f-a62f-8a31a00ece0d.png">
+<img width="1440" alt="config-provider.json content" src="https://user-images.githubusercontent.com/19791710/159399982-20762726-1ddd-4c2f-a62f-8a31a00ece0d.png">
+
+## 交流
+
+`vant-theme` 使用或者其他问题，都可以在群内讨论或提问。
+
+<img width="200" alt="wechat" src="https://user-images.githubusercontent.com/19791710/161285670-ab52226c-c51c-422e-9804-675b3660c0b5.jpg">
 
 ## 其他
 
