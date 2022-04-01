@@ -289,7 +289,6 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   } else {
     menus = menu;
   }
-  console.log("menus length:", menus.length);
   logWithSpinner(`reptile vant ${v} ${language} docs css variables start`);
   const styles = [];
   const { page, browser } = await initBrowser();
@@ -344,11 +343,11 @@ export const reptileCSSVariables = async (v, language = "zh-CN", menu) => {
   }
   const path = VANT_STYLES_CONCAT_JSON(v, language.toLocaleLowerCase());
   await fs.outputFile(path, JSON.stringify(styles));
-  await browser.close();
-  successSpinner(`reptile vant ${v} ${language} docs css variables complete`);
   console.log("menus:", JSON.stringify(menus));
   console.log("\n");
   console.log("styles:", JSON.stringify(styles));
+  await browser.close();
+  successSpinner(`reptile vant ${v} ${language} docs css variables complete`);
 };
 
 /**
