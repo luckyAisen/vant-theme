@@ -44,14 +44,38 @@ const $props = defineProps<Props>();
 
 const dark = ref<GlobalTheme | null>();
 
-const themeOverrides: GlobalThemeOverrides = {};
+const themeOverrides = ref<GlobalThemeOverrides | null>();
+
+const lightThemeOverrides: GlobalThemeOverrides = {
+  common: {
+    primaryColor: "#2080f0",
+    primaryColorHover: "#4098fc",
+    primaryColorPressed: "#1060c9",
+    primaryColorSuppl: "#1060c9",
+  },
+};
+
+const darkThemeOverrides: GlobalThemeOverrides = {
+  common: {
+    primaryColor: "#70c0e8",
+    primaryColorHover: "#8acbec",
+    primaryColorPressed: "#66afd3",
+    primaryColorSuppl: "#66afd3",
+  },
+};
 
 const locale = ref<NLocale | null>(null);
 
 const dateLocale = ref<NDateLocale | null>(null);
 
 watchEffect(() => {
-  dark.value = $props.schemeColor === "dark" ? darkTheme : null;
+  if ($props.schemeColor === "dark") {
+    dark.value = darkTheme;
+    themeOverrides.value = darkThemeOverrides;
+  } else {
+    dark.value = null;
+    themeOverrides.value = lightThemeOverrides;
+  }
   locale.value = $props.language === "en-US" ? null : zhCN;
   dateLocale.value = $props.language === "en-US" ? null : dateZhCN;
 });

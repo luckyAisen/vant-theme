@@ -7,7 +7,7 @@
     }"
     preset="card"
     :mask-closable="false"
-    @close="modalClose"
+    @after-leave="modalClose"
   >
     <n-form
       label-placement="left"
