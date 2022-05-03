@@ -176,26 +176,36 @@ export const updateMobileJSPath = async (v) => {
   const fileName = $("script[src]").eq(0).attr("src").split("/").pop();
   const targetFile = `${VANT_PUBLIC_PATH}/${v}/${fileName}`;
   const jsContent = await fs.readFile(targetFile, "utf-8");
-  const regExpStr = "l.href=i";
+  /**
+   * \(.*\.href=.*\)
+   * \).*?\.href=.+?
+   * .\.href=.,
+   * const regExpStr = ").*?.href=.+?";
+   */
+  const str1 = jsContent.match(/(\S*)\.href=/)[1];
+  const firstStr = str1[str1.length - 1];
+  const lastStr = jsContent.match(/\.href=(\S*)/)[1][0];
+  console.log("\nfirstStr：", firstStr);
+  console.log("\nlastStr：", lastStr);
   let replaceStr;
   switch (v) {
     case "v3":
       replaceStr = `((i) => {
         const iarr = i.split("/assets");
         iarr.splice(1, 0, "/v3");
-        return l.href = '/vant-theme' + iarr.join("");
-      })(i)`;
+        return ${firstStr}.href = '/vant-theme' + iarr.join("");
+      })(${lastStr}),`;
       break;
     case "v4":
       replaceStr = `((i) => {
         const iarr = i.split("/assets");
         // iarr.splice(1, 0, "/v4");
-        return l.href = '/vant-theme' + iarr.join("");
-      })(i)`;
+        return ${firstStr}.href = '/vant-theme' + iarr.join("");
+      })(${lastStr}),`;
       break;
   }
   const newJsContent = jsContent.replace(
-    new RegExp(regExpStr, "g"),
+    new RegExp(/.\.href=.,/, "g"),
     replaceStr
   );
   await fs.writeFile(targetFile, newJsContent);
@@ -369,7 +379,7 @@ export const runBuild = async () => {
 
 export const runClean = async () => {
   logWithSpinner(`clean start`);
-  // await fs.remove(VANT_SOURCE_LOCAL);
+  await fs.remove(VANT_SOURCE_LOCAL);
   await fs.remove(VANT_PUBLIC_PATH);
   const version = VERSION_LIST;
   for (let i = 0; i < version.length; i++) {

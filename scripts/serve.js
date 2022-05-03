@@ -42,16 +42,3 @@ const serve = async () => {
 };
 
 serve();
-// initializeVantPublic();
-// copyVantAssetsToPublic("v4");
-// copyVantMobilePage("v4");
-// updateMobilePageTagsInfo("v4");
-// updateMobileJSPath("v4");
-// reptileMenu("v2", "zh-CN");
-// reptileMenu("v2", "en-US");
-// reptileMenu("v3", "zh-CN");
-// reptileMenu("v3", "en-US");
-// reptileMenu("v4", "zh-CN");
-// reptileMenu("v4", "en-US");
-// reptileCSSVariables("v4");
-// reptileCSSVariables("v3", "en-US");

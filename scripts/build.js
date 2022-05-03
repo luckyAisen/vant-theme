@@ -1,8 +1,4 @@
-import {
-  VANT_SOURCE_LOCAL,
-  VERSION_LIST,
-  VANT_MOBILE_PAGE_CONCAT_PATH,
-} from "./constant.js";
+import { VERSION_LIST, VANT_MOBILE_PAGE_CONCAT_PATH } from "./constant.js";
 import {
   localPathExists,
   downloadVantGhSource,
