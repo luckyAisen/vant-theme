@@ -89,6 +89,17 @@ export type Color =
   | "--van-orange-light"
   | "--van-green";
 
+export type V2Color =
+  | "@red"
+  | "@blue"
+  | "@orange"
+  | "@orange-dark"
+  | "@orange-light"
+  | "@green";
+
 export type DefauleColor = {
   [keyof in Color]: string;
+};
+export type V2DefauleColor = {
+  [keyof in V2Color]: string;
 };
