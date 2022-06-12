@@ -268,7 +268,7 @@ const initMainColor = () => {
   mainColor.value = colorMap[key];
 };
 
-const filterColor = (theme: Theme, key: Color, value: string) => {
+const filterColor = (theme: Theme, key: Color | V2Color, value: string) => {
   const configColor = theme?.config?.[key];
   if (configColor) {
     return configColor;
