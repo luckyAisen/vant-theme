@@ -17,7 +17,7 @@ import useMainStore from "@/stores";
 import { APP_BASE_URL, APP_HEADER_LINKS } from "@/utils/constant";
 import type { VersionInfo } from "@/utils/type";
 import LayoutProvider from "@/components/LayoutProvider.vue";
-import ThemeView from "./theme.vue";
+import ThemeView from "./ThemeView.vue";
 
 const $store = useMainStore();
 

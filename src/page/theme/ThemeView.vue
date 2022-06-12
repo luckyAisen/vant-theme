@@ -191,16 +191,23 @@ import {
   V3_MAIN_COLOR,
   V4_MAIN_COLOR,
 } from "@/utils/constant";
-import type { DefauleColor, Theme, Color, ModalValue } from "@/utils/type";
+import type {
+  DefauleColor,
+  Theme,
+  Color,
+  ModalValue,
+  V2Color,
+  V2DefauleColor,
+} from "@/utils/type";
 import ModalComponent, { type TypeProps } from "@/components/Modal.vue";
 
 const $store = useMainStore();
 
 const { versionInfo, versionAllTheme } = storeToRefs($store);
 
-const defaultColor = ref<DefauleColor>();
+const defaultColor = ref<DefauleColor | V2DefauleColor>();
 
-const mainColor = ref<Color>();
+const mainColor = ref<Color | V2Color>();
 
 const $message = useMessage();
 

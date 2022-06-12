@@ -1,4 +1,10 @@
-import type { VersionInfo, DefauleColor, Color } from "./type";
+import type {
+  VersionInfo,
+  DefauleColor,
+  Color,
+  V2DefauleColor,
+  V2Color,
+} from "./type";
 
 export const VANT_THEME_APP_VERSION = "VANT_THEME_APP_VERSION";
 
@@ -62,13 +68,13 @@ export const APP_HEADER_LANGUAGE = [
   },
 ];
 
-export const V2_DEFAULT_COLOR: DefauleColor = {
-  "--van-red": "#ee0a24",
-  "--van-blue": "#1989fa",
-  "--van-orange": "#ff976a",
-  "--van-orange-dark": "#ed6a0c",
-  "--van-orange-light": "#fffbe8",
-  "--van-green": "#07c160",
+export const V2_DEFAULT_COLOR: V2DefauleColor = {
+  "@red": "#ee0a24",
+  "@blue": "#1989fa",
+  "@orange": "#ff976a",
+  "@orange-dark": "#ed6a0c",
+  "@orange-light": "#fffbe8",
+  "@green": "#07c160",
 };
 
 export const V3_DEFAULT_COLOR: DefauleColor = {
@@ -89,7 +95,7 @@ export const V4_DEFAULT_COLOR: DefauleColor = {
   "--van-green": "#07c160",
 };
 
-export const V2_MAIN_COLOR: Color = "--van-red";
+export const V2_MAIN_COLOR: V2Color = "@red";
 
 export const V3_MAIN_COLOR: Color = "--van-red";
 
