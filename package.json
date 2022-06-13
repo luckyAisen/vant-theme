@@ -28,8 +28,9 @@
   "type": "module",
   "scripts": {
     "prepare": "husky install",
-    "serve": "node scripts/serve.js",
-    "build": "node scripts/build.js",
+    "serve": "node scripts/exec.js development",
+    "build": "node scripts/exec.js production",
+    "update": "node scripts/exec.js update",
     "reptile:css": "node scripts/reptile-css.js",
     "clean": "node scripts/clean.js",
     "preview": "vite preview --port 5050",
