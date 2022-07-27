@@ -1,0 +1,1 @@
+import{r}from"./use-translate.c56bc05e.js";import{x as n,N as u,q as a}from"./vue-libs.a3cd7f61.js";const f=(s,i)=>{const e=n(),o=()=>{e.value=r(s).height};return u(()=>{if(a(o),i)for(let t=1;t<=3;t++)setTimeout(o,100*t)}),e};export{f as u};
