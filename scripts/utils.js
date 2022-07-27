@@ -173,7 +173,13 @@ export const updateMobileJSPath = async (v) => {
   const src = VANT_MOBILE_PAGE_CONCAT_PATH(v);
   const srcContent = await fs.readFile(src, "utf-8");
   const $ = cheerio.load(srcContent);
-  const fileName = $("script[src]").eq(0).attr("src").split("/").pop();
+  const fileName = $("link[rel='modulepreload']")
+    .eq(1)
+    .attr("href")
+    .split("/")
+    .pop();
+  // console.log(`\n${fileName}`);
+  // return;
   const targetFile = `${VANT_PUBLIC_PATH}/${v}/${fileName}`;
   const jsContent = await fs.readFile(targetFile, "utf-8");
   /**
@@ -185,8 +191,8 @@ export const updateMobileJSPath = async (v) => {
   const str1 = jsContent.match(/(\S*)\.href=/)[1];
   const firstStr = str1[str1.length - 1];
   const lastStr = jsContent.match(/\.href=(\S*)/)[1][0];
-  console.log("\nfirstStr：", firstStr);
-  console.log("\nlastStr：", lastStr);
+  // console.log("\nfirstStr：", firstStr);
+  // console.log("\nlastStr：", lastStr);
   let replaceStr;
   switch (v) {
     case "v3":

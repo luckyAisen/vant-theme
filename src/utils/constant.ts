@@ -121,7 +121,7 @@ export const VERSION_VARIABLES_EL = {
 export const VANT_VERSION_CSS = {
   v2: `${APP_BASE_URL}v2.css`,
   v3: "https://cdn.jsdelivr.net/npm/vant/lib/index.css",
-  v4: "https://cdn.jsdelivr.net/npm/vant@alpha/lib/index.css",
+  v4: "https://cdn.jsdelivr.net/npm/vant@beta/lib/index.css",
 };
 
 export const VANT_THEME_STYLE_TAG_ID = "VANT_THEME_STYLE_TAG_ID";

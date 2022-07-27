@@ -39,6 +39,7 @@ const serve = async () => {
     }
   }
   await runServe();
+  // updateMobileJSPath("v3");
 };
 
 serve();

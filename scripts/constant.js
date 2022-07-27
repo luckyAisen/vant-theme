@@ -1,4 +1,4 @@
-export const VANT_WEBSITE = "https://youzan.github.io/vant";
+export const VANT_WEBSITE = "https://vant-ui.github.io/vant";
 export const VERSION_LIST = ["v4", "v3", "v2"];
 // export const VERSION_LIST = ["v2", "v3", "v4"];
 // export const VERSION_LIST = ["v3"];
