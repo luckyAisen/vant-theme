@@ -1,3 +1,5 @@
+**vant-theme 正在进行 next 版本的升级，旧版本代码请查看 [website](https://github.com/Aisen60/vant-theme/tree/website) 分支。**
+
 ## 简介
 
 `vant-theme` 是一个 `vant` 组件库**在线主题预览工具**，**支持 `Vant` 所有版本。**

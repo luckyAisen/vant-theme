@@ -1,4 +1,4 @@
-name: Deploy Site By Dev Branch
+name: Deploy Site By Next Branch
 
 on:
   workflow_dispatch:
@@ -9,10 +9,10 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - name: Checkout dev branch code
+      - name: Checkout next branch code
         uses: actions/checkout@v3
         with:
-          ref: dev
+          ref: next
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -38,7 +38,7 @@ jobs:
 
       - name: Deploy gh page
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/dev' }}
+        if: ${{ github.ref == 'refs/heads/next' }}
         with:
           github_token: ${{ secrets.GH_PAGES }}
           publish_dir: ./dist

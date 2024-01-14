@@ -1,6 +1,0 @@
-{
-  "extends": ["@vant/stylelint-config"],
-  "ignoreFiles": [
-      "public/vant/**/*.css"
-  ]
-}
