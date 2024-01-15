@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <h1 className="text-5xl font-bold">Vue App</h1>
+    <h1 className="text-5xl font-bold">{{ $t('hello') }}</h1>
   </div>
 </template>
 

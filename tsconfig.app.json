@@ -5,12 +5,15 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "src/*.json",
+    "src/**/*.json",
     "types/**/*.d.ts",
     "types/**/*.ts",
     "vite.config.ts"
   ],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
+    "resolveJsonModule": true,
     "composite": true,
     "noEmit": true,
     "baseUrl": ".",

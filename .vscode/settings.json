@@ -1,9 +1,20 @@
 {
+  "editor.tabSize": 2,
+
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml,.npmrc,LICENSE",
     "tsconfig.json": "tsconfig*,.gitignore,.eslint*,.prettier*,postcss.config.js,tailwind.config.js",
     "README.md": "README.md,README.zh-CN.md"
-  }
+  },
+
+  "i18n-ally.localesPaths": "src/locales",
+  "i18n-ally.enabledFrameworks": ["vue"],
+  "i18n-ally.sourceLanguage": "zh-CN",
+  "i18n-ally.displayLanguage": "zh-CN",
+  "i18n-ally.enabledParsers": ["ts", "json", "js"],
+  "i18n-ally.extract.keyMaxLength": 100,
+  "i18n-ally.namespace": true,
+  "i18n-ally.keystyle": "nested"
 }
