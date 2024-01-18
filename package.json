@@ -35,6 +35,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vicons/ionicons5": "^0.12.0",
     "@vueuse/core": "^10.7.2",
     "naive-ui": "^2.37.3",
     "pinia": "^2.1.7",
