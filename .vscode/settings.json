@@ -11,8 +11,8 @@
 
   "i18n-ally.localesPaths": "src/locales",
   "i18n-ally.enabledFrameworks": ["vue"],
-  "i18n-ally.sourceLanguage": "zh-CN",
-  "i18n-ally.displayLanguage": "zh-CN",
+  "i18n-ally.sourceLanguage": "zh",
+  "i18n-ally.displayLanguage": "zh",
   "i18n-ally.enabledParsers": ["ts", "json", "js"],
   "i18n-ally.extract.keyMaxLength": 100,
   "i18n-ally.namespace": true,
