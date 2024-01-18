@@ -5,7 +5,7 @@ import { localeEnum } from '@/enums';
 import { store } from '@/stores';
 import i18n from '@/locales';
 
-import type { Locale } from '@/types/locale';
+import type { Locale } from '@/types';
 import type { NLocale, NDateLocale } from 'naive-ui';
 
 export const useLocaleStore = defineStore('localeStore', () => {

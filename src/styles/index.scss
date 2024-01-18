@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "./var.scss";
+
+body {
+  font-family: var(--vt-font-family) !important;
+  color: var(--vt-color-text-1);
+}

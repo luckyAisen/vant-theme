@@ -2,7 +2,6 @@ import { createPinia } from 'pinia';
 import type { App } from 'vue';
 
 // export * from "./modules";
-export * from './types';
 
 export const store = createPinia();
 

@@ -1,0 +1,151 @@
+:root {
+  --vt-font-family: "system-ui", "-apple-system", BlinkMacSystemFont, "segoe ui", Roboto, Helvetica, Arial, "sans-serif",
+    "apple color emoji", "segoe ui emoji", "segoe ui symbol";
+
+  --vt-size-1: 4px;
+  --vt-size-2: 8px;
+  --vt-size-3: 12px;
+  --vt-size-4: 16px;
+  --vt-size-5: 20px;
+  --vt-size-6: 24px;
+  --vt-size-7: 28px;
+  --vt-size-8: 32px;
+  --vt-size-8: 36px;
+
+  --vt-font-size-1: 12px;
+  --vt-font-size-2: 13px;
+  --vt-font-size-3: 14px;
+  --vt-font-size-4: 16px;
+  --vt-font-size-5: 20px;
+  --vt-font-size-6: 24px;
+  --vt-font-size-7: 36px;
+  --vt-font-size-8: 48px;
+  --vt-font-size-9: 56px;
+
+  --vt-font-weight-1: 500;
+  --vt-font-weight-2: 600;
+  --vt-font-weight-3: 700;
+  --vt-font-weight-4: 800;
+  --vt-font-weight-5: 900;
+  --vt-font-weight-bolder: bolder;
+
+  --vt-line-height: 1.5715;
+
+  --vt-border-width-1: 1px;
+  --vt-border-width-2: 2px;
+  --vt-border-width-3: 3px;
+
+  --vt-border-radius-1: 2px;
+  --vt-border-radius-2: 4px;
+  --vt-border-radius-3: 6px;
+  --vt-border-radius-4: 8px;
+  --vt-border-radius-5: 10px;
+  --vt-border-radius-6: 12px;
+  --vt-border-radius-7: 14px;
+  --vt-border-radius-8: 16px;
+  --vt-border-radius-9: 18px;
+  --vt-border-radius-10: 20px;
+  --vt-border-radius-full: 50%;
+
+  --vt-color-bg-1: #ffffff;
+  --vt-color-bg-2: #fafafa;
+  --vt-color-bg-3: #ffffff;
+
+  --vt-color-text-1: #171717;
+  --vt-color-text-2: #666666;
+  --vt-color-text-3: #666666;
+  --vt-color-text-white: #ffffff;
+  --vt-color-text-black: #000000;
+
+  --vt-color-border-1: #eaeaea;
+  --vt-color-border-2: #ebebeb;
+
+  --vt-color-fill-1: rgba(247, 248, 250, 1);
+  --vt-color-fill-2: rgba(242, 243, 245, 1);
+  --vt-color-fill-3: rgba(229, 230, 235, 1);
+  --vt-color-fill-4: rgba(201, 205, 212, 1);
+
+  --vt-color-primary-1: #e8f3ff;
+  --vt-color-primary-2: #bedaff;
+  --vt-color-primary-3: #94bfff;
+  --vt-color-primary-4: #94bfff;
+  --vt-color-primary-5: #4080ff;
+  --vt-color-primary-6: #165dff;
+  --vt-color-primary-7: #0e42d2;
+
+  --vt-color-success-1: #e8ffea;
+  --vt-color-success-2: #aff0b5;
+  --vt-color-success-3: #7be188;
+  --vt-color-success-4: #4cd263;
+  --vt-color-success-5: #23c343;
+  --vt-color-success-6: #00b42a;
+  --vt-color-success-7: #009a29;
+
+  --vt-color-warning-1: #fff7e8;
+  --vt-color-warning-2: #ffe4ba;
+  --vt-color-warning-3: #ffcf8b;
+  --vt-color-warning-4: #ffb65d;
+  --vt-color-warning-5: #d25f00;
+  --vt-color-warning-6: #ff7d00;
+  --vt-color-warning-7: #d25f00;
+
+  --vt-color-danger-1: #ffece8;
+  --vt-color-danger-2: #fdcdc5;
+  --vt-color-danger-3: #fbaca3;
+  --vt-color-danger-4: #f98981;
+  --vt-color-danger-5: #f76560;
+  --vt-color-danger-6: #f53f3f;
+  --vt-color-danger-7: #cb272d;
+}
+
+:root[theme="dark"] {
+  --vt-color-bg-1: #000000;
+  --vt-color-bg-2: #111111;
+  --vt-color-bg-3: #0a0a0a;
+
+  --vt-color-text-1: #ededed;
+  --vt-color-text-2: #ededed;
+  --vt-color-text-3: #ededed;
+  --vt-color-text-white: #ffffff;
+  --vt-color-text-black: #000000;
+
+  --vt-color-border-1: #333333;
+  --vt-color-border-2: #1f1f1f;
+
+  --vt-color-fill-1: rgba(255, 255, 255, 0.04);
+  --vt-color-fill-2: rgba(255, 255, 255, 0.08);
+  --vt-color-fill-3: rgba(255, 255, 255, 0.12);
+  --vt-color-fill-4: rgba(255, 255, 255, 0.16);
+
+  --vt-color-primary-1: #000d4d;
+  --vt-color-primary-2: #041b79;
+  --vt-color-primary-3: #0e32a6;
+  --vt-color-primary-4: #1d4dd2;
+  --vt-color-primary-5: #306fff;
+  --vt-color-primary-6: #3c7eff;
+  --vt-color-primary-7: #689fff;
+
+  --vt-color-success-1: #004d1c;
+  --vt-color-success-2: #046625;
+  --vt-color-success-3: #0a802d;
+  --vt-color-success-4: #129a37;
+  --vt-color-success-5: #1db440;
+  --vt-color-success-6: #27c346;
+  --vt-color-success-7: #50d266;
+
+  --vt-color-warning-1: #4d1b00;
+  --vt-color-warning-2: #793004;
+  --vt-color-warning-3: #a64b0a;
+  --vt-color-warning-4: #d26913;
+  --vt-color-warning-5: #ff8d1f;
+  --vt-color-warning-6: #ff9626;
+  --vt-color-warning-7: #ffb357;
+
+  --vt-color-danger-1: #4d000a;
+  --vt-color-danger-2: #770611;
+  --vt-color-danger-3: #a1161f;
+  --vt-color-danger-4: #cb2e34;
+  --vt-color-danger-5: #f54e4e;
+  --vt-color-danger-6: #f76965;
+  --vt-color-danger-7: #f98d86;
+}

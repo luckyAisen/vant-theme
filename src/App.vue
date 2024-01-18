@@ -1,5 +1,10 @@
 <template>
-  <n-config-provider :locale="naiveLocale" :date-locale="naiveDateLocale">
+  <n-config-provider
+    :locale="naiveLocale"
+    :date-locale="naiveDateLocale"
+    :theme="naiveTheme"
+    :theme-overrides="naiveThemeOverrides"
+  >
     <n-loading-bar-provider>
       <n-message-provider>
         <n-notification-provider>
@@ -14,6 +19,7 @@
 
 <script setup lang="ts">
 import { useLocaleStore } from '@/stores/modules/locale';
+import { useThemeStore } from '@/stores/modules/theme';
 
 defineOptions({
   name: 'App'
@@ -21,7 +27,13 @@ defineOptions({
 
 const localeStore = useLocaleStore();
 
+const themeStore = useThemeStore();
+
 const naiveLocale = computed(() => localeStore.naiveLocale);
 
 const naiveDateLocale = computed(() => localeStore.naiveDateLocale);
+
+const naiveTheme = computed(() => themeStore.naiveTheme);
+
+const naiveThemeOverrides = computed(() => themeStore.naiveThemeOverrides);
 </script>
