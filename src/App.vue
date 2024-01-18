@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider>
+  <n-config-provider :locale="naiveLocale" :date-locale="naiveDateLocale">
     <n-loading-bar-provider>
       <n-message-provider>
         <n-notification-provider>
@@ -13,7 +13,15 @@
 </template>
 
 <script setup lang="ts">
+import { useLocaleStore } from '@/stores/modules/locale';
+
 defineOptions({
   name: 'App'
 });
+
+const localeStore = useLocaleStore();
+
+const naiveLocale = computed(() => localeStore.naiveLocale);
+
+const naiveDateLocale = computed(() => localeStore.naiveDateLocale);
 </script>

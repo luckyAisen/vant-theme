@@ -1,19 +1,17 @@
 import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import App from './App.vue';
 import router from './router';
-import './styles/index.scss';
+import { setupStore } from './stores';
 import i18n from './locales';
+import './styles/index.scss';
 
 async function bootstrap() {
   const app = createApp(App);
-  const pinia = createPinia();
-  pinia.use(piniaPluginPersistedstate);
-  app.use(pinia);
   app.use(router);
   app.use(i18n);
+  setupStore(app);
 
+  // https://github.com/tusen-ai/naive-ui/blob/main/demo/pages/docs/style-conflict/zhCN/index.md
   const meta = document.createElement('meta');
   meta.name = 'naive-ui-style';
   document.head.appendChild(meta);

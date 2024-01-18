@@ -1,4 +1,5 @@
 import { createI18n } from 'vue-i18n';
+import { localeEnum } from '@/enums';
 import zh from './zh.json';
 import en from './en.json';
 
@@ -7,9 +8,9 @@ import en from './en.json';
 let currentLanguage = navigator.language.replace(/-(\S*)/, '');
 
 // 如果本地缓存记录了语言环境，则使用本地缓存
-const lsLocale = localStorage.getItem('locale') || '';
+const lsLocale = localStorage.getItem(localeEnum.APP_LOCALE) || '';
 if (lsLocale) {
-  currentLanguage = JSON.parse(lsLocale)?.curLocale;
+  currentLanguage = lsLocale;
 }
 
 export const langs = [
