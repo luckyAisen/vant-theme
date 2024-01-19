@@ -11,10 +11,10 @@ import type { NLocale, NDateLocale } from 'naive-ui';
 export const useLocaleStore = defineStore('localeStore', () => {
   const locale = ref(useStorage(localeEnum.APP_LOCALE, i18n.global.locale.value));
 
-  const naiveLocale = computed<NLocale | null>(() => (locale.value === 'zh' ? zhCN : null));
+  const naiveLocale = computed<NLocale | null>(() => (locale.value === 'zh-CN' ? zhCN : null));
 
   const naiveDateLocale = computed<NDateLocale | null>(() =>
-    locale.value === 'zh' ? dateZhCN : null
+    locale.value === 'zh-CN' ? dateZhCN : null
   );
 
   const setLocale = (lang: Locale) => {
