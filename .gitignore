@@ -13,3 +13,9 @@ dist
 dist-ssr
 coverage
 *.local
+
+tsconfig.node.tsbuildinfo
+
+.VANT_SOURCE
+public/vant
+src/mobile

@@ -1,2 +1,8 @@
 node_modules
 dist
+
+tsconfig.node.tsbuildinfo
+
+.VANT_SOURCE
+public/vant
+src/mobile
