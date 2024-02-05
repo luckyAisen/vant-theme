@@ -9,7 +9,8 @@
     "src/**/*.json",
     "types/**/*.d.ts",
     "types/**/*.ts",
-    "vite.config.ts"
+    "vite.config.ts",
+    "package.json"
   ],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
