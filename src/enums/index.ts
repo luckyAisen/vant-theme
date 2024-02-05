@@ -1,2 +1,2 @@
-export * from './localeEnum';
-export * from './themeEnum';
+export * from './AppEnum';
+export * from './ThemeEnum';
