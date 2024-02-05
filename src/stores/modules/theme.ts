@@ -1,51 +1,54 @@
 import { defineStore } from 'pinia';
 import { useStorage, usePreferredDark } from '@vueuse/core';
 import { darkTheme } from 'naive-ui';
-import { themeEnum } from '@/enums';
+import { AppThemeEnum } from '@/enums';
 import { store } from '@/stores';
+import { getCssVariable } from '@/utils/getCssVariable';
 
-import type { Theme } from '@/types';
-
-// import type { ThemeCommonVars, GlobalThemeOverrides } from 'naive-ui';
+import type { AppTheme } from '@/types';
 
 export const useThemeStore = defineStore('themeStore', () => {
   const systemDark = ref(usePreferredDark());
 
-  const theme = ref<Theme>(
-    useStorage(themeEnum.APP_THEME, systemDark.value ? 'dark' : 'light') as unknown as Theme
+  const theme = ref<AppTheme>(
+    useStorage(AppThemeEnum.APP_THEME, systemDark.value ? 'dark' : 'light') as unknown as AppTheme
   );
 
   const naiveTheme = computed(() => (theme.value === 'dark' ? darkTheme : null));
 
   const naiveThemeOverrides = computed(() => {
-    const common = {
-      fontFamily: 'var(--vt-font-family)',
+    const common: Record<string, string> = {
+      fontFamily: '--vt-font-family',
 
-      primaryColor: 'var(--vt-color-primary-6)',
-      primaryColorHover: 'var(--vt-color-primary-5)',
-      primaryColorPressed: 'var(--vt-color-primary-7)',
-      primaryColorSuppl: 'var(--vt-color-primary-5)',
+      primaryColor: '--vt-color-primary-6',
+      primaryColorHover: '--vt-color-primary-5',
+      primaryColorPressed: '--vt-color-primary-7',
+      primaryColorSuppl: '--vt-color-primary-5',
 
-      infoColor: 'var(--vt-color-primary-6)',
-      infoColorHover: 'var(--vt-color-primary-5)',
-      infoColorPressed: 'var(--vt-color-primary-7)',
-      infoColorSuppl: 'var(--vt-color-primary-5)',
+      infoColor: '--vt-color-primary-6',
+      infoColorHover: '--vt-color-primary-5',
+      infoColorPressed: '--vt-color-primary-7',
+      infoColorSuppl: '--vt-color-primary-5',
 
-      successColor: 'var(--vt-color-success-6)',
-      successColorHover: 'var(--vt-color-success-5)',
-      successColorPressed: 'var(--vt-color-success-7)',
-      successColorSuppl: 'var(--vt-color-success-5)',
+      successColor: '--vt-color-success-6',
+      successColorHover: '--vt-color-success-5',
+      successColorPressed: '--vt-color-success-7',
+      successColorSuppl: '--vt-color-success-5',
 
-      warningColor: 'var(--vt-color-warning-6)',
-      warningColorHover: 'var(--vt-color-warning-5)',
-      warningColorPressed: 'var(--vt-color-warning-7)',
-      warningColorSuppl: 'var(--vt-color-warning-5)',
+      warningColor: '--vt-color-warning-6',
+      warningColorHover: '--vt-color-warning-5',
+      warningColorPressed: '--vt-color-warning-7',
+      warningColorSuppl: '--vt-color-warning-5',
 
-      errorColor: 'var(--vt-color-danger-6)',
-      errorColorHover: 'var(--vt-color-danger-5)',
-      errorColorPressed: 'var(--vt-color-danger-7)',
-      errorColorSuppl: 'var(--vt-color-danger-5)'
+      errorColor: '--vt-color-danger-6',
+      errorColorHover: '--vt-color-danger-5',
+      errorColorPressed: '--vt-color-danger-7',
+      errorColorSuppl: '--vt-color-danger-5'
     };
+
+    Object.keys(common).map((k) => {
+      common[k] = getCssVariable(common[k]);
+    });
 
     if (theme.value === 'dark') {
       return {
@@ -58,19 +61,21 @@ export const useThemeStore = defineStore('themeStore', () => {
     };
   });
 
-  const setTheme = (t: Theme) => {
+  const setTheme = (t: AppTheme) => {
     theme.value = t;
   };
 
-  watch(
-    () => theme.value,
-    (val) => {
-      document.documentElement.setAttribute('theme', val);
-    },
-    {
-      immediate: true
-    }
-  );
+  const watchTheme = () => {
+    watch(
+      () => theme.value,
+      (val) => {
+        document.documentElement.setAttribute('theme', val);
+      },
+      {
+        immediate: true
+      }
+    );
+  };
 
   return {
     systemDark,
@@ -78,7 +83,8 @@ export const useThemeStore = defineStore('themeStore', () => {
     naiveTheme,
     naiveThemeOverrides,
 
-    setTheme
+    setTheme,
+    watchTheme
   };
 });
 

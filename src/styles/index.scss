@@ -4,7 +4,12 @@
 
 @import "./var.scss";
 
+:root {
+  --vt-header-height: 58px;
+}
+
 body {
   font-family: var(--vt-font-family) !important;
   color: var(--vt-color-text-1);
+  background-color: var(--vt-color-bg-1);
 }

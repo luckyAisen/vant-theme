@@ -18,12 +18,15 @@
 </template>
 
 <script setup lang="ts">
+import { useAppStore } from '@/stores/modules/app';
 import { useLocaleStore } from '@/stores/modules/locale';
 import { useThemeStore } from '@/stores/modules/theme';
 
 defineOptions({
   name: 'App'
 });
+
+const appStore = useAppStore();
 
 const localeStore = useLocaleStore();
 
@@ -36,4 +39,8 @@ const naiveDateLocale = computed(() => localeStore.naiveDateLocale);
 const naiveTheme = computed(() => themeStore.naiveTheme);
 
 const naiveThemeOverrides = computed(() => themeStore.naiveThemeOverrides);
+
+appStore.setVersion();
+
+themeStore.watchTheme();
 </script>

@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('@/views/index.vue')
     },
     {
+      path: '/theme',
+      name: 'theme',
+      component: () => import('@/views/theme/index.vue')
+    },
+    {
       path: '/workspace/:version/:id',
       name: 'workspace',
       component: () => import('@/views/workspace/index.vue')
