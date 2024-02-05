@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { Moon, Sunny } from '@vicons/ionicons5';
-import { useThemeStore } from '@/stores/modules/theme';
+import { useAppStore } from '@/stores/modules/app';
 
 import type { SwitchThemeEmits } from './type';
 
@@ -24,9 +24,9 @@ const emits = defineEmits<SwitchThemeEmits>();
 
 const { t } = useI18n();
 
-const themeStore = useThemeStore();
+const appStore = useAppStore();
 
-const theme = computed(() => themeStore.theme);
+const theme = computed(() => appStore.theme);
 
 const btnIcon = computed(() => (theme.value === 'dark' ? Moon : Sunny));
 
@@ -36,7 +36,7 @@ const btnText = computed(() =>
 
 const onSwitchTheme = () => {
   const nextTheme = theme.value === 'dark' ? 'light' : 'dark';
-  themeStore.setTheme(nextTheme);
+  appStore.setTheme(nextTheme);
   emits('switch', nextTheme);
 };
 </script>

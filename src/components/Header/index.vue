@@ -55,27 +55,24 @@
 <script setup lang="ts">
 import { Moon, Sunny, LogoGithub } from '@vicons/ionicons5';
 import LocaleSvg from '@/components/LocaleSvg/index.vue';
-import { useLocaleStore } from '@/stores/modules/locale';
-import { useThemeStore } from '@/stores/modules/theme';
+import { useAppStore } from '@/stores/modules/app';
 
-const localeStore = useLocaleStore();
+const appStore = useAppStore();
 
-const locale = computed(() => localeStore.locale);
+const locale = computed(() => appStore.locale);
 
 const onSwitchLocale = () => {
   const nextLocale = locale.value === 'zh-CN' ? 'en-US' : 'zh-CN';
-  localeStore.setLocale(nextLocale);
+  appStore.setLocale(nextLocale);
 };
 
-const themeStore = useThemeStore();
-
-const theme = computed(() => themeStore.theme);
+const theme = computed(() => appStore.theme);
 
 const ThemeIcon = computed(() => (theme.value === 'dark' ? Moon : Sunny));
 
 const onSwitchTheme = () => {
   const nextTheme = theme.value === 'dark' ? 'light' : 'dark';
-  themeStore.setTheme(nextTheme);
+  appStore.setTheme(nextTheme);
 };
 
 defineOptions({

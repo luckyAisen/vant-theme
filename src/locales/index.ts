@@ -14,8 +14,8 @@ if (lsLocale) {
 }
 
 export const langs = [
-  { key: AppLocaleEnum.ZH_CN, label: AppLocaleEnum.ZH_CN_TEXT },
-  { key: AppLocaleEnum.EN_US, label: AppLocaleEnum.EN_US_TEXT }
+  { key: AppLocaleEnum.APP_LOCALE_ZH_CN, label: '中文' },
+  { key: AppLocaleEnum.APP_LOCALE_EN_US, label: 'English' }
 ];
 
 export default createI18n({

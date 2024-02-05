@@ -1,15 +1,9 @@
 export enum AppLocaleEnum {
+  APP_VERSION = 'APP_VERSION',
+
   APP_LOCALE = 'APP_LOCALE',
-  'ZH_CN' = 'zh-CN',
-  'EN_US' = 'en-US',
-  'ZH_CN_TEXT' = '中文',
-  'EN_US_TEXT' = 'English'
-}
+  APP_LOCALE_ZH_CN = 'zh-CN',
+  APP_LOCALE_EN_US = 'en-US',
 
-export enum AppThemeEnum {
   APP_THEME = 'APP_THEME'
-}
-
-export enum AppVersionEnum {
-  APP_VERSION = 'APP_VERSION'
 }
