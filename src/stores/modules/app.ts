@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { useStorage, usePreferredDark } from '@vueuse/core';
 import { zhCN, dateZhCN, darkTheme } from 'naive-ui';
-import { AppLocaleEnum } from '@/enums';
+import { AppEnum } from '@/enums';
 import { store } from '@/stores';
 import i18n from '@/locales';
 import { getCssVariable } from '@/utils/getCssVariable';
@@ -13,7 +13,7 @@ import type { AppLocale, AppTheme } from '@/types';
 export const useAppStore = defineStore('appStore', () => {
   const version = ref('');
 
-  const locale = ref(useStorage(AppLocaleEnum.APP_LOCALE, i18n.global.locale.value));
+  const locale = ref(useStorage(AppEnum.APP_LOCALE, i18n.global.locale.value));
 
   const naiveLocale = computed<NLocale | null>(() => (locale.value === 'zh-CN' ? zhCN : null));
 
@@ -24,7 +24,7 @@ export const useAppStore = defineStore('appStore', () => {
   const systemDark = ref(usePreferredDark());
 
   const theme = ref<AppTheme>(
-    useStorage(AppLocaleEnum.APP_THEME, systemDark.value ? 'dark' : 'light') as unknown as AppTheme
+    useStorage(AppEnum.APP_THEME, systemDark.value ? 'dark' : 'light') as unknown as AppTheme
   );
 
   const naiveTheme = computed(() => (theme.value === 'dark' ? darkTheme : null));
@@ -75,7 +75,7 @@ export const useAppStore = defineStore('appStore', () => {
   });
 
   const setVersion = () => {
-    version.value = useStorage(AppLocaleEnum.APP_VERSION, pkg.version).value;
+    version.value = useStorage(AppEnum.APP_VERSION, pkg.version).value;
   };
 
   const setLocale = (lang: AppLocale) => {

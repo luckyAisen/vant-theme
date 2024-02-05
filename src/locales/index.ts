@@ -1,5 +1,5 @@
 import { createI18n } from 'vue-i18n';
-import { AppLocaleEnum } from '@/enums';
+import { AppEnum } from '@/enums';
 import zhCN from './lang/zh-CN';
 import enUS from './lang/en-US';
 
@@ -8,14 +8,14 @@ import enUS from './lang/en-US';
 let currentLanguage = navigator.language;
 
 // 如果本地缓存记录了语言环境，则使用本地缓存
-const lsLocale = localStorage.getItem(AppLocaleEnum.APP_LOCALE) || '';
+const lsLocale = localStorage.getItem(AppEnum.APP_LOCALE) || '';
 if (lsLocale) {
   currentLanguage = lsLocale;
 }
 
 export const langs = [
-  { key: AppLocaleEnum.APP_LOCALE_ZH_CN, label: '中文' },
-  { key: AppLocaleEnum.APP_LOCALE_EN_US, label: 'English' }
+  { key: AppEnum.APP_LOCALE_ZH_CN, label: '中文' },
+  { key: AppEnum.APP_LOCALE_EN_US, label: 'English' }
 ];
 
 export default createI18n({

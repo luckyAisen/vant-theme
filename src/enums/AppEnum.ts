@@ -1,4 +1,4 @@
-export enum AppLocaleEnum {
+export enum AppEnum {
   APP_VERSION = 'APP_VERSION',
 
   APP_LOCALE = 'APP_LOCALE',
