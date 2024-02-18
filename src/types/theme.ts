@@ -10,3 +10,10 @@ export type Theme = {
   created_at?: string;
   updated_at?: string;
 };
+
+export type ThemeVarBase = {
+  [key in ThemeVersion]: Record<string, string>;
+  // [key in ThemeVersion]: object;
+};
+
+export type ThemeVarConfig = Record<string, Record<string, string>>;

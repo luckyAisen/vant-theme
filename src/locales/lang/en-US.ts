@@ -14,14 +14,27 @@ export default {
 
   create_theme: 'Create Theme',
   import_theme: 'Import Theme',
-  add_theme: 'Increase Theme',
-  edit_theme: 'Update Theme',
+  see_theme: 'View Theme',
+  add_theme: 'Add Theme',
+  edit_theme: 'Edit Theme',
   copy_theme: 'Copy Theme',
+  del_theme: 'Delete Theme',
+  export_theme: 'Export Theme',
   modal_theme_name: 'Theme Name',
   modal_theme_desc: 'Theme Description',
   modal_theme_vant_version: 'Vant Version',
 
   modal_vant_options_4: 'Vant 4 (for Vue 3)',
   modal_vant_options_3: 'Vant 3 (for Vue 3)',
-  modal_vant_options_2: 'Vant 2 (for Vue 2)'
+  modal_vant_options_2: 'Vant 2 (for Vue 2)',
+
+  last_modified: 'Last Modified',
+  success_add: 'Added Successfully',
+  success_edit: 'Edited Successfully',
+  success_copy: 'Copied Successfully',
+  delete_tips: 'Delete Tips',
+  confirm_delete: 'Do You Confirm Delete?',
+  success_delete: 'Successfully Deleted',
+
+  loading_vant_css: 'Loading Vant Css Basic Variables'
 };

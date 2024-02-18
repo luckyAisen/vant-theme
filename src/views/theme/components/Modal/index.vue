@@ -42,7 +42,11 @@
           clearable
         />
       </n-form-item>
-      <n-form-item :label="$t('modal_theme_vant_version')" path="version">
+      <n-form-item
+        v-if="props.type === 'add'"
+        :label="$t('modal_theme_vant_version')"
+        path="version"
+      >
         <n-select
           v-model:value="formModel.version"
           :placeholder="$t('please_select')"
@@ -63,6 +67,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { ThemeEnum } from '@/enums';
+import { DEFAULT_MODEL } from './util';
 
 import type { VNodeChild } from 'vue';
 import type { SelectOption } from 'naive-ui';
@@ -72,13 +77,6 @@ import type { ThemeModalProps, ThemeModalEmits } from './type';
 defineOptions({
   name: 'ThemeModal'
 });
-
-const DEFAULT_MODEL: Theme = {
-  id: '',
-  name: '',
-  description: '',
-  version: ThemeEnum.VERSION_4
-};
 
 const { t } = useI18n();
 

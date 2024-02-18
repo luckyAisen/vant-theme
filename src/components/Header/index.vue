@@ -1,6 +1,8 @@
 <template>
   <header class="bg-[--vt-color-bg-1]">
-    <div class="max-w-7xl mx-auto px-5 flex items-center justify-between h-[--vt-header-height]">
+    <div
+      class="max-w-7xl mx-auto min-w-[--vt-header-min-width] px-5 flex items-center justify-between h-[--vt-header-height]"
+    >
       <div class="flex items-center flex-1">
         <router-link to="/" class="flex items-center">
           <img src="/logo.png" alt="Logo" class="h-[36px]" draggable="false" />
