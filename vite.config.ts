@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url';
-
+import { resolve } from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -36,6 +36,18 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       host: '0.0.0.0'
+    },
+    build: {
+      rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'index.html'),
+          v2: resolve(__dirname, 'mobile/v2.html'),
+          v3: resolve(__dirname, 'mobile/v3.html'),
+          v4: resolve(__dirname, 'mobile/v4.html')
+        },
+        // external: [/\/vant\/v\d\/.*/]
+        external: (id) => id.startsWith('/vant/v') || id.startsWith('/vant-theme/vant/v')
+      }
     }
   };
 });
