@@ -40,15 +40,15 @@ export const createMobileVariables = async () => {
     const variable = {};
 
     if (version === 'v4') {
-      Object.assign(variable, VANT_V4_BASE_VARIABLES);
+      Object.assign(variable, { basic: VANT_V4_BASE_VARIABLES });
     }
 
     if (version === 'v3') {
-      Object.assign(variable, VANT_V3_BASE_VARIABLES);
+      Object.assign(variable, { basic: VANT_V3_BASE_VARIABLES });
     }
 
     if (version === 'v2') {
-      Object.assign(variable, VANT_V2_BASE_VARIABLES);
+      Object.assign(variable, { basic: VANT_V2_BASE_VARIABLES });
     }
 
     for (let i = 0; i < menu.length; i++) {
@@ -71,7 +71,7 @@ export const createMobileVariables = async () => {
         }
         return obj;
       });
-      Object.assign(variable, css);
+      Object.assign(variable, { [comp]: css });
     }
 
     const file = pathResolve(`${VANT_PUBLIC_PATH}/${version}/variable/variable.json`);
