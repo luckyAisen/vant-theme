@@ -16,7 +16,7 @@ export const createMobileMenu = async () => {
       waitUntil: 'networkidle2'
     });
 
-    const menu = await page.evaluate(() => {
+    const menu = await page.evaluate((language) => {
       const menu = [];
       const navs = document.querySelectorAll('.demo-home-nav');
       Array.from(navs).map((group) => {
@@ -37,8 +37,32 @@ export const createMobileMenu = async () => {
 
         menu.push(item);
       });
+      if (language === 'zh-CN') {
+        menu.unshift({
+          label: '基础样式',
+          value: 'basic',
+          children: [
+            {
+              label: '基础样式',
+              value: 'basic'
+            }
+          ]
+        });
+      }
+      if (language === 'en-US') {
+        menu.unshift({
+          label: 'Basic Style',
+          value: 'basic',
+          children: [
+            {
+              label: 'Basic Style',
+              value: 'basic'
+            }
+          ]
+        });
+      }
       return menu;
-    });
+    }, language);
 
     const file = pathResolve(`${VANT_PUBLIC_PATH}/${version}/menu/${language}.json`);
 
