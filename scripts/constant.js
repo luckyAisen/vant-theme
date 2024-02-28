@@ -10,7 +10,7 @@ export const VANT_VERSION_LIST = ['v4', 'v3', 'v2'];
 
 export const VANT_PUBLIC_PATH = 'public/vant';
 
-export const VANT_MOBILE_PAGE = 'src/mobile';
+export const VANT_MOBILE_PAGE = 'mobile';
 
 export const VANT_V4_BASE_VARIABLES = {
   // Color Palette
