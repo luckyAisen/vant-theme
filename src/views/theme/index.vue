@@ -2,12 +2,11 @@
   <div class="flex flex-col w-screen h-screen theme">
     <VHeader />
 
-    <div v-if="skeletonState" class="w-full pt-20 pl-5 pr-5 mx-auto max-w-7xl theme-skeleton">
-      <p class="pb-[--vt-size-4]">{{ $t('loading_vant_css') }}</p>
-      <n-space vertical>
-        <n-skeleton v-for="it in skeletonMap" :key="it" :width="it" text />
-      </n-space>
-    </div>
+    <VSkeleton
+      v-if="skeletonState"
+      class="w-full pt-20 pl-5 pr-5 mx-auto max-w-7xl theme-skeleton"
+      :text="skeletonText"
+    />
 
     <template v-else>
       <div v-if="allThemes.length" class="mx-auto max-w-7xl">
@@ -73,16 +72,18 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useMessage, useDialog } from 'naive-ui';
+import { useMessage, useDialog, NButton } from 'naive-ui';
 import { useI18n } from 'vue-i18n';
 import { AddCircleOutline, CloudUploadOutline } from '@vicons/ionicons5';
-
+import { WorkspaceEnum } from '@/enums';
 import VHeader from '@/components/Header/index.vue';
+import VSkeleton from '@/components/Skeleton/index.vue';
 import ThemeCard from './components/Card/index.vue';
 import ThemeModal from './components/Modal/index.vue';
 import { useThemeStore } from '@/stores/modules/theme';
 import { DEFAULT_MODEL } from './components/Modal/util';
 
+import type { VNodeChild } from 'vue';
 import type { Theme } from '@/types';
 import type { ThemeModalProps } from './components/Modal/type';
 
@@ -102,8 +103,7 @@ const themeStore = useThemeStore();
 
 const skeletonState = ref(false);
 
-// const skeletonMap = ref(Array.from({ length: 10 }, (_, index) => `${(index + 1) * 10}%`));
-const skeletonMap = ref(['40%', '100%', '100%', '100%', '100%', '70%']);
+const skeletonText: Ref<string | VNodeChild> = ref(t('loading_vant_css'));
 
 const allThemes = computed(() => themeStore.allThemes);
 
@@ -112,17 +112,6 @@ const modal = reactive<ThemeModalProps>({
   type: 'add',
   model: { ...DEFAULT_MODEL }
 });
-
-const init = async () => {
-  try {
-    skeletonState.value = true;
-    await themeStore.initBaseVar();
-  } catch {
-    // TODO:异常处理
-  } finally {
-    skeletonState.value = false;
-  }
-};
 
 const onAdd = () => {
   modal.show = true;
@@ -134,8 +123,9 @@ const onSee = (theme: Theme) => {
   router.push({
     name: 'workspace',
     params: {
+      id: theme.id,
       version: theme.version,
-      id: theme.id
+      component: WorkspaceEnum.WORKSPACE_BASIC
     }
   });
 };
@@ -194,6 +184,52 @@ const onModalConfirm = (theme: Theme) => {
     message.success(t('success_copy'));
   }
   onModalCancel();
+};
+
+const init = async () => {
+  try {
+    skeletonState.value = true;
+    await themeStore.initBaseVar();
+    skeletonState.value = false;
+  } catch {
+    const vnode = h(
+      'div',
+      {
+        class: 'flex'
+      },
+      [
+        h('span', {}, t('load_vant_css_failed') + t('period') + t('chinese_user_try')),
+        h(
+          NButton,
+          {
+            text: true,
+            type: 'primary',
+            tag: 'a',
+            target: '_blank',
+            href: 'https://aisen60.gitee.io/vant-theme'
+          },
+          h(
+            'span',
+            {
+              style: {
+                paddingLeft: 'var(--vt-size-1)'
+              }
+            },
+            'https://aisen60.gitee.io/vant-theme'
+          )
+        )
+      ]
+    );
+
+    skeletonText.value = vnode;
+
+    message.create(() => vnode, {
+      type: 'error',
+      keepAliveOnHover: true,
+      duration: 0,
+      closable: true
+    });
+  }
 };
 
 init();

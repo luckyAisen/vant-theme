@@ -31,7 +31,7 @@
       <div class="flex">
         <p class="flex-1 text-[--vt-color-text-1] mb-[6px] pr-[--vt-size-1]">
           <span>{{ $t('modal_theme_name') }}: </span>
-          <span class="pl-[--vt-size-2]">{{ props.theme.name }}</span>
+          <span class="pl-[--vt-size-2] break-all">{{ props.theme.name }}</span>
         </p>
 
         <n-dropdown :options="dropdownOptions" @select="onSelect">
@@ -40,11 +40,6 @@
           </n-icon>
         </n-dropdown>
       </div>
-
-      <p class="text-[--vt-color-text-1] mb-[6px]">
-        <span>{{ $t('modal_theme_vant_version') }}: </span>
-        <span class="pl-[--vt-size-2]">{{ props.theme.version }}</span>
-      </p>
 
       <n-ellipsis v-if="props.theme.description" :line-clamp="2" class="mb-[6px]">
         <span>{{ $t('modal_theme_desc') }}: </span>
@@ -59,6 +54,11 @@
         </template>
       </n-ellipsis>
 
+      <p class="text-[--vt-color-text-1] mb-[6px]">
+        <span>{{ $t('modal_theme_vant_version') }}: </span>
+        <span class="pl-[--vt-size-2]">{{ props.theme.version }}</span>
+      </p>
+
       <p class="text-[--vt-color-text-1]">
         <span>{{ $t('last_modified') }}: </span>
         <span class="pl-[--vt-size-2]">{{ parseTime(props.theme.updated_at) }}</span>
@@ -70,12 +70,12 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { EllipsisHorizontalCircle, EyedropOutline } from '@vicons/ionicons5';
-import { ThemeEnum } from '@/enums';
+import { ThemeEnum, WorkspaceEnum } from '@/enums';
 import { getItem } from '@/utils/localStorage';
 import { parseTime } from '@/utils/time';
 
 import type { ThemeCardProps, ThemeCardEmits } from './type';
-import type { ThemeVarBase, ThemeVarConfig } from '@/types';
+import type { ThemeVarObject, ThemeVarDefault, ThemeVarConfig } from '@/types';
 
 defineOptions({
   name: 'ThemeCard'
@@ -87,31 +87,109 @@ const props = defineProps<ThemeCardProps>();
 
 const emits = defineEmits<ThemeCardEmits>();
 
+// TODO: 需要优化取值逻辑
 const blocks = computed(() => {
-  const configs: ThemeVarConfig = getItem(ThemeEnum.APP_THEME_VAR_CONFIG);
-  const config =
-    Object.keys(configs[props.theme.id]).length > 0
-      ? configs[props.theme.id]
-      : getItem<ThemeVarBase>(ThemeEnum.APP_THEME_VAR_BASE)[props.theme.version];
+  // 所有版本默认的 css 变量
+  const varDefault = getItem<ThemeVarDefault>(ThemeEnum.THEME_VAR_DEFAULT);
+
+  // 所有用户自定义的 css 变量
+  const componentVarConfig = getItem<ThemeVarConfig>(ThemeEnum.THEME_VAR_CONFIG);
+
+  // 当前主题是否有 用户自定义 的 css 变量
+  const hasConfig = Object.keys(componentVarConfig[props.theme.id]).length > 0;
+
+  // 当前主题版本号默认的 css 变量
+  const versionVarDefault = varDefault[props.theme.version];
+
+  // 当前主题自定义的 css 变量
+  const themeVarConfig = hasConfig
+    ? (componentVarConfig[props.theme.id].light as ThemeVarObject)
+    : ({} as unknown as ThemeVarObject);
+
   let colors: string[] = [];
+
   if (props.theme.version === ThemeEnum.VERSION_2) {
+    const RED = '@red';
+    const BLUE = '@blue';
+    const ORANGE = '@orange';
+    const ORANGE_DARK = '@orange-dark';
+    const ORANGE_LIGHT = '@orange-light';
+    const ORANGE_GREEN = '@green';
+
+    const basicRed = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][RED];
+    const basicBlue = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][BLUE];
+    const basicoRange = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][ORANGE];
+    const basicoRangeDark = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][ORANGE_DARK];
+    const basicoRangeLight = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][ORANGE_LIGHT];
+    const basicoRangeGreen = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][ORANGE_GREEN];
+
     colors = [
-      config['@red'],
-      config['@blue'],
-      config['@orange'],
-      config['@orange-dark'],
-      config['@orange-light'],
-      config['@green']
+      hasConfig ? (themeVarConfig[RED] ? themeVarConfig[RED] : basicRed) : basicRed,
+
+      hasConfig ? (themeVarConfig[BLUE] ? themeVarConfig[BLUE] : basicBlue) : basicBlue,
+
+      hasConfig ? (themeVarConfig[ORANGE] ? themeVarConfig[ORANGE] : basicoRange) : basicoRange,
+
+      hasConfig
+        ? themeVarConfig[ORANGE_DARK]
+          ? themeVarConfig[ORANGE_DARK]
+          : basicoRangeDark
+        : basicoRangeDark,
+
+      hasConfig
+        ? themeVarConfig[ORANGE_LIGHT]
+          ? themeVarConfig[ORANGE_LIGHT]
+          : basicoRangeLight
+        : basicoRangeLight,
+
+      hasConfig
+        ? themeVarConfig[ORANGE_GREEN]
+          ? themeVarConfig[ORANGE_GREEN]
+          : basicoRangeGreen
+        : basicoRangeGreen
+    ];
+  } else {
+    const RED = '--van-red';
+    const BLUE = '--van-blue';
+    const ORANGE = '--van-orange';
+    const ORANGE_DARK = '--van-orange-dark';
+    const ORANGE_LIGHT = '--van-orange-light';
+    const ORANGE_GREEN = '--van-green';
+
+    const basicRed = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][RED];
+    const basicBlue = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][BLUE];
+    const basicoRange = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][ORANGE];
+    const basicoRangeDark = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][ORANGE_DARK];
+    const basicoRangeLight = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][ORANGE_LIGHT];
+    const basicoRangeGreen = versionVarDefault[WorkspaceEnum.WORKSPACE_BASIC][ORANGE_GREEN];
+
+    colors = [
+      hasConfig ? (themeVarConfig[RED] ? themeVarConfig[RED] : basicRed) : basicRed,
+
+      hasConfig ? (themeVarConfig[BLUE] ? themeVarConfig[BLUE] : basicBlue) : basicBlue,
+
+      hasConfig ? (themeVarConfig[ORANGE] ? themeVarConfig[ORANGE] : basicoRange) : basicoRange,
+
+      hasConfig
+        ? themeVarConfig[ORANGE_DARK]
+          ? themeVarConfig[ORANGE_DARK]
+          : basicoRangeDark
+        : basicoRangeDark,
+
+      hasConfig
+        ? themeVarConfig[ORANGE_LIGHT]
+          ? themeVarConfig[ORANGE_LIGHT]
+          : basicoRangeLight
+        : basicoRangeLight,
+
+      hasConfig
+        ? themeVarConfig[ORANGE_GREEN]
+          ? themeVarConfig[ORANGE_GREEN]
+          : basicoRangeGreen
+        : basicoRangeGreen
     ];
   }
-  colors = [
-    config['--van-red'],
-    config['--van-blue'],
-    config['--van-orange'],
-    config['--van-orange-dark'],
-    config['--van-orange-light'],
-    config['--van-green']
-  ];
+
   const blockMap = colors.map((it, index) => ({
     key: it,
     style: {
