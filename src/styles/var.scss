@@ -97,6 +97,10 @@
   --vt-color-danger-5: #f76560;
   --vt-color-danger-6: #f53f3f;
   --vt-color-danger-7: #cb272d;
+
+  .n-message-wrapper {
+    --n-max-width: 9999px !important;
+  }
 }
 
 :root[theme="dark"] {
