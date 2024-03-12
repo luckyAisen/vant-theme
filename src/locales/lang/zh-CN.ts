@@ -1,5 +1,8 @@
 export default {
   hello: '你好 Vant Theme',
+  comma: '，',
+  period: '。',
+  colon: '：',
   download_theme: '下载主题',
   reset_theme: '重置主题',
   switch_light_mode: '切换亮色模式',
@@ -36,5 +39,18 @@ export default {
   confirm_delete: '是否确认删除?',
   success_delete: '删除成功',
 
-  loading_vant_css: '正在加载 vant css 基础变量'
+  loading_vant_css: '正在加载 Vant css 基础变量',
+  loading_vant_menu: '正在加载 Vant 菜单数据',
+
+  theme_info_error: '主题信息错误',
+  theme_not_exist: '主题不存在',
+
+  load_vant_css_failed: '加载 Vant css 基础变量失败',
+  load_vant_menu_failed: '加载 Vant 菜单数据失败',
+
+  chinese_user_try: '如果你是中国地区用户，请尝试访问：',
+
+  workspace_switch_theme_tip: 'Vant v2 和 Vant v3 不支持深色模式',
+
+  workspace_loading_component_var: '正在加载组件样式变量'
 };

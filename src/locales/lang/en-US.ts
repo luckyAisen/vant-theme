@@ -1,5 +1,8 @@
 export default {
   hello: 'Hello Vant Theme',
+  comma: ',',
+  period: '.',
+  colon: ':',
   download_theme: 'Download Theme',
   reset_theme: 'Reset Theme',
   switch_light_mode: 'Switch Light Mode',
@@ -36,5 +39,18 @@ export default {
   confirm_delete: 'Do You Confirm Delete?',
   success_delete: 'Successfully Deleted',
 
-  loading_vant_css: 'Loading Vant Css Basic Variables'
+  loading_vant_css: 'Loading Vant Css Basic Variables',
+  loading_vant_menu: 'Loading Vant Menu Data',
+
+  theme_info_error: 'Theme Information Error',
+  theme_not_exist: 'Theme Does Not Exist',
+
+  load_vant_css_failed: 'Loading Vant Css Basic Variables Failed',
+  load_vant_menu_failed: 'Loading Vant Menu Data Failed',
+
+  chinese_user_try: 'If you are a user in China, please try to visit:',
+
+  workspace_switch_theme_tip: 'Vant V2 And Vant V3 Do Not Support Dark Mode',
+
+  workspace_loading_component_var: 'Loading Component Style Variables'
 };
