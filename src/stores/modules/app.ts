@@ -7,13 +7,17 @@ import i18n from '@/locales';
 import { getCssVariable } from '@/utils/getCssVariable';
 import pkg from '../../../package.json';
 
+import type { RemovableRef } from '@vueuse/core';
 import type { NLocale, NDateLocale } from 'naive-ui';
 import type { AppLocale, AppTheme } from '@/types';
 
 export const useAppStore = defineStore('appStore', () => {
-  const version = ref('');
+  const version = useStorage(AppEnum.APP_VERSION, pkg.version);
 
-  const locale = ref(useStorage(AppEnum.APP_LOCALE, i18n.global.locale.value));
+  const locale = useStorage(
+    AppEnum.APP_LOCALE,
+    i18n.global.locale.value
+  ) as RemovableRef<AppLocale>;
 
   const naiveLocale = computed<NLocale | null>(() => (locale.value === 'zh-CN' ? zhCN : null));
 
@@ -21,11 +25,9 @@ export const useAppStore = defineStore('appStore', () => {
     locale.value === 'zh-CN' ? dateZhCN : null
   );
 
-  const systemDark = ref(usePreferredDark());
+  const systemDark = usePreferredDark();
 
-  const theme = ref<AppTheme>(
-    useStorage(AppEnum.APP_THEME, systemDark.value ? 'dark' : 'light') as unknown as AppTheme
-  );
+  const theme = useStorage<AppTheme>(AppEnum.APP_THEME, systemDark.value ? 'dark' : 'light');
 
   const naiveTheme = computed(() => (theme.value === 'dark' ? darkTheme : null));
 
@@ -74,17 +76,13 @@ export const useAppStore = defineStore('appStore', () => {
     };
   });
 
-  const setVersion = () => {
-    version.value = useStorage(AppEnum.APP_VERSION, pkg.version).value;
+  const setLocale = (appLocale: AppLocale) => {
+    locale.value = appLocale;
+    i18n.global.locale.value = appLocale;
   };
 
-  const setLocale = (lang: AppLocale) => {
-    locale.value = lang;
-    i18n.global.locale.value = lang;
-  };
-
-  const setTheme = (t: AppTheme) => {
-    theme.value = t;
+  const setTheme = (appTheme: AppTheme) => {
+    theme.value = appTheme;
   };
 
   const watchTheme = () => {
@@ -110,8 +108,6 @@ export const useAppStore = defineStore('appStore', () => {
     theme,
     naiveTheme,
     naiveThemeOverrides,
-
-    setVersion,
 
     setLocale,
 

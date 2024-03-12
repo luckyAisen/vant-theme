@@ -5,15 +5,15 @@ import { store } from '@/stores';
 import { getItem, setItem } from '@/utils/localStorage';
 import { getTimeStamp } from '@/utils/time';
 
-import type { Theme, ThemeVersion, ThemeVarBase, ThemeVarConfig } from '@/types';
+import type { Theme, ThemeVersion, ThemeVarDefault, ThemeVarConfig } from '@/types';
 
 export const useThemeStore = defineStore('themeStore', () => {
-  const allThemes = ref(useStorage<Theme[]>(ThemeEnum.APP_THEME_LIST, []));
+  const allThemes = ref(useStorage<Theme[]>(ThemeEnum.THEME_LIST, []));
 
-  const themeVarConfig = ref<ThemeVarConfig>(getItem(ThemeEnum.APP_THEME_VAR_CONFIG, {}));
+  const themeVarConfig = ref<ThemeVarConfig>(getItem(ThemeEnum.THEME_VAR_CONFIG, {}));
 
   const initBaseVar = async (): Promise<object> => {
-    if (getItem(ThemeEnum.APP_THEME_VAR_BASE)) return getItem(ThemeEnum.APP_THEME_VAR_BASE);
+    if (getItem(ThemeEnum.THEME_VAR_DEFAULT)) return getItem(ThemeEnum.THEME_VAR_DEFAULT);
 
     return await Promise.all([
       fetch(`${import.meta.env.VITE_BASE_URL}vant/${ThemeEnum.VERSION_2}/variable/variable.json`),
@@ -26,7 +26,7 @@ export const useThemeStore = defineStore('themeStore', () => {
         ThemeEnum.VERSION_4
       ];
 
-      const variables: ThemeVarBase = {
+      const variables: ThemeVarDefault = {
         [ThemeEnum.VERSION_2]: {},
         [ThemeEnum.VERSION_3]: {},
         [ThemeEnum.VERSION_4]: {}
@@ -37,7 +37,7 @@ export const useThemeStore = defineStore('themeStore', () => {
         variables[versions[i]] = variable;
       }
 
-      setItem(ThemeEnum.APP_THEME_VAR_BASE, variables);
+      setItem(ThemeEnum.THEME_VAR_DEFAULT, variables);
 
       return variables;
     });
@@ -85,22 +85,23 @@ export const useThemeStore = defineStore('themeStore', () => {
   };
 
   const addConfig = (theme: Theme, id?: string) => {
-    // const baseConfig: ThemeVarBase = getItem(ThemeEnum.APP_THEME_VAR_BASE);
-    const configs: ThemeVarConfig = getItem(ThemeEnum.APP_THEME_VAR_CONFIG, {});
-    // configs[theme.id] = { ...baseConfig[theme.version] };
-    configs[theme.id] = {};
+    const configs: ThemeVarConfig = getItem(ThemeEnum.THEME_VAR_CONFIG, {});
+    configs[theme.id] = {
+      light: {},
+      dark: {}
+    };
     if (id) {
       configs[theme.id] = configs[id];
     }
     themeVarConfig.value = configs;
-    setItem(ThemeEnum.APP_THEME_VAR_CONFIG, configs);
+    setItem(ThemeEnum.THEME_VAR_CONFIG, configs);
   };
 
   const deleteConfig = (theme: Theme) => {
-    const configs: ThemeVarConfig = getItem(ThemeEnum.APP_THEME_VAR_CONFIG, {});
+    const configs: ThemeVarConfig = getItem(ThemeEnum.THEME_VAR_CONFIG, {});
     delete configs[theme.id];
     themeVarConfig.value = configs;
-    setItem(ThemeEnum.APP_THEME_VAR_CONFIG, configs);
+    setItem(ThemeEnum.THEME_VAR_CONFIG, configs);
   };
 
   return {
