@@ -11,9 +11,16 @@ export type Theme = {
   updated_at?: string;
 };
 
-export type ThemeVarBase = {
-  [key in ThemeVersion]: Record<string, string>;
-  // [key in ThemeVersion]: object;
+export type ThemeVarObject = Record<string, string>;
+
+export type ThemeVarDefault = {
+  [key in ThemeVersion]: Record<string, ThemeVarObject>;
 };
 
-export type ThemeVarConfig = Record<string, Record<string, string>>;
+export type ThemeVarConfig = Record<
+  string,
+  {
+    light: ThemeVarObject;
+    dark: ThemeVarObject;
+  }
+>;
