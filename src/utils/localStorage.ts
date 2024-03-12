@@ -3,7 +3,7 @@ export const parse = (value: string): string => {
   try {
     newValue = JSON.parse(value);
   } catch {
-    newValue = newValue || null;
+    newValue = value || null;
   }
   return newValue;
 };
