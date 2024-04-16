@@ -233,7 +233,7 @@ const onCompileLess = () => {
 /**
  *  监听 子窗口 发起的 同步 组件变量 请求
  */
-listenToSyncGetVar((vars: Record<string, ComponentVarType>) => {
+const listenToSyncGetVarFn = listenToSyncGetVar((vars: Record<string, ComponentVarType>) => {
   const config = generateVariable(vars);
 
   cssVars.value = config;
@@ -254,6 +254,10 @@ const init = () => {
 };
 
 init();
+
+onUnmounted(() => {
+  window.removeEventListener('message', listenToSyncGetVarFn);
+});
 
 watch(
   () => appStore.locale,

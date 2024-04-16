@@ -59,35 +59,43 @@ export const initIsMobileReady = () => {
  * 监听 子窗口 发起的 iframe 加载完成请求
  */
 export const listenToIframeReady = () => {
-  window.addEventListener('message', (event) => {
+  const fn = (event: MessageEvent) => {
     if (event.data.type === IframeSyncEnum.IFRAME_READY) {
       isIframeReady = true;
       // eslint-disable-next-line @typescript-eslint/ban-types
       iframeQueue.forEach((callback: Function) => callback());
       iframeQueue = [];
     }
-  });
+  };
+
+  window.addEventListener('message', fn);
+
+  return fn;
 };
 
 /**
  * 监听 子窗口 发起的 页面 加载完成请求
  */
 export const listenToMobileReady = () => {
-  window.addEventListener('message', (event) => {
+  const fn = (event: MessageEvent) => {
     if (event.data.type === IframeSyncEnum.MOBILE_READY) {
       isMobileReady = true;
       // eslint-disable-next-line @typescript-eslint/ban-types
       mobileQueue.forEach((callback: Function) => callback());
       mobileQueue = [];
     }
-  });
+  };
+
+  window.addEventListener('message', fn);
+
+  return fn;
 };
 
 /**
  * 监听 子窗口 发起的 同步 地址（组件）请求
  */
 export const listenToSyncPath = () => {
-  window.addEventListener('message', (event) => {
+  const fn = (event: MessageEvent) => {
     if (event.data?.type === IframeSyncEnum.REPLACE_PATH) {
       const { id, version, component: prevComponent } = router.currentRoute.value.params;
 
@@ -112,19 +120,27 @@ export const listenToSyncPath = () => {
           .catch(() => {});
       }
     }
-  });
+  };
+
+  window.addEventListener('message', fn);
+
+  return fn;
 };
 
 /**
  * 监听 子窗口 发起的 同步 组件变量 请求
  */
 export const listenToSyncGetVar = (callback: Function) => {
-  window.addEventListener('message', (event) => {
+  const fn = (event: MessageEvent) => {
     if (event.data?.type === IframeSyncEnum.GET_VAR) {
       const data = JSON.parse(event.data.value);
       callback(data);
     }
-  });
+  };
+
+  window.addEventListener('message', fn);
+
+  return fn;
 };
 
 /**

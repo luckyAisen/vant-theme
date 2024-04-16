@@ -76,6 +76,12 @@ provide('component', component);
 
 const workspaceWorkRef = ref();
 
+let listenToIframeReadyFn: any;
+
+let listenToMobileReadyFn: any;
+
+let listenToSyncPathFn: any;
+
 const onSwitchTheme = (appTheme: AppTheme) => {
   if (appTheme === 'dark' && theme.value.version !== ThemeEnum.VERSION_4) {
     message.warning(t('workspace_switch_theme_tip'));
@@ -167,11 +173,11 @@ const init = async () => {
 
   initIsMobileReady();
 
-  listenToIframeReady();
+  listenToIframeReadyFn = listenToIframeReady();
 
-  listenToMobileReady();
+  listenToMobileReadyFn = listenToMobileReady();
 
-  listenToSyncPath();
+  listenToSyncPathFn = listenToSyncPath();
 
   nextTick(() => {
     if (appStore.theme === 'dark') {
@@ -181,6 +187,12 @@ const init = async () => {
 };
 
 init();
+
+onUnmounted(() => {
+  window.removeEventListener('message', listenToIframeReadyFn);
+  window.removeEventListener('message', listenToMobileReadyFn);
+  window.removeEventListener('message', listenToSyncPathFn);
+});
 </script>
 
 <style lang="scss" scoped>
