@@ -38,6 +38,10 @@ export default {
   delete_tips: 'Delete Tips',
   confirm_delete: 'Do You Confirm Delete?',
   success_delete: 'Successfully Deleted',
+  reset_tips: 'Reset tips',
+  confirm_reset: 'Do You Confirm Reset?',
+  success_reset: 'Successfully Reset',
+  success_download: 'Successfully Download',
 
   loading_vant_css: 'Loading Vant Css Basic Variables',
   loading_vant_menu: 'Loading Vant Menu Data',
@@ -52,5 +56,12 @@ export default {
 
   workspace_switch_theme_tip: 'Vant V2 And Vant V3 Do Not Support Dark Mode',
 
-  workspace_loading_component_var: 'Loading Component Style Variables'
+  workspace_loading_component_var: 'Loading Component Style Variables',
+
+  workspace_build_component_var_tip:
+    'Vant 2 does not support real-time updates and needs to be manually initiated',
+  workspace_build_component_var: 'Compile less variables',
+  workspace_build_component_var_loading: 'Compiling less variables',
+  workspace_build_component_var_success: 'Successfully Compile',
+  workspace_build_component_var_failed: 'Failed Compile'
 };

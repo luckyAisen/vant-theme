@@ -78,6 +78,12 @@ export const useThemeStore = defineStore('themeStore', () => {
     addConfig(nextTheme, theme.id);
   };
 
+  const resetTheme = (theme: Theme) => {
+    updateTheme(theme);
+    deleteConfig(theme);
+    addConfig(theme);
+  };
+
   const deleteTheme = (theme: Theme) => {
     const index = allThemes.value.findIndex((it) => it.id === theme.id);
     allThemes.value.splice(index, 1);
@@ -112,6 +118,7 @@ export const useThemeStore = defineStore('themeStore', () => {
     addTheme,
     updateTheme,
     copyTheme,
+    resetTheme,
     deleteTheme,
 
     addConfig,

@@ -71,7 +71,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
 import { useMessage, useDialog, NButton } from 'naive-ui';
 import { useI18n } from 'vue-i18n';
 import { AddCircleOutline, CloudUploadOutline } from '@vicons/ionicons5';
@@ -151,8 +150,8 @@ const onDelete = (theme: Theme) => {
     negativeText: t('cancel_text'),
     maskClosable: false,
     onPositiveClick: () => {
-      message.success(t('success_delete'));
       themeStore.deleteTheme(theme);
+      message.success(t('success_delete'));
     },
     onNegativeClick: () => {}
   });

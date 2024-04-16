@@ -1,5 +1,5 @@
 import type { AppLocale } from '@/types';
 
 export type SwitchLocaleEmits = {
-  (e: 'switch', AppLocale: AppLocale): void;
+  (e: 'switch', locale: AppLocale): void;
 };

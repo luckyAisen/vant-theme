@@ -1,49 +1,19 @@
-export const getTimeStamp = () => new Date().getTime();
+import dayjs from 'dayjs';
 
-export const parseTime = (time: any, cFormat = '{y}-{m}-{d} {h}:{i}:{s}') => {
-  if (!time) {
-    return null;
-  }
-  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
-  let date;
-  if (typeof time === 'object') {
-    date = time;
-  } else {
-    if (typeof time === 'string') {
-      if (/^[0-9]+$/.test(time)) {
-        // support "1548221490638"
-        // eslint-disable-next-line no-param-reassign
-        time = parseInt(time);
-      } else {
-        // support safari
-        // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-        // eslint-disable-next-line no-param-reassign
-        time = time.replace(new RegExp(/-/gm), '/');
-      }
-    }
+const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
-    if (typeof time === 'number' && time.toString().length === 10) {
-      // eslint-disable-next-line no-param-reassign
-      time = time * 1000;
-    }
-    date = new Date(time);
-  }
-  const formatObj: any = {
-    y: date.getFullYear(),
-    m: date.getMonth() + 1,
-    d: date.getDate(),
-    h: date.getHours(),
-    i: date.getMinutes(),
-    s: date.getSeconds(),
-    a: date.getDay()
-  };
-  const timeStr = format.replace(/{([ymdhisa])+}/g, (_result: any, key: any) => {
-    const value = formatObj[key];
-    // Note: getDay() returns 0 on Sunday
-    if (key === 'a') {
-      return ['日', '一', '二', '三', '四', '五', '六'][value];
-    }
-    return value.toString().padStart(2, '0');
-  });
-  return timeStr;
+/**
+ * 生成当前时间戳
+ * @returns 当前时间戳
+ */
+export const getTimeStamp = () => dayjs().valueOf();
+
+/**
+ * 格式化时间
+ * @param date 需要转换的时间
+ * @param format 格式化方式
+ * @returns 格式化后的时间
+ */
+export const parseTime = (date: any | undefined = undefined, format = DATE_TIME_FORMAT): string => {
+  return dayjs(date).format(format);
 };

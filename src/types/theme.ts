@@ -17,10 +17,9 @@ export type ThemeVarDefault = {
   [key in ThemeVersion]: Record<string, ThemeVarObject>;
 };
 
-export type ThemeVarConfig = Record<
-  string,
-  {
-    light: ThemeVarObject;
-    dark: ThemeVarObject;
-  }
->;
+export type ThemeVarConfig = Record<string, ThemeVarItemConfig>;
+
+export type ThemeVarItemConfig = {
+  light: ThemeVarObject;
+  dark: ThemeVarObject;
+};

@@ -8,12 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Header: typeof import('./../src/components/Header/index.vue')['default']
-    Locale: typeof import('./../src/components/locale.vue')['default']
     LocaleSvg: typeof import('./../src/components/LocaleSvg/index.vue')['default']
-    LogoSvg: typeof import('./../src/components/LogoSvg/index.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
-    NDatePicker: typeof import('naive-ui')['NDatePicker']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NDropdown: typeof import('naive-ui')['NDropdown']
     NEllipsis: typeof import('naive-ui')['NEllipsis']
@@ -28,7 +25,9 @@ declare module 'vue' {
     NSelect: typeof import('naive-ui')['NSelect']
     NSkeleton: typeof import('naive-ui')['NSkeleton']
     NSpace: typeof import('naive-ui')['NSpace']
+    NTooltip: typeof import('naive-ui')['NTooltip']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Skeleton: typeof import('./../src/components/Skeleton/index.vue')['default']
   }
 }

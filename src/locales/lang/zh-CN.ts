@@ -38,6 +38,10 @@ export default {
   delete_tips: '删除提示',
   confirm_delete: '是否确认删除?',
   success_delete: '删除成功',
+  reset_tips: '重置主题提示',
+  confirm_reset: '是否确认重置',
+  success_reset: '重置成功',
+  success_download: '下载成功',
 
   loading_vant_css: '正在加载 Vant css 基础变量',
   loading_vant_menu: '正在加载 Vant 菜单数据',
@@ -52,5 +56,12 @@ export default {
 
   workspace_switch_theme_tip: 'Vant v2 和 Vant v3 不支持深色模式',
 
-  workspace_loading_component_var: '正在加载组件样式变量'
+  workspace_loading_component_var: '正在加载组件样式变量',
+
+  workspace_build_component_var_tip: 'Vant 2 不支持实时更新，需要手动发起更新',
+  workspace_build_component_var: '编译 less 变量',
+
+  workspace_build_component_var_loading: '正在编译 less 变量',
+  workspace_build_component_var_success: '编译成功',
+  workspace_build_component_var_failed: '编译失败'
 };

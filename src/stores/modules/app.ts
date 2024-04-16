@@ -4,7 +4,7 @@ import { zhCN, dateZhCN, darkTheme } from 'naive-ui';
 import { AppEnum } from '@/enums';
 import { store } from '@/stores';
 import i18n from '@/locales';
-import { getCssVariable } from '@/utils/getCssVariable';
+import { getCssVariable } from '@/utils/css';
 import pkg from '../../../package.json';
 
 import type { RemovableRef } from '@vueuse/core';
