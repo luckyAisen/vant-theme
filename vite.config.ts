@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
       AutoImport({
         imports: [
           'vue',
+          'vue-router',
           {
             'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']
           }
