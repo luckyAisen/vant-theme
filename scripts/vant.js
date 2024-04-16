@@ -31,21 +31,21 @@ export const createMobilePage = async () => {
       // nextContent = originContent.replace(/\/vant\/static\//g, '/vant-theme/vant/v4/assets/');
       nextContent = originContent.replace(/\/vant\/static\//g, '/vant/v4/assets/');
 
-      /**
-       * 替换百度统计
-       */
-      nextContent = nextContent.replace(
-        'af5d41bc4e446e76665dbe3ec18d55c3',
-        '80adfe034cfb8053f339574d36128324'
-      );
+      // /**
+      //  * 替换百度统计
+      //  */
+      // nextContent = nextContent.replace(
+      //   'af5d41bc4e446e76665dbe3ec18d55c3',
+      //   '80adfe034cfb8053f339574d36128324'
+      // );
 
-      /**
-       * 新增自定义处理逻辑
-       */
-      nextContent = nextContent.replace(
-        /(<div id="app"><\/div>)/,
-        '$1<script type="module" src="/src/mobile.ts"></script>'
-      );
+      // /**
+      //  * 新增自定义处理逻辑
+      //  */
+      // nextContent = nextContent.replace(
+      //   /(<div id="app"><\/div>)/,
+      //   '$1<script type="module" src="/src/mobile.ts"></script>'
+      // );
     }
     if (name === 'v3') {
       /**
@@ -54,21 +54,21 @@ export const createMobilePage = async () => {
       // nextContent = originContent.replace(/\/vant\/v3\/assets\//g, '/vant-theme/vant/v3/assets/');
       nextContent = originContent.replace(/\/vant\/v3\/assets\//g, '/vant/v3/assets/');
 
-      /**
-       * 替换百度统计
-       */
-      nextContent = nextContent.replace(
-        'af5d41bc4e446e76665dbe3ec18d55c3',
-        '80adfe034cfb8053f339574d36128324'
-      );
+      // /**
+      //  * 替换百度统计
+      //  */
+      // nextContent = nextContent.replace(
+      //   'af5d41bc4e446e76665dbe3ec18d55c3',
+      //   '80adfe034cfb8053f339574d36128324'
+      // );
 
-      /**
-       * 新增自定义处理逻辑
-       */
-      nextContent = nextContent.replace(
-        /(<div id="app"><\/div>)/,
-        '$1<script type="module" src="/src/mobile.ts"></script>'
-      );
+      // /**
+      //  * 新增自定义处理逻辑
+      //  */
+      // nextContent = nextContent.replace(
+      //   /(<div id="app"><\/div>)/,
+      //   '$1<script type="module" src="/src/mobile.ts"></script>'
+      // );
     }
     if (name === 'v2') {
       /**
@@ -77,22 +77,47 @@ export const createMobilePage = async () => {
       // nextContent = originContent.replace(/\/vant\/v2\//g, '/vant-theme/vant/v2/assets/');
       nextContent = originContent.replace(/\/vant\/v2\//g, '/vant/v2/assets/');
 
-      /**
-       * 替换百度统计
-       */
-      nextContent = nextContent.replace(
-        'af5d41bc4e446e76665dbe3ec18d55c3',
-        '80adfe034cfb8053f339574d36128324'
-      );
+      // /**
+      //  * 替换百度统计
+      //  */
+      // nextContent = nextContent.replace(
+      //   'af5d41bc4e446e76665dbe3ec18d55c3',
+      //   '80adfe034cfb8053f339574d36128324'
+      // );
 
-      /**
-       * 新增自定义处理逻辑
-       */
-      nextContent = nextContent.replace(
-        /(<div id="app"><\/div>)/,
-        '$1<script type="module" src="/src/mobile.ts"></script>'
-      );
+      // /**
+      //  * 新增自定义处理逻辑
+      //  */
+      // nextContent = nextContent.replace(
+      //   /(<div id="app"><\/div>)/,
+      //   '$1<script type="module" src="/src/mobile.ts"></script>'
+      // );
     }
+
+    /**
+     * 新增自定义处理逻辑
+     */
+    nextContent = nextContent.replace(
+      /(<div id="app"><\/div>)/,
+      '$1<script type="module" src="/src/mobile.ts"></script>'
+    );
+
+    /**
+     * 新增自定义处理逻辑
+     */
+    nextContent = nextContent.replace(
+      /(<\/head>)/,
+      `<meta name="vant-theme-mobile-version" content="${name}" />$1`
+    );
+
+    /**
+     * 替换百度统计
+     */
+    nextContent = nextContent.replace(
+      'af5d41bc4e446e76665dbe3ec18d55c3',
+      '80adfe034cfb8053f339574d36128324'
+    );
+
     const file = pathResolve(`${VANT_MOBILE_PAGE}/${name}.html`);
     await fs.outputFile(file, nextContent);
   }
