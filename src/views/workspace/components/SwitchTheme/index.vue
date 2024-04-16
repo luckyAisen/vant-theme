@@ -28,7 +28,7 @@ const appStore = useAppStore();
 
 const theme = computed(() => appStore.theme);
 
-const btnIcon = computed(() => (theme.value === 'dark' ? Moon : Sunny));
+const btnIcon = computed(() => (theme.value === 'dark' ? Sunny : Moon));
 
 const btnText = computed(() =>
   theme.value === 'dark' ? t('switch_light_mode') : t('switch_dark_mode')

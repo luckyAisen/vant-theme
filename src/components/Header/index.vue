@@ -70,7 +70,7 @@ const onSwitchLocale = () => {
 
 const theme = computed(() => appStore.theme);
 
-const ThemeIcon = computed(() => (theme.value === 'dark' ? Moon : Sunny));
+const ThemeIcon = computed(() => (theme.value === 'dark' ? Sunny : Moon));
 
 const onSwitchTheme = () => {
   const nextTheme = theme.value === 'dark' ? 'light' : 'dark';
