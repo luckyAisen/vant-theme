@@ -86,7 +86,7 @@ const createBackEl = () => {
 };
 
 /**
- * 监听 父窗口 发起的 同步系统主题 请求
+ * 监听 父窗口 发起的 同步系统语言 请求
  */
 const listenToSyncLocale = () => {
   window.addEventListener('message', (event) => {
