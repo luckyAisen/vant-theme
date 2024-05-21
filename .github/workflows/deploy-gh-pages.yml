@@ -10,7 +10,7 @@ on:
 jobs:
   build-and-deploy:
     if: github.repository == 'Aisen60/vant-theme'
-    runs-on: macos-14
+    runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
