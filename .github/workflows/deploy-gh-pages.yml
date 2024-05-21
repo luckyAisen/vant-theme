@@ -10,7 +10,7 @@ on:
 jobs:
   build-and-deploy:
     if: github.repository == 'Aisen60/vant-theme'
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -24,8 +24,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "16"
-          cache: "pnpm"
+          node-version: '18'
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
