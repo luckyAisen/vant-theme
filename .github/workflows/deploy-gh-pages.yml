@@ -51,7 +51,7 @@ jobs:
 
       - name: Deploy gh page
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/website' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GH_PAGES }}
           publish_dir: ./dist
