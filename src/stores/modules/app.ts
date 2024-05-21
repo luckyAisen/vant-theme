@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-import { useStorage, usePreferredDark } from '@vueuse/core';
+import { useStorage, useColorMode } from '@vueuse/core';
 import { zhCN, dateZhCN, darkTheme } from 'naive-ui';
+import { useI18n } from 'vue-i18n';
 import { AppEnum } from '@/enums';
 import { store } from '@/stores';
 import i18n from '@/locales';
@@ -12,6 +13,8 @@ import type { NLocale, NDateLocale } from 'naive-ui';
 import type { AppLocale, AppTheme } from '@/types';
 
 export const useAppStore = defineStore('appStore', () => {
+  const { t } = useI18n();
+
   const version = useStorage(AppEnum.APP_VERSION, pkg.version);
 
   const locale = useStorage(
@@ -25,9 +28,30 @@ export const useAppStore = defineStore('appStore', () => {
     locale.value === 'zh-CN' ? dateZhCN : null
   );
 
-  const systemDark = usePreferredDark();
+  const setLocale = (appLocale: AppLocale) => {
+    locale.value = appLocale;
+    i18n.global.locale.value = appLocale;
+  };
 
-  const theme = useStorage<AppTheme>(AppEnum.APP_THEME, systemDark.value ? 'dark' : 'light');
+  const watchLocale = () => {
+    watch(
+      () => locale.value,
+      () => {
+        document.title = 'Vant Theme' + ' - ' + t('home_describe_1');
+      },
+      {
+        immediate: true
+      }
+    );
+  };
+
+  const { system: systemColor, store: storeColor } = useColorMode();
+
+  const storageColor = useStorage<AppTheme>(AppEnum.APP_THEME, storeColor.value);
+
+  const theme = computed(() => {
+    return storageColor.value == 'auto' ? systemColor.value : storageColor.value;
+  });
 
   const naiveTheme = computed(() => (theme.value === 'dark' ? darkTheme : null));
 
@@ -76,13 +100,8 @@ export const useAppStore = defineStore('appStore', () => {
     };
   });
 
-  const setLocale = (appLocale: AppLocale) => {
-    locale.value = appLocale;
-    i18n.global.locale.value = appLocale;
-  };
-
   const setTheme = (appTheme: AppTheme) => {
-    theme.value = appTheme;
+    storageColor.value = appTheme;
   };
 
   const watchTheme = () => {
@@ -103,14 +122,14 @@ export const useAppStore = defineStore('appStore', () => {
     locale,
     naiveLocale,
     naiveDateLocale,
+    setLocale,
+    watchLocale,
 
-    systemDark,
+    systemColor,
+    storageColor,
     theme,
     naiveTheme,
     naiveThemeOverrides,
-
-    setLocale,
-
     setTheme,
     watchTheme
   };

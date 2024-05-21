@@ -6,12 +6,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/index.vue')
+      component: () => import('@/views/home/index.vue')
     },
     {
-      path: '/theme',
-      name: 'theme',
-      component: () => import('@/views/theme/index.vue')
+      path: '/project',
+      name: 'project',
+      component: () => import('@/views/project/index.vue')
     },
     {
       path: '/workspace/:id/:version/:component',

@@ -2,7 +2,7 @@
 import router from '@/router';
 import { IframeSyncEnum, WorkspaceEnum } from '@/enums';
 
-import type { AppLocale, AppTheme, Theme, ThemeVarObject, ThemeVarItemConfig } from '@/types';
+import type { AppLocale, AppTheme, Project, ProjectVarObject, ProjectVarItemConfig } from '@/types';
 
 export type MessagePayload<T = any> = {
   type: string;
@@ -146,9 +146,9 @@ export const listenToSyncGetVar = (callback: Function) => {
 /**
  * 同步 系统语言 到子窗口
  * @param appLocale 系统语言
- * @param theme 当前主题配置信息
+ * @param project 当前项目信息
  */
-export const syncLocaleToChild = (appLocale: AppLocale, theme: Theme) => {
+export const syncLocaleToChild = (appLocale: AppLocale, project: Project) => {
   const iframe = document.querySelector('iframe');
   if (iframe) {
     iframeReady(() => {
@@ -157,7 +157,7 @@ export const syncLocaleToChild = (appLocale: AppLocale, theme: Theme) => {
           type: IframeSyncEnum.UPDATE_LOCALE,
           value: JSON.stringify({
             appLocale,
-            theme
+            project
           })
         },
         '*'
@@ -207,7 +207,7 @@ export const syncPathToChild = (path: string) => {
 /**
  * 向 子窗口 发起 获取组件变量 请求
  */
-export const syncGetVarToChild = (componentVar: ThemeVarObject) => {
+export const syncGetVarToChild = (componentVar: ProjectVarObject) => {
   const iframe = document.querySelector('iframe');
   if (iframe) {
     mobileReady(() => {
@@ -225,7 +225,7 @@ export const syncGetVarToChild = (componentVar: ThemeVarObject) => {
 /**
  * 向 子窗口 发起 设置组件变量 请求
  */
-export const syncSetVarToChild = (cvVar: ThemeVarItemConfig) => {
+export const syncSetVarToChild = (cvVar: ProjectVarItemConfig) => {
   const iframe = document.querySelector('iframe');
   if (iframe) {
     mobileReady(() => {

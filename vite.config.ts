@@ -5,17 +5,27 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
+import compressPlugin from 'vite-plugin-compression';
+
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 
+import type { UserConfigExport, PluginOption } from 'vite';
+
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command, mode }) => {
+  const isBuild = command === 'build';
+
   const env = loadEnv(mode, process.cwd(), '');
-  return {
+
+  const config: UserConfigExport = {
     base: env.VITE_BASE_URL,
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
+    },
+    server: {
+      host: '0.0.0.0'
     },
     plugins: [
       vue(),
@@ -35,8 +45,8 @@ export default defineConfig(({ mode }) => {
         dts: './types/components.d.ts'
       })
     ],
-    server: {
-      host: '0.0.0.0'
+    esbuild: {
+      drop: isBuild ? ['console', 'debugger'] : []
     },
     build: {
       rollupOptions: {
@@ -51,4 +61,37 @@ export default defineConfig(({ mode }) => {
       }
     }
   };
+
+  if (isBuild) {
+    const compress = env.VITE_APP_BUILD_COMPRESS;
+
+    const deleteOriginFile = env.VITE_APP_BUILD_COMPRESS_DELETE_ORIGIN_FILE;
+
+    const compressList = compress.split(',');
+
+    const plugins: PluginOption[] = [];
+
+    if (compressList.includes('gzip')) {
+      plugins.push(
+        compressPlugin({
+          ext: '.gz',
+          deleteOriginFile: deleteOriginFile === 'true'
+        })
+      );
+    }
+
+    if (compressList.includes('brotli')) {
+      plugins.push(
+        compressPlugin({
+          ext: '.br',
+          algorithm: 'brotliCompress',
+          deleteOriginFile: deleteOriginFile === 'true'
+        })
+      );
+    }
+
+    config.plugins?.push(...plugins);
+  }
+
+  return config;
 });

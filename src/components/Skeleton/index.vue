@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 pt-10 pb-10 v-skeleton">
+  <div class="w-full min-w-[--vt-page-min-width] max-w-7xl mx-auto px-4 py-10 v-skeleton">
     <template v-if="props.text">
       <p v-if="typeof props.text === 'string'" class="pb-[--vt-size-4]">{{ props.text }}</p>
       <p v-else class="pb-[--vt-size-4]">

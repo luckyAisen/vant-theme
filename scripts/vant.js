@@ -111,6 +111,16 @@ export const createMobilePage = async () => {
     );
 
     /**
+     * 如果是 v2 插入 css
+     */
+    if (name === 'v2') {
+      nextContent = nextContent.replace(
+        /(<div id="app"><\/div>)/,
+        '$1<link rel="stylesheet" type="text/css" href="/mobile-v2.css" />'
+      );
+    }
+
+    /**
      * 替换百度统计
      */
     nextContent = nextContent.replace(

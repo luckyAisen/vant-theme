@@ -1,6 +1,8 @@
 export type AppLocale = 'zh-CN' | 'en-US';
 
-export type AppTheme = 'dark' | 'light';
+export type AppTheme = 'light' | 'dark' | 'auto';
+
+export type AppCompTheme = 'light' | 'dark';
 
 export type AppVersion = string;
 

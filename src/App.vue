@@ -34,5 +34,7 @@ const naiveTheme = computed(() => appStore.naiveTheme);
 
 const naiveThemeOverrides = computed(() => appStore.naiveThemeOverrides);
 
+appStore.watchLocale();
+
 appStore.watchTheme();
 </script>

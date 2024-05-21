@@ -15,5 +15,6 @@ export const getTimeStamp = () => dayjs().valueOf();
  * @returns 格式化后的时间
  */
 export const parseTime = (date: any | undefined = undefined, format = DATE_TIME_FORMAT): string => {
-  return dayjs(date).format(format);
+  const _date = typeof date === 'string' ? parseInt(date) : date;
+  return dayjs(_date).format(format);
 };

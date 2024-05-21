@@ -1,23 +1,23 @@
-import type { AppLocale, ThemeVersion } from '@/types';
+import type { AppLocale, ProjectVersion } from '@/types';
 
-export type Menu = {
+export type WMenu = {
   label: string;
   value: string;
-  children: Menu[];
+  children: WMenu[];
 };
 
-export type MenuBase = {
-  [key in ThemeVersion]: Record<AppLocale, Menu[]>;
+export type WMenuBase = {
+  [key in ProjectVersion]: Record<AppLocale, WMenu[]>;
 };
 
-export type ComponentVarItem = ComponentVarType & {
+export type WComponentVarItem = WComponentVarType & {
   type: '0' | '1';
 };
 
-export type ComponentVarType = {
+export type WComponentVarType = {
   isVar: boolean;
   varLabel: string;
   value: string;
 };
 
-export type ComponentVarConfig = Record<string, ComponentVarItem>;
+export type ComponentVarConfig = Record<string, WComponentVarItem>;

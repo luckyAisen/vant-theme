@@ -1,0 +1,41 @@
+name: Deploy Site
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 5 * * *"
+
+jobs:
+  build-and-deploy:
+    if: github.repository == 'Aisen60/vant-theme'
+    runs-on: macos-14
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: "main"
+
+      - name: Install pnpm
+        run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "16"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy gh page
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/website' }}
+        with:
+          github_token: ${{ secrets.GH_PAGES }}
+          publish_dir: ./dist

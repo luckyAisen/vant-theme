@@ -1,33 +1,39 @@
 import { defineStore } from 'pinia';
-import { ThemeEnum, WorkspaceEnum } from '@/enums';
+import { ProjectEnum, WorkspaceEnum } from '@/enums';
 import { store } from '@/stores';
 import { getItem, setItem } from '@/utils/localStorage';
 
-import type { MenuBase } from '@/types';
+import type { WMenuBase } from '@/types';
 
 export const useWorkspaceStore = defineStore('workspaceStore', () => {
-  const initBaseMenu = async (): Promise<MenuBase> => {
+  const component = ref<string>(WorkspaceEnum.WORKSPACE_BASIC);
+
+  const setComponent = (comp: string) => {
+    component.value = comp;
+  };
+
+  const initBaseMenu = async (): Promise<WMenuBase> => {
     if (getItem(WorkspaceEnum.WORKSPACE_MENU))
-      return getItem<MenuBase>(WorkspaceEnum.WORKSPACE_MENU);
+      return getItem<WMenuBase>(WorkspaceEnum.WORKSPACE_MENU);
 
     return await Promise.all([
-      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ThemeEnum.VERSION_2}/menu/zh-CN.json`),
-      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ThemeEnum.VERSION_2}/menu/en-US.json`),
-      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ThemeEnum.VERSION_3}/menu/zh-CN.json`),
-      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ThemeEnum.VERSION_3}/menu/en-US.json`),
-      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ThemeEnum.VERSION_4}/menu/zh-CN.json`),
-      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ThemeEnum.VERSION_4}/menu/en-US.json`)
+      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ProjectEnum.VERSION_2}/menu/zh-CN.json`),
+      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ProjectEnum.VERSION_2}/menu/en-US.json`),
+      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ProjectEnum.VERSION_3}/menu/zh-CN.json`),
+      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ProjectEnum.VERSION_3}/menu/en-US.json`),
+      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ProjectEnum.VERSION_4}/menu/zh-CN.json`),
+      fetch(`${import.meta.env.VITE_BASE_URL}vant/${ProjectEnum.VERSION_4}/menu/en-US.json`)
     ]).then(async (res) => {
-      const menus: MenuBase = {
-        [ThemeEnum.VERSION_2]: {
+      const menus: WMenuBase = {
+        [ProjectEnum.VERSION_2]: {
           'zh-CN': [],
           'en-US': []
         },
-        [ThemeEnum.VERSION_3]: {
+        [ProjectEnum.VERSION_3]: {
           'zh-CN': [],
           'en-US': []
         },
-        [ThemeEnum.VERSION_4]: {
+        [ProjectEnum.VERSION_4]: {
           'zh-CN': [],
           'en-US': []
         }
@@ -49,6 +55,8 @@ export const useWorkspaceStore = defineStore('workspaceStore', () => {
   };
 
   return {
+    component,
+    setComponent,
     initBaseMenu
   };
 });

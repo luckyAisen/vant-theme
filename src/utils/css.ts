@@ -1,21 +1,21 @@
-import { ThemeEnum } from '@/enums';
+import { ProjectEnum } from '@/enums';
 import { getItem, setItem } from './localStorage';
 
 import type {
-  AppTheme,
-  ThemeVersion,
-  ThemeVarObject,
-  ThemeVarDefault,
-  ThemeVarConfig,
+  AppCompTheme,
+  ProjectVersion,
+  ProjectVarObject,
+  ProjectVarDefault,
+  ProjectVarConfig,
   ComponentVarConfig,
-  ComponentVarType
+  WComponentVarType
 } from '@/types';
 
 /**
  * 获取 所有版本 默认的样式变量
  */
 export const getAllDV = () => {
-  return getItem<ThemeVarDefault>(ThemeEnum.THEME_VAR_DEFAULT);
+  return getItem<ProjectVarDefault>(ProjectEnum.PROJECT_VAR_DEFAULT);
 };
 
 /**
@@ -23,7 +23,7 @@ export const getAllDV = () => {
  * @param version 主题版本
  * @returns 当前版本 默认 的样式变量
  */
-export const getVersionDV = (version: ThemeVersion) => {
+export const getVersionDV = (version: ProjectVersion) => {
   return getAllDV()[version];
 };
 
@@ -31,7 +31,7 @@ export const getVersionDV = (version: ThemeVersion) => {
  * 获取 所有版本 自定义的样式变量
  */
 export const getAllCV = () => {
-  return getItem<ThemeVarConfig>(ThemeEnum.THEME_VAR_CONFIG);
+  return getItem<ProjectVarConfig>(ProjectEnum.PROJECT_VAR_CONFIG);
 };
 
 /**
@@ -40,8 +40,8 @@ export const getAllCV = () => {
  * @param appTheme 系统主题
  * @returns 当前主题 自定义 的样式变量
  */
-export const getIdCV = (id: string, appTheme: AppTheme = 'light') => {
-  return getAllCV()[id][appTheme];
+export const getIdCV = (id: string, appCompTheme: AppCompTheme = 'light') => {
+  return getAllCV()[id][appCompTheme];
 };
 
 /**
@@ -50,12 +50,12 @@ export const getIdCV = (id: string, appTheme: AppTheme = 'light') => {
  * @param appTheme 系统主题
  * @param value 自定义的 样式变量
  */
-export const setIdCV = (id: string, appTheme: AppTheme, value: ThemeVarObject) => {
+export const setIdCV = (id: string, appTheme: AppCompTheme, value: ProjectVarObject) => {
   const allCV = getAllCV();
   const cv = allCV[id];
   cv[appTheme] = value;
   allCV[id] = cv;
-  setItem(ThemeEnum.THEME_VAR_CONFIG, allCV);
+  setItem(ProjectEnum.PROJECT_VAR_CONFIG, allCV);
 };
 
 /**
@@ -166,21 +166,26 @@ export const getCssVariable = (name: string): string => {
 };
 
 /**
- * 将 组件变量 转换为 ComponentVarType 类型的格式
+ * 将 组件变量 转换为 WComponentVarType 类型的格式
  * @param componentVar 组件变量
  * @param version 版本
  */
-export const transformVarsType = (componentVar: ThemeVarObject, version: ThemeVersion) => {
-  const vars: Record<string, ComponentVarType> = {};
+export const transformVarsType = (componentVar: ProjectVarObject, version: ProjectVersion) => {
+  const vars: Record<string, WComponentVarType> = {};
 
   const component = componentVar;
 
   Object.keys(component).forEach((key) => {
-    const newKey = version === ThemeEnum.VERSION_2 ? key.replace('@', '--van-') : key;
+    const isVar =
+      version === ProjectEnum.VERSION_2
+        ? component[key].startsWith('@')
+        : component[key].includes('var(--');
 
-    const isVar = component[newKey].includes('var(--');
-    const varLabel = isVar ? component[newKey] : '';
-    const value = getCssVariable(newKey);
+    const varLabel = isVar ? component[key] : '';
+
+    const name = version === ProjectEnum.VERSION_2 ? key.replace('@', '--van-') : key;
+
+    const value = getCssVariable(name);
 
     vars[key] = {
       isVar,
@@ -197,7 +202,7 @@ export const transformVarsType = (componentVar: ThemeVarObject, version: ThemeVe
  * @param dv 当前组件 默认 的样式变量
  * @param cv 当前组件 自定义 的样式变量
  */
-export const generateVariable = (vars: Record<string, ComponentVarType>): ComponentVarConfig => {
+export const generateVariable = (vars: Record<string, WComponentVarType>): ComponentVarConfig => {
   const config: ComponentVarConfig = {};
 
   for (const [key] of Object.entries(vars)) {

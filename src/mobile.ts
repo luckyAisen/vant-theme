@@ -1,9 +1,9 @@
 import '@/mobile.scss';
-import { AppEnum, IframeSyncEnum, ThemeEnum, WorkspaceEnum } from '@/enums';
+import { AppEnum, IframeSyncEnum, ProjectEnum, WorkspaceEnum } from '@/enums';
 import { getItem } from '@/utils/localStorage';
 import { transformVarsType } from '@/utils/css';
 
-import type { AppLocale, Theme, ThemeVersion, ComponentVarType } from '@/types';
+import type { AppLocale, Project, ProjectVersion, WComponentVarType } from '@/types';
 
 const STYLE_TAG_ID = 'VANT_THEME_TAG';
 
@@ -11,18 +11,18 @@ const V2_STYLE_TAG_ID = 'V2_VANT_THEME_TAG';
 
 let _appLocale = getItem<AppLocale>(AppEnum.APP_LOCALE, 'zh-CN');
 
-let _mobileVersion: ThemeVersion = ThemeEnum.VERSION_4;
+let _mobileVersion: ProjectVersion = ProjectEnum.VERSION_4;
 
 const initMobileVersion = () => {
   const metaTag = document.querySelector(
     'meta[name="vant-theme-mobile-version"]'
   ) as HTMLMetaElement;
 
-  _mobileVersion = metaTag.content as ThemeVersion;
+  _mobileVersion = metaTag.content as ProjectVersion;
 };
 
 const initHtmlClass = () => {
-  if (_mobileVersion === ThemeEnum.VERSION_2 || _mobileVersion === ThemeEnum.VERSION_3) {
+  if (_mobileVersion === ProjectEnum.VERSION_2 || _mobileVersion === ProjectEnum.VERSION_3) {
     const htmlTag = document.querySelector('html') as HTMLHtmlElement;
 
     htmlTag.classList.add('van-theme-light');
@@ -30,7 +30,7 @@ const initHtmlClass = () => {
 };
 
 const initMobileV2Css = () => {
-  if (_mobileVersion === ThemeEnum.VERSION_2) {
+  if (_mobileVersion === ProjectEnum.VERSION_2) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
@@ -44,7 +44,7 @@ const createStyleTag = () => {
   style.id = STYLE_TAG_ID;
   document.head.appendChild(style);
 
-  if (_mobileVersion === ThemeEnum.VERSION_2) {
+  if (_mobileVersion === ProjectEnum.VERSION_2) {
     const style = document.createElement('style');
     style.id = V2_STYLE_TAG_ID;
     document.head.appendChild(style);
@@ -95,10 +95,10 @@ const listenToSyncLocale = () => {
 
       const appLocale: AppLocale = data.appLocale;
 
-      const theme: Theme = data.theme;
+      const project: Project = data.project;
 
       const currentRoute =
-        theme.version === ThemeEnum.VERSION_2
+        project.version === ProjectEnum.VERSION_2
           ? window.vueRouter.currentRoute
           : window.vueRouter.currentRoute.value;
 
@@ -139,7 +139,7 @@ const listenToSyncSetVar = () => {
       let lightCss = JSON.stringify(cvVar.light).replace(/,/g, ';').replace(/"/g, '');
       let darkCss = JSON.stringify(cvVar.dark).replace(/,/g, ';').replace(/"/g, '');
 
-      if (_mobileVersion === ThemeEnum.VERSION_2) {
+      if (_mobileVersion === ProjectEnum.VERSION_2) {
         lightCss = lightCss.replace(/@/g, '--van-');
         darkCss = darkCss.replace(/@/g, '--van-');
       }
@@ -194,7 +194,7 @@ const syncPathToParent = () => {
 /**
  * 同步 组件变量 到父窗口
  */
-const syncVarToParent = (vars: Record<string, ComponentVarType>) => {
+const syncVarToParent = (vars: Record<string, WComponentVarType>) => {
   if (window.top) {
     window.top.postMessage(
       {
@@ -215,11 +215,11 @@ const init = () => {
 
   initHtmlClass();
 
-  initMobileV2Css();
+  // initMobileV2Css();
 
   createStyleTag();
 
-  createBackEl();
+  // createBackEl();
 
   listenToSyncLocale();
 

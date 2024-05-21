@@ -22,12 +22,16 @@ declare module 'vue' {
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
+    NPopselect: typeof import('naive-ui')['NPopselect']
     NSelect: typeof import('naive-ui')['NSelect']
     NSkeleton: typeof import('naive-ui')['NSkeleton']
     NSpace: typeof import('naive-ui')['NSpace']
     NTooltip: typeof import('naive-ui')['NTooltip']
+    NUpload: typeof import('naive-ui')['NUpload']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Skeleton: typeof import('./../src/components/Skeleton/index.vue')['default']
+    SwitchLocale: typeof import('./../src/components/SwitchLocale/index.vue')['default']
+    SwitchTheme: typeof import('./../src/components/SwitchTheme/index.vue')['default']
   }
 }

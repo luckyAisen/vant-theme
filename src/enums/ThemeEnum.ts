@@ -1,9 +1,0 @@
-export enum ThemeEnum {
-  VERSION_2 = 'v2',
-  VERSION_3 = 'v3',
-  VERSION_4 = 'v4',
-
-  THEME_LIST = 'THEME_LIST',
-  THEME_VAR_DEFAULT = 'THEME_VAR_DEFAULT',
-  THEME_VAR_CONFIG = 'THEME_VAR_CONFIG'
-}
