@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: "main"
+          ref: main
       
       - name: Install node.js
         uses: actions/setup-node@v4
@@ -53,5 +53,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          github_token: ${{ secrets.GH_PAGES }}
+          github_token: ${{ secrets.TOKEN_GH_PAGES }}
           publish_dir: ./dist
