@@ -5,12 +5,16 @@ on:
   push:
     branches: [main]
   schedule:
+    # 北京时间凌晨5点
     - cron: "0 5 * * *"
 
 jobs:
   build-and-deploy:
     if: github.repository == 'Aisen60/vant-theme'
     runs-on: ubuntu-latest
+    env:
+      # 设置时区环境变量
+      TZ: Asia/Shanghai
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -63,5 +67,5 @@ jobs:
           port: ${{ secrets.SECRETS_PORT }}
           username: ${{ secrets.SECRETS_USERNAME }}
           password: ${{ secrets.SECRETS_PASSWORD }}
-          source: "./dist"
+          source: "dist/*"
           target: "/opt/cxs/vant-theme"
