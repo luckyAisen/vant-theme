@@ -1,0 +1,32 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["config:recommended", "schedule:weekly"],
+	"dependencyDashboard": false,
+	"packageRules": [
+		{
+			"matchPackagePatterns": ["*"],
+			"semanticCommitType": "chore",
+			"rangeStrategy": "bump"
+		},
+		{
+			"groupName": "vite",
+			"packagePatterns": ["vite"],
+			"groupSlug": "vite"
+		},
+		{
+			"groupName": "types",
+			"packagePatterns": ["^@types/"],
+			"groupSlug": "types"
+		},
+		{
+			"groupName": "all patch dependencies",
+			"groupSlug": "all-patch",
+			"matchPackagePatterns": ["*"],
+			"matchUpdateTypes": ["patch"]
+		},
+		{
+			"depTypeList": ["peerDependencies"],
+			"enabled": false
+		}
+	]
+}
