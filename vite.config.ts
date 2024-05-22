@@ -55,9 +55,7 @@ export default defineConfig(({ command, mode }) => {
           v2: resolve(__dirname, 'mobile/v2.html'),
           v3: resolve(__dirname, 'mobile/v3.html'),
           v4: resolve(__dirname, 'mobile/v4.html')
-        },
-        // external: [/\/vant\/v\d\/.*/]
-        external: (id) => id.startsWith('/vant/v') || id.startsWith('/vant-theme/vant/v')
+        }
       }
     }
   };
