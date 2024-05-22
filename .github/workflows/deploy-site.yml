@@ -51,7 +51,7 @@ jobs:
         run: pnpm install
 
       - name: Build project
-        run: npm run build
+        run: npm run build:gh-pages
 
       - name: Deploy gh page
         uses: peaceiris/actions-gh-pages@v3
@@ -59,15 +59,3 @@ jobs:
         with:
           github_token: ${{ secrets.TOKEN_GH_PAGES }}
           publish_dir: ./dist
-      
-      - name: Sync Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SECRETS_HOST }}
-          port: ${{ secrets.SECRETS_PORT }}
-          username: ${{ secrets.SECRETS_USERNAME }}
-          password: ${{ secrets.SECRETS_PASSWORD }}
-          script: |
-            cd /opt/cxs/vant-theme 
-            git checkout .
-            git pull origin gh-pages

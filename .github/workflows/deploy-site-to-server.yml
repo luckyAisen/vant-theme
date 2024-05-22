@@ -1,0 +1,30 @@
+name: Deploy Site To Server
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  main-branch-deploy:
+    if: github.repository == 'Aisen60/vant-theme'
+    runs-on: ubuntu-latest
+    env:
+      # 设置时区环境变量
+      TZ: Asia/Shanghai
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SECRETS_HOST }}
+          port: ${{ secrets.SECRETS_PORT }}
+          username: ${{ secrets.SECRETS_USERNAME }}
+          password: ${{ secrets.SECRETS_PASSWORD }}
+          script: |
+            cd /opt/cxs/vant-theme
+            git checkout .
+            git pull origin main
+            pnpm install
+            npm run build
