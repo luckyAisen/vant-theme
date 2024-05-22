@@ -28,7 +28,6 @@ export const createMobilePage = async () => {
       /**
        * vite 编译时，会加上 base_url，这里无需配置
        */
-      // nextContent = originContent.replace(/\/vant\/static\//g, '/vant-theme/vant/v4/assets/');
       nextContent = originContent.replace(/\/vant\/static\//g, '/vant/v4/assets/');
 
       // /**
@@ -51,7 +50,6 @@ export const createMobilePage = async () => {
       /**
        * vite 编译时，会加上 base_url，这里无需配置
        */
-      // nextContent = originContent.replace(/\/vant\/v3\/assets\//g, '/vant-theme/vant/v3/assets/');
       nextContent = originContent.replace(/\/vant\/v3\/assets\//g, '/vant/v3/assets/');
 
       // /**
@@ -74,7 +72,6 @@ export const createMobilePage = async () => {
       /**
        * vite 编译时，会加上 base_url，这里无需配置
        */
-      // nextContent = originContent.replace(/\/vant\/v2\//g, '/vant-theme/vant/v2/assets/');
       nextContent = originContent.replace(/\/vant\/v2\//g, '/vant/v2/assets/');
 
       // /**
@@ -167,7 +164,7 @@ export const replaceMobileAssets = async () => {
         .then((files) => files.find((file) => file.startsWith('mobile')));
       const filePath = `${VANT_PUBLIC_PATH}/${v}/assets/js/${file}`;
       let content = await fs.readFile(filePath, 'utf8');
-      content = content.replace(/\/vant\//g, '/vant-theme/vant/v4/assets/');
+      content = content.replace(/\/vant\//g, `${process.env.VANT_THEME_BASE}vant/v4/assets/`);
       content = content.replace(/static\/js\/async\//g, 'js/async/');
       content = content.replace(/static\/css\/async\//g, 'css/async/');
       await fs.outputFile(filePath, content);
@@ -178,7 +175,7 @@ export const replaceMobileAssets = async () => {
         .then((files) => files.find((file) => file.startsWith('iframe-router')));
       const filePath = `${VANT_PUBLIC_PATH}/${v}/assets/${file}`;
       let content = await fs.readFile(filePath, 'utf8');
-      content = content.replace(/\/vant\/v3\//g, '/vant-theme/vant/v3/');
+      content = content.replace(/\/vant\/v3\//g, `${process.env.VANT_THEME_BASE}vant/v3/`);
       await fs.outputFile(filePath, content);
     }
   }

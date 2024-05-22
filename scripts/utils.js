@@ -10,7 +10,8 @@ export const runServe = () => {
 };
 
 export const runBuild = () => {
-  spawn('npx', ['run-p type-check "build-only {@}" --'], { stdio: 'inherit', shell: true });
+  const mode = process.env.VANT_THEME_BASE === '/' ? '{@}' : '-- --mode gh-pages';
+  spawn('npx', [`run-p type-check "build-only ${mode}" --`], { stdio: 'inherit', shell: true });
 };
 
 export const runClean = async () => {

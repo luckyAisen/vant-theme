@@ -2,7 +2,7 @@ export const VANT_WEBSITE = 'https://vant-ui.github.io/vant';
 
 export const VANT_GIT_REPO = 'youzan/vant#gh-pages';
 
-export const VANT_THEME_BASE = '/vant-theme/';
+export const VANT_THEME_BASE = process.env.VANT_THEME_BASE;
 
 export const VANT_SOURCE = '.VANT_SOURCE';
 
