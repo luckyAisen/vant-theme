@@ -173,15 +173,15 @@ export const getCssVariable = (name: string): string => {
 export const transformVarsType = (componentVar: ProjectVarObject, version: ProjectVersion) => {
   const vars: Record<string, WComponentVarType> = {};
 
-  const component = componentVar;
+  const newComponentVar = componentVar;
 
-  Object.keys(component).forEach((key) => {
+  Object.keys(newComponentVar).forEach((key) => {
     const isVar =
       version === ProjectEnum.VERSION_2
-        ? component[key].startsWith('@')
-        : component[key].includes('var(--');
+        ? newComponentVar[key].startsWith('@')
+        : newComponentVar[key].includes('var(--');
 
-    const varLabel = isVar ? component[key] : '';
+    const varLabel = isVar ? newComponentVar[key] : '';
 
     const name = version === ProjectEnum.VERSION_2 ? key.replace('@', '--van-') : key;
 

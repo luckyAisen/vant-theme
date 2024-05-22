@@ -119,9 +119,9 @@ const listenToSyncLocale = () => {
 const listenToSyncGetVar = () => {
   window.addEventListener('message', (event) => {
     if (event.data.type === IframeSyncEnum.GET_VAR) {
-      const component = JSON.parse(event.data.value);
+      const componentVar = JSON.parse(event.data.value);
 
-      const vars = transformVarsType(component, _mobileVersion);
+      const vars = transformVarsType(componentVar, _mobileVersion);
 
       syncVarToParent(vars);
     }
@@ -147,8 +147,8 @@ const listenToSyncSetVar = () => {
       const styleTag = document.querySelector(`#${STYLE_TAG_ID}`);
       if (styleTag) {
         styleTag.innerHTML = `
-          .van-theme-light ${lightCss}
-          .van-theme-dark ${darkCss}
+          html.van-theme-light ${lightCss}
+          html.van-theme-dark ${darkCss}
         `;
       }
     }
