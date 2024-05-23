@@ -4,17 +4,20 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths-ignore:
+      - "**.md"
+      - ".vscode/**"
+      - ".env*"
+      - ".eslint*"
+      - "tsconfig*"
   schedule:
     # 北京时间凌晨5点
-    - cron: "0 5 * * *"
+    - cron: "0 21 * * *"
 
 jobs:
   build-and-deploy:
     if: github.repository == 'Aisen60/vant-theme'
     runs-on: ubuntu-latest
-    env:
-      # 设置时区环境变量
-      TZ: Asia/Shanghai
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:

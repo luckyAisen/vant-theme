@@ -4,6 +4,15 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths-ignore:
+      - "**.md"
+      - ".vscode/**"
+      - ".env*"
+      - ".eslint*"
+      - "tsconfig*"
+  schedule:
+    # 北京时间凌晨5点
+    - cron: "0 21 * * *"
 
 jobs:
   main-branch-deploy:
