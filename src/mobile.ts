@@ -3,7 +3,7 @@ import { AppEnum, IframeSyncEnum, ProjectEnum, WorkspaceEnum } from '@/enums';
 import { getItem } from '@/utils/localStorage';
 import { transformVarsType } from '@/utils/css';
 
-import type { AppLocale, Project, ProjectVersion, WComponentVarType } from '@/types';
+import type { RecordObject, AppLocale, Project, ProjectVersion, WComponentVarType } from '@/types';
 
 const STYLE_TAG_ID = 'VANT_THEME_TAG';
 
@@ -136,13 +136,31 @@ const listenToSyncSetVar = () => {
     if (event.data.type === IframeSyncEnum.SET_VAR) {
       const cvVar = JSON.parse(event.data.value);
 
-      let lightCss = JSON.stringify(cvVar.light).replace(/,/g, ';').replace(/"/g, '');
-      let darkCss = JSON.stringify(cvVar.dark).replace(/,/g, ';').replace(/"/g, '');
+      const _format = (modeCss: RecordObject) => {
+        let css = '{';
 
-      if (_mobileVersion === ProjectEnum.VERSION_2) {
-        lightCss = lightCss.replace(/@/g, '--van-');
-        darkCss = darkCss.replace(/@/g, '--van-');
-      }
+        Object.entries(modeCss).forEach(([key, value]) => {
+          const k =
+            _mobileVersion !== ProjectEnum.VERSION_2
+              ? key
+              : key.replace(/@([a-z0-9-]+)/g, '--van-$1');
+
+          const v =
+            _mobileVersion !== ProjectEnum.VERSION_2
+              ? value
+              : value.replace(/@([a-z0-9-]+)/g, 'var(--van-$1)');
+
+          css += `${k}: ${v}; `;
+        });
+
+        css += '}';
+
+        return css;
+      };
+
+      const lightCss = _format(cvVar.light);
+
+      const darkCss = _format(cvVar.dark);
 
       const styleTag = document.querySelector(`#${STYLE_TAG_ID}`);
       if (styleTag) {
