@@ -6,5 +6,6 @@ export const DEFAULT_MODEL: Project = {
   id: '',
   name: '',
   description: '',
-  version: ProjectEnum.VERSION_4
+  version: ProjectEnum.VERSION_4,
+  dark: ProjectEnum.ENABLE_DARK_MODE
 };

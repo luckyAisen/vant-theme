@@ -40,7 +40,7 @@
       </p>
 
       <p class="pb-3 text-[12px] text-[--vt-color-text-3]">
-        {{ parseTime(props.project.createTime) }}
+        {{ parseTime(props.project.updateTime) }}
       </p>
 
       <div class="flex justify-end">

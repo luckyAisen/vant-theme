@@ -145,14 +145,19 @@ const initBaseMenu = async () => {
     });
 
     return Promise.reject(t('load_vant_css_failed') + t('period'));
-
-    // for (let i = 0; i < 2; i++) {
-
-    // }
   }
 };
 
 const initChildTheme = () => {
+  if (
+    appStore.theme === 'dark' &&
+    project.value.version === ProjectEnum.VERSION_4 &&
+    project.value.dark === ProjectEnum.DISABLE_DARK_MODE
+  ) {
+    message.warning(t('workspace_switch_theme_tip_disable'));
+    return;
+  }
+
   if (appStore.theme === 'dark' && project.value.version !== ProjectEnum.VERSION_4) {
     message.warning(t('workspace_switch_theme_tip'));
     return;

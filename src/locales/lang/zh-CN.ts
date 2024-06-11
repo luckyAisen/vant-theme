@@ -21,9 +21,13 @@ export default {
   modal_project_name: '项目名称',
   modal_project_desc: '项目描述',
   modal_project_vant_version: 'Vant 版本',
+  modal_project_dark_mode: '深色模式',
   modal_vant_options_4: 'Vant 4（适用于 Vue 3）',
   modal_vant_options_3: 'Vant 3（适用于 Vue 3）',
   modal_vant_options_2: 'Vant 2（适用于 Vue 2）',
+  modal_project_dark_mode_enable: '启用',
+  modal_project_dark_mode_disable: '禁用',
+  modal_project_dark_mode_tooltip: 'Vant 从 4.0 开始支持切换所有组件为深色模式',
 
   create_project: '创建项目',
   edit_project: '编辑项目',
@@ -59,6 +63,7 @@ export default {
   chinese_user_try: '如果你是中国地区用户，请尝试访问：',
 
   workspace_switch_theme_tip: 'Vant v2 和 Vant v3 不支持深色模式',
+  workspace_switch_theme_tip_disable: '当前项目已禁用深色模式',
   workspace_loading_component_var: '正在加载组件样式变量',
   workspace_build_component_var_tip: 'Vant 2 不支持实时更新，需要手动发起更新',
   workspace_build_component_var: '编译 less 变量',

@@ -55,6 +55,8 @@ export const useProjectStore = defineStore('projectStore', () => {
     const nextTheme = {
       ...project,
       id: timeStamp,
+      dark:
+        project.version === ProjectEnum.VERSION_4 ? project.dark : ProjectEnum.DISABLE_DARK_MODE,
       createTime: timeStamp,
       updateTime: timeStamp
     };

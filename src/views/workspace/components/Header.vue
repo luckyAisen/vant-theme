@@ -91,10 +91,20 @@ const onSwitchLocale = () => {
  * 切换系统主题
  */
 const onSwitchTheme = () => {
+  if (
+    appStore.theme === 'dark' &&
+    project.value.version === ProjectEnum.VERSION_4 &&
+    project.value.dark === ProjectEnum.DISABLE_DARK_MODE
+  ) {
+    message.warning(t('workspace_switch_theme_tip_disable'));
+    return;
+  }
+
   if (appStore.theme === 'dark' && project.value.version !== ProjectEnum.VERSION_4) {
     message.warning(t('workspace_switch_theme_tip'));
     return;
   }
+
   syncThemeToChild(appStore.theme);
 };
 

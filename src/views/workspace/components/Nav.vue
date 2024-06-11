@@ -57,11 +57,14 @@ const menu = computed(() => {
  * @param value 组件标识
  */
 const onReplace = (value: string) => {
-  let path = '/' + appStore.locale;
-  if (value !== WorkspaceEnum.WORKSPACE_BASIC) {
-    path += '/' + value;
+  if (component.value !== value) {
+    let path = '/' + appStore.locale;
+    if (value !== WorkspaceEnum.WORKSPACE_BASIC) {
+      path += '/' + value;
+    }
+    workspaceStore.setSkeletonState(true);
+    syncPathToChild(path);
   }
-  syncPathToChild(path);
 };
 
 /**

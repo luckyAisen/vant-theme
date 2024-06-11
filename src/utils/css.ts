@@ -37,7 +37,7 @@ export const getAllCV = () => {
 /**
  * 获取 指定主题 自定义的样式变量
  * @param id 主题 id
- * @param appTheme 系统主题
+ * @param appCompTheme 系统主题
  * @returns 当前主题 自定义 的样式变量
  */
 export const getIdCV = (id: string, appCompTheme: AppCompTheme = 'light') => {
@@ -47,13 +47,13 @@ export const getIdCV = (id: string, appCompTheme: AppCompTheme = 'light') => {
 /**
  * 设置 指定主题 自定义的样式变量
  * @param id 主题 id
- * @param appTheme 系统主题
+ * @param appCompTheme 系统主题
  * @param value 自定义的 样式变量
  */
-export const setIdCV = (id: string, appTheme: AppCompTheme, value: ProjectVarObject) => {
+export const setIdCV = (id: string, appCompTheme: AppCompTheme, value: ProjectVarObject) => {
   const allCV = getAllCV();
   const cv = allCV[id];
-  cv[appTheme] = value;
+  cv[appCompTheme] = value;
   allCV[id] = cv;
   setItem(ProjectEnum.PROJECT_VAR_CONFIG, allCV);
 };

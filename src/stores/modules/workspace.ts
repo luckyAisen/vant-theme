@@ -6,7 +6,13 @@ import { getItem, setItem } from '@/utils/localStorage';
 import type { WMenuBase } from '@/types';
 
 export const useWorkspaceStore = defineStore('workspaceStore', () => {
+  const skeletonState = ref<boolean>(false);
+
   const component = ref<string>(WorkspaceEnum.WORKSPACE_BASIC);
+
+  const setSkeletonState = (state: boolean) => {
+    skeletonState.value = state;
+  };
 
   const setComponent = (comp: string) => {
     component.value = comp;
@@ -55,7 +61,10 @@ export const useWorkspaceStore = defineStore('workspaceStore', () => {
   };
 
   return {
+    skeletonState,
     component,
+
+    setSkeletonState,
     setComponent,
     initBaseMenu
   };

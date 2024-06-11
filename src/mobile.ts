@@ -29,16 +29,6 @@ const initHtmlClass = () => {
   }
 };
 
-const initMobileV2Css = () => {
-  if (_mobileVersion === ProjectEnum.VERSION_2) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = import.meta.env.BASE_URL + 'mobile-v2.css';
-    document.head.appendChild(link);
-  }
-};
-
 const createStyleTag = () => {
   const style = document.createElement('style');
   style.id = STYLE_TAG_ID;
@@ -232,8 +222,6 @@ const init = () => {
   initMobileVersion();
 
   initHtmlClass();
-
-  // initMobileV2Css();
 
   createStyleTag();
 

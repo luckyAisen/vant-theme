@@ -51,7 +51,34 @@
           v-model:value="formModel.version"
           :placeholder="$t('please_select')"
           :options="versionOptions"
-          :render-label="renderLabel"
+          :render-label="optionsRenderLabel"
+        />
+      </n-form-item>
+
+      <n-form-item
+        v-if="formModel.version === ProjectEnum.VERSION_4"
+        :label="$t('modal_project_dark_mode')"
+        path="dark"
+      >
+        <template #label>
+          <span class="flex items-center">
+            <span class="pr-1"> {{ $t('modal_project_dark_mode') }}</span>
+            <n-tooltip trigger="hover">
+              <template #trigger>
+                <n-icon size="var(--vt-font-size-4)" class="cursor-pointer">
+                  <InformationCircleOutline />
+                </n-icon>
+              </template>
+              {{ $t('modal_project_dark_mode_tooltip') }}
+            </n-tooltip>
+          </span>
+        </template>
+
+        <n-select
+          v-model:value="formModel.dark"
+          :placeholder="$t('please_select')"
+          :options="darkModeOptions"
+          :render-label="darkRenderLabel"
         />
       </n-form-item>
     </n-form>
@@ -66,6 +93,7 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
+import { InformationCircleOutline } from '@vicons/ionicons5';
 import { ProjectEnum } from '@/enums';
 import { DEFAULT_MODEL } from './util';
 
@@ -118,7 +146,24 @@ const versionOptions = computed(() => [
   }
 ]);
 
-const renderLabel = (option: SelectOption): VNodeChild => {
+const darkModeOptions = computed(() => [
+  {
+    locale: 'modal_project_dark_mode_enable',
+    label: t('modal_project_dark_mode_enable'),
+    value: ProjectEnum.ENABLE_DARK_MODE
+  },
+  {
+    locale: 'modal_project_dark_mode_disable',
+    label: t('modal_project_dark_mode_disable'),
+    value: ProjectEnum.DISABLE_DARK_MODE
+  }
+]);
+
+const optionsRenderLabel = (option: SelectOption): VNodeChild => {
+  return h('span', t(option.locale as string));
+};
+
+const darkRenderLabel = (option: SelectOption): VNodeChild => {
   return h('span', t(option.locale as string));
 };
 

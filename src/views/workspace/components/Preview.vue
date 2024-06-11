@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex items-center workspace-preview">
     <VSkeleton v-if="skeletonState" class="absolute z-10 workspace-preview-skeleton" :rows="20" />
-    <iframe class="workspace-preview-mobile" :src="iframeUrl" @load="onLoad"></iframe>
+    <iframe class="workspace-preview-mobile" :src="iframeUrl"></iframe>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ const project = inject('project') as Ref<Project>;
 const component = computed(() => workspaceStore.component);
 
 // 骨架屏状态
-const skeletonState = ref(true);
+const skeletonState = computed(() => workspaceStore.skeletonState);
 
 // 外链地址
 const iframeUrl = ref('');
@@ -45,13 +45,6 @@ const initIframeUrl = () => {
   }
 
   iframeUrl.value = url;
-};
-
-/**
- * iframe 加载完成后的回调
- */
-const onLoad = () => {
-  skeletonState.value = false;
 };
 
 /**
@@ -91,7 +84,7 @@ init();
   }
 
   .workspace-preview-skeleton {
-    background-color: #fff;
+    background-color: var(--vt-color-bg-1);
   }
 }
 

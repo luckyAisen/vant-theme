@@ -1,53 +1,54 @@
 <template>
   <div class="flex flex-col flex-1 workspace-work">
-    <div class="flex items-center justify-between workspace-work-header">
-      {{ compLabel }}
-      <n-tooltip v-if="project.version === ProjectEnum.VERSION_2">
-        <template #trigger>
-          <n-button type="info" :loading="compileLoading" @click="onCompileLess">
-            {{ t('workspace_build_component_var') }}
-          </n-button>
-        </template>
-        {{ t('workspace_build_component_var_tip') }}
-      </n-tooltip>
-    </div>
-    <div class="flex-1 overflow-y-auto workspace-work-container">
-      <VSkeleton
-        v-if="skeletonState"
-        class="w-full pt-5 pl-5 pr-5 mx-auto max-w-7xl"
-        :text="skeletonText"
-      />
+    <VSkeleton
+      v-if="skeletonState"
+      class="w-full pt-5 pl-5 pr-5 mx-auto max-w-7xl"
+      :text="skeletonText"
+    />
+    <template v-else>
+      <div class="flex items-center justify-between workspace-work-header">
+        {{ compLabel }}
+        <n-tooltip v-if="project.version === ProjectEnum.VERSION_2">
+          <template #trigger>
+            <n-button type="info" :loading="compileLoading" @click="onCompileLess">
+              {{ t('workspace_build_component_var') }}
+            </n-button>
+          </template>
+          {{ t('workspace_build_component_var_tip') }}
+        </n-tooltip>
+      </div>
+      <div class="flex-1 overflow-y-auto workspace-work-container">
+        <div class="workspace-work-wrapper">
+          <template v-if="cssVars && Object.keys(cssVars).length">
+            <div class="class=item-component" v-for="(obj, key) in cssVars" :key="key">
+              <InputItem
+                v-if="obj.type === '0'"
+                :label="key"
+                :default-value="obj.value"
+                :is-var="obj.isVar"
+                :var-label="obj.varLabel"
+                @change="onVarChange"
+              />
+              <ColorItem
+                v-if="obj.type === '1'"
+                :label="key"
+                :default-value="obj.value"
+                :is-var="obj.isVar"
+                :var-label="obj.varLabel"
+                @change="onVarChange"
+              />
+            </div>
+          </template>
 
-      <div v-else class="workspace-work-wrapper">
-        <template v-if="cssVars && Object.keys(cssVars).length">
-          <div class="class=item-component" v-for="(obj, key) in cssVars" :key="key">
-            <InputItem
-              v-if="obj.type === '0'"
-              :label="key"
-              :default-value="obj.value"
-              :is-var="obj.isVar"
-              :var-label="obj.varLabel"
-              @change="onVarChange"
-            />
-            <ColorItem
-              v-if="obj.type === '1'"
-              :label="key"
-              :default-value="obj.value"
-              :is-var="obj.isVar"
-              :var-label="obj.varLabel"
-              @change="onVarChange"
-            />
+          <div v-else class="flex items-center justify-center flex-col workspace-no-css-var">
+            <img class="w-[300px]" src="../../../assets/img/no-css-var.png" draggable="false" />
+            <p class="text-lg text-[var(--vt-color-text-2)]">
+              {{ $t('workspace_component_no_var') }}
+            </p>
           </div>
-        </template>
-
-        <div v-else class="flex items-center justify-center flex-col workspace-no-css-var">
-          <img class="w-[300px]" src="../../../assets/img/no-css-var.png" draggable="false" />
-          <p class="text-lg text-[var(--vt-color-text-2)]">
-            {{ $t('workspace_component_no_var') }}
-          </p>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -99,7 +100,7 @@ const project = inject('project') as Ref<Project>;
 const component = computed(() => workspaceStore.component);
 
 // 骨架屏状态
-const skeletonState = ref(false);
+const skeletonState = computed(() => workspaceStore.skeletonState);
 
 // 骨架屏文案
 const skeletonText = ref(t('workspace_loading_component_var'));
@@ -127,19 +128,21 @@ const onSetCompLabel = () => {
  * 设置 组件变量 列表
  */
 const onSetCompVar = () => {
-  // skeletonState.value = true;
-
   // 所有版本 默认 样式变量
   const versionDV = getVersionDV(project.value.version);
 
   // 当前组件 默认 样式变量
   const currentCompDV = versionDV[component.value];
 
+  // 要获取哪套主题的变量
+  const appCompTheme =
+    project.value.version === ProjectEnum.VERSION_4 &&
+    project.value.dark === ProjectEnum.ENABLE_DARK_MODE
+      ? appStore.theme
+      : 'light';
+
   // 当前主题 自定义 样式变量
-  const currentThemeCV = getIdCV(
-    project.value.id,
-    project.value.version === ProjectEnum.VERSION_4 ? appStore.theme : 'light'
-  );
+  const currentThemeCV = getIdCV(project.value.id, appCompTheme);
 
   // 当前组件 默认 样式变量 和 当前主题 自定义 样式变量 的交集
   const componentVar: ProjectVarObject = {};
@@ -170,11 +173,14 @@ const onVarChange = (key: string, value: string) => {
   newTheme.updateTime = String(getTimeStamp());
   projectStore.updateProject(newTheme);
 
-  const newVarConfig = getIdCV(
-    newTheme.id,
-    project.value.version === ProjectEnum.VERSION_4 ? appStore.theme : 'light'
-  );
-  setIdCV(newTheme.id, project.value.version === ProjectEnum.VERSION_4 ? appStore.theme : 'light', {
+  const appCompTheme =
+    project.value.version === ProjectEnum.VERSION_4 &&
+    project.value.dark === ProjectEnum.ENABLE_DARK_MODE
+      ? appStore.theme
+      : 'light';
+
+  const newVarConfig = getIdCV(newTheme.id, appCompTheme);
+  setIdCV(newTheme.id, appCompTheme, {
     ...newVarConfig,
     [key]: value
   });
@@ -259,12 +265,14 @@ const listenToSyncGetVarFn = listenToSyncGetVar((vars: Record<string, WComponent
 
   cssVars.value = config;
 
-  skeletonState.value = false;
+  workspaceStore.setSkeletonState(false);
 });
 
 const init = () => {
   nextTick(() => {
     setMobileVar();
+
+    workspaceStore.setSkeletonState(true);
 
     if (project.value.version === ProjectEnum.VERSION_2) {
       onCompileLess();

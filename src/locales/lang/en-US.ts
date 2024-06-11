@@ -21,9 +21,14 @@ export default {
   modal_project_name: 'Project Name',
   modal_project_desc: 'Project Description',
   modal_project_vant_version: 'Vant Version',
+  modal_project_dark_mode: 'Dark Mode',
   modal_vant_options_4: 'Vant 4 (for Vue 3)',
   modal_vant_options_3: 'Vant 3 (for Vue 3)',
   modal_vant_options_2: 'Vant 2 (for Vue 2)',
+  modal_project_dark_mode_enable: 'Enable',
+  modal_project_dark_mode_disable: 'Disable',
+  modal_project_dark_mode_tooltip:
+    'Starting from Vant 4.0, all components can be switched to dark mode',
 
   create_project: 'Create Project',
   edit_project: 'Edit Project',
@@ -60,6 +65,7 @@ export default {
   chinese_user_try: 'If you are a user in China, please try to visit:',
 
   workspace_switch_theme_tip: 'Vant V2 And Vant V3 Do Not Support Dark Mode',
+  workspace_switch_theme_tip_disable: '当前项目已禁用深色模式',
   workspace_loading_component_var: 'Loading Component Style Variables',
   workspace_build_component_var_tip:
     'Vant 2 does not support real-time updates and needs to be manually initiated',
