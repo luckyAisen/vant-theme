@@ -3,6 +3,8 @@ import { AppEnum, IframeSyncEnum, ProjectEnum, WorkspaceEnum } from '@/enums';
 import { getItem } from '@/utils/localStorage';
 import { transformVarsType } from '@/utils/css';
 
+import type { RouteLocationNormalized, NavigationGuardNext } from 'vue-router';
+
 import type { RecordObject, AppLocale, Project, ProjectVersion, WComponentVarType } from '@/types';
 
 const STYLE_TAG_ID = 'VANT_THEME_TAG';
@@ -12,6 +14,29 @@ const V2_STYLE_TAG_ID = 'V2_VANT_THEME_TAG';
 let _appLocale = getItem<AppLocale>(AppEnum.APP_LOCALE, 'zh-CN');
 
 let _mobileVersion: ProjectVersion = ProjectEnum.VERSION_4;
+
+let routeHistory: string[] = [];
+
+let routeIndex = 0;
+
+const initRouteHistory = () => {
+  const route = unref(window.vueRouter.currentRoute);
+
+  routeHistory = [];
+  // routeHistory = [WorkspaceEnum.WORKSPACE_BASIC];
+  routeHistory.push(route.path.split('/')[2] || WorkspaceEnum.WORKSPACE_BASIC);
+  routeIndex = routeHistory.length - 1;
+  console.log('init routeHistory', routeHistory);
+  console.log('init routeIndex', routeIndex);
+};
+
+const addRouteHistory = (path: string) => {
+  routeHistory.push(path);
+  routeIndex = routeHistory.length - 1;
+
+  console.log('add routeHistory', routeHistory);
+  console.log('add routeIndex', routeIndex);
+};
 
 const initMobileVersion = () => {
   const metaTag = document.querySelector(
@@ -183,8 +208,21 @@ const listenToSyncSetVarV2 = () => {
  * 同步 地址（组件）到父窗口
  */
 const syncPathToParent = () => {
-  // TODO:需要重新设计
-  const nextPath = '/' + _appLocale + '/' + WorkspaceEnum.WORKSPACE_BASIC;
+  routeHistory.pop();
+
+  let nextPath;
+
+  if (routeHistory.length === 0) {
+    routeIndex = 0;
+
+    nextPath = '/' + _appLocale + '/' + WorkspaceEnum.WORKSPACE_BASIC;
+  } else {
+    routeIndex = routeHistory.length - 1;
+
+    const value = routeHistory.splice(routeIndex, 1);
+
+    nextPath = '/' + _appLocale + '/' + value[0];
+  }
 
   window.vueRouter.replace(nextPath);
 
@@ -225,7 +263,7 @@ const init = () => {
 
   createStyleTag();
 
-  // createBackEl();
+  createBackEl();
 
   listenToSyncLocale();
 
@@ -234,6 +272,16 @@ const init = () => {
   listenToSyncSetVar();
 
   listenToSyncSetVarV2();
+
+  initRouteHistory();
+
+  window.vueRouter.beforeEach(
+    (to: RouteLocationNormalized, form: RouteLocationNormalized, next: NavigationGuardNext) => {
+      const path = to.path.split('/')[2] || WorkspaceEnum.WORKSPACE_BASIC;
+      addRouteHistory(path);
+      next();
+    }
+  );
 };
 
 init();
