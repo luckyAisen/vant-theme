@@ -16,11 +16,14 @@
 </template>
 
 <script setup lang="ts">
+import { AppEnum } from '@/enums';
 import { useAppStore } from '@/stores/modules/app';
 
 import VHeader from '@/components/Header/index.vue';
-import homeLight from '@/assets/img/home-light.png';
-import homeDark from '@/assets/img/home-dark.png';
+import enUSLightHome from '@/assets/img/en-us-light-home.png';
+import enUSDarkHome from '@/assets/img/en-us-dark-home.png';
+import zhCNLightHome from '@/assets/img/zh-cn-light-home.png';
+import zhCNDarkHome from '@/assets/img/zh-cn-dark-home.png';
 
 defineOptions({
   name: 'Home'
@@ -32,11 +35,17 @@ const appStore = useAppStore();
 
 const img = computed(() => {
   const imgMap = {
-    light: homeLight,
-    dark: homeDark
+    [AppEnum.APP_LOCALE_EN_US]: {
+      light: enUSLightHome,
+      dark: enUSDarkHome
+    },
+    [AppEnum.APP_LOCALE_ZH_CN]: {
+      light: zhCNLightHome,
+      dark: zhCNDarkHome
+    }
   };
 
-  return imgMap[appStore.theme];
+  return imgMap[appStore.locale][appStore.theme];
 });
 
 const pageToProject = () => {
