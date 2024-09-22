@@ -8,9 +8,9 @@
 
 `Vant 2.x` 通过编译 `less` 实现修改后的样式。
 
-在线预览：[https://aisen60.github.io/vant-theme](https://aisen60.github.io/vant-theme)
+在线预览：[https://luckyaisen.github.io/vant-theme](https://luckyaisen.github.io/vant-theme)
 
-仓库地址：[https://github.com/Aisen60/vant-theme](https://github.com/Aisen60/vant-theme)
+仓库地址：[https://github.com/luckyaisen/vant-theme](https://github.com/luckyaisen/vant-theme)
 
 开发 `Vant Theme` 工具的目的，是为了解决以下问题：
 
