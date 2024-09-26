@@ -43,7 +43,7 @@
     "@vueuse/core": "^10.7.2",
     "dayjs": "^1.11.10",
     "jszip": "^3.10.1",
-    "naive-ui": "^2.37.3",
+    "naive-ui": "^2.40.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "vue": "^3.3.11",
