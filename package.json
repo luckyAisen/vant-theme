@@ -65,7 +65,7 @@
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
     "fs-extra": "^11.2.0",
-    "npm-run-all2": "^6.1.1",
+    "npm-run-all2": "^6.2.6",
     "ora": "^8.0.1",
     "postcss": "^8.4.33",
     "prettier": "^3.0.3",
